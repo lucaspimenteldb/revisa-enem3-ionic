@@ -1,15 +1,28 @@
 /* Ionic Variables and Theming. For more info, please see:
 http://ionicframework.com/docs/theming/ */
 
+/*Fontes*/
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+* {
+  font-family: 'Montserrat', sans-serif;
+}
+
 /** Ionic CSS Variables **/
 :root {
-  /** primary **/
-  --ion-color-primary: #3880ff;
-  --ion-color-primary-rgb: 56, 128, 255;
+  --ion-color-azul: #000952;
+  --ion-color-azul-rgb: 0, 9, 82;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
-  --ion-color-primary-shade: #3171e0;
-  --ion-color-primary-tint: #4c8dff;
+  --ion-color-primary-shade: #020732;
+  --ion-color-primary-tint: #151e73;
+
+  /** primaria customizada **/
+  --ion-color-primary: #000952;
+  --ion-color-primary-rgb: 0, 9, 82;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #020732;
+  --ion-color-primary-tint: #151e73;
 
   /** secondary **/
   --ion-color-secondary: #3dc2ff;
@@ -74,6 +87,36 @@ http://ionicframework.com/docs/theming/ */
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
+
+  /* cor das areas */
+  --ion-color-linguagens: #FFCBFD;
+  --ion-color-linguagens-rgb: 255,203,253;
+  --ion-color-linguagens-contrast: #000000;
+  --ion-color-linguagens-contrast-rgb: 0,0,0;
+  --ion-color-linguagens-shade: #e0b3df;
+  --ion-color-linguagens-tint: #ffd0fd;
+
+  --ion-color-matematica: #BEECFF;
+  --ion-color-matematica-rgb: 190,236,255;
+  --ion-color-matematica-contrast: #000000;
+  --ion-color-matematica-contrast-rgb: 0,0,0;
+  --ion-color-matematica-shade: #a7d0e0;
+  --ion-color-matematica-tint: #c5eeff;
+
+  --ion-color-natureza: #91E59F;
+  --ion-color-natureza-rgb: 145,229,159;
+  --ion-color-natureza-contrast: #000000;
+  --ion-color-natureza-contrast-rgb: 0,0,0;
+  --ion-color-natureza-shade: #80ca8c;
+  --ion-color-natureza-tint: #9ce8a9;
+
+  --ion-color-humanas: #F4AD89;
+  --ion-color-humanas-rgb: 244,173,137;
+  --ion-color-humanas-contrast: #000000;
+  --ion-color-humanas-contrast-rgb: 0,0,0;
+  --ion-color-humanas-shade: #d79879;
+  --ion-color-humanas-tint: #f5b595;
+
 }
 
 @media (prefers-color-scheme: dark) {
@@ -83,12 +126,12 @@ http://ionicframework.com/docs/theming/ */
    */
 
   body {
-    --ion-color-primary: #428cff;
-    --ion-color-primary-rgb: 66,140,255;
+    --ion-color-primary: #000952;
+    --ion-color-primary-rgb: 0, 9, 82;
     --ion-color-primary-contrast: #ffffff;
-    --ion-color-primary-contrast-rgb: 255,255,255;
-    --ion-color-primary-shade: #3a7be0;
-    --ion-color-primary-tint: #5598ff;
+    --ion-color-primary-contrast-rgb: 255, 255, 255;
+    --ion-color-primary-shade: #020732;
+    --ion-color-primary-tint: #151e73;
 
     --ion-color-secondary: #50c8ff;
     --ion-color-secondary-rgb: 80,200,255;
@@ -145,6 +188,11 @@ http://ionicframework.com/docs/theming/ */
     --ion-color-light-contrast-rgb: 255,255,255;
     --ion-color-light-shade: #1e2023;
     --ion-color-light-tint: #383a3e;
+
+    --ion-color-linguagens: #FFCBFD;
+    --ion-color-matematica: #BEECFF;
+    --ion-color-natureza: #91E59F;
+    --ion-color-humanas: #F4AD89;
   }
 
   /*
@@ -233,4 +281,37 @@ http://ionicframework.com/docs/theming/ */
 
     --ion-card-background: #1e1e1e;
   }
+}
+
+.ion-color-linguagens {
+  --ion-color-base: var(--ion-color-linguagens);
+  --ion-color-base-rgb: var(--ion-color-linguagens-rgb);
+  --ion-color-contrast: var(--ion-color-linguagens-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-linguagens-contrast-rgb);
+  --ion-color-shade: var(--ion-color-linguagens-shade);
+  --ion-color-tint: var(--ion-color-linguagens-tint);
+}
+.ion-color-matematica {
+  --ion-color-base: var(--ion-color-matematica);
+  --ion-color-base-rgb: var(--ion-color-matematica-rgb);
+  --ion-color-contrast: var(--ion-color-matematica-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-matematica-contrast-rgb);
+  --ion-color-shade: var(--ion-color-matematica-shade);
+  --ion-color-tint: var(--ion-color-matematica-tint);
+}
+.ion-color-natureza {
+  --ion-color-base: var(--ion-color-natureza);
+  --ion-color-base-rgb: var(--ion-color-natureza-rgb);
+  --ion-color-contrast: var(--ion-color-natureza-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-natureza-contrast-rgb);
+  --ion-color-shade: var(--ion-color-natureza-shade);
+  --ion-color-tint: var(--ion-color-natureza-tint);
+}
+.ion-color-humanas {
+  --ion-color-base: var(--ion-color-humanas);
+  --ion-color-base-rgb: var(--ion-color-humanas-rgb);
+  --ion-color-contrast: var(--ion-color-humanas-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-humanas-contrast-rgb);
+  --ion-color-shade: var(--ion-color-humanas-shade);
+  --ion-color-tint: var(--ion-color-humanas-tint);
 }

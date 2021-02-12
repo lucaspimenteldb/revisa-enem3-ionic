@@ -1,0 +1,12 @@
+ion-button {
+  min-height: 46px;
+}
+
+.loading {
+  animation: rodar 1.2s ease-in-out infinite;
+}
+
+@keyframes rodar {
+  0% { transform: rotate(0deg)}
+  100% { transform: rotate(360deg)}
+}
