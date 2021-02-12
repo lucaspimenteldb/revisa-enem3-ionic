@@ -9,10 +9,10 @@
     </ion-header>
 
     <ion-content :fullscreen="true">
-      <!-- selecionar disciplina -->
+      <!-- selecionar videoaula -->
       <ion-item class="ion-margin ion-margin-bottom white rounded select">
         <ion-label>
-          Selecionar disciplina...
+          Selecionar videoaula...
         </ion-label>
 
         <ion-select>
@@ -22,33 +22,37 @@
 
       <ion-list class="ion-padding rounded-top">
         <ion-label class="font-bold text-lg">
-          Volume 1
+          Volume 1 - Literatura
         </ion-label>
 
         <ion-item
             class="ion-margin-top lista__professores rounded"
-            v-for="disciplina in disciplinas"
-            :key="disciplina.ttl+ 'acessar'"
-            @click="() => router.push(disciplina.rota)"
+            v-for="aula in aulas"
+            :key="aula.ttl+ 'acessar'"
+            @click="() => router.push(aula.rota)"
             lines="none"
         >
           <ion-label class="ion-padding-vertical text-white">
-            <h2 class="font-bold">
-              {{ disciplina.ttl }}
-            </h2>
+            <p class="text-white">
+              Aula {{ aula.ttl }}
+            </p>
+            <p class="font-bold text-white text-xl">
+              {{ aula.assunto }}
+            </p>
 
-            <ion-text class="mt-8">
-              <p>
-                50% concluído
-              </p>
-            </ion-text>
+            <article class="mt-8">
+              <ion-text>
+                <p class="text-sm">
+                  50% concluído <span class="ion-float-right">2/3 questões</span>
+                </p>
+              </ion-text>
 
-            <ion-progress-bar
-                value="0.5"
-                :color="disciplina.area"
-                buffer="0.5"
-                class="w-3/5"
-            ></ion-progress-bar>
+              <ion-progress-bar
+                  value="0.5"
+                  :color="aula.area"
+                  buffer="0.5"
+              />
+            </article>
           </ion-label>
 
           <ion-icon
@@ -70,7 +74,7 @@ import {notifications, arrowForwardCircleOutline} from 'ionicons/icons';
 import { useRouter } from 'vue-router'
 
 export default {
-  name: 'Videoaulas',
+  name: 'VideoaulasAssuntos',
   components: {IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel, IonList, IonIcon, IonSelect, IonSelectOption, IonProgressBar},
 
   setup () {
@@ -79,49 +83,58 @@ export default {
       arrowForwardCircleOutline,
       router: useRouter(),
 
-      disciplinas: [
+      aulas: [
         {
-          ttl: 'Matemática',
-          rota: 'ver-videoaula',
-          area: 'matematica'
-        },
-        {
-          ttl: 'Física',
-          rota: 'ver-videoaula',
-          area: 'natureza'
-        },
-        {
-          ttl: 'Biologia',
-          rota: 'ver-videoaula',
-          area: 'natureza'
-        },
-        {
-          ttl: 'Química',
-          rota: 'ver-videoaula',
-          area: 'natureza'
-        },
-        {
-          ttl: 'Geografia',
-          rota: 'ver-videoaula',
-          area: 'humanas'
-        },
-        {
-          ttl: 'Filosofia',
-          rota: 'ver-videoaula',
-          area: 'humanas'
-        },
-        {
-          ttl: 'História',
-          rota: 'ver-videoaula',
-          area: 'humanas'
-        },
-        {
-          ttl: 'Português',
+          ttl: '1',
+          assunto: 'O texto literário e suas funções',
           rota: 'ver-videoaula',
           area: 'linguagens'
         },
         {
-          ttl: 'Literatura',
+          ttl: '2',
+          assunto: 'O texto literário e suas funções',
+          rota: 'ver-videoaula',
+          area: 'linguagens'
+        },
+        {
+          ttl: '3',
+          assunto: 'O texto literário e suas funções',
+          rota: 'ver-videoaula',
+          area: 'linguagens'
+        },
+        {
+          ttl: '4',
+          assunto: 'O texto literário e suas funções',
+          rota: 'ver-videoaula',
+          area: 'linguagens'
+        },
+        {
+          ttl: '5',
+          assunto: 'O texto literário e suas funções',
+          rota: 'ver-videoaula',
+          area: 'linguagens'
+        },
+        {
+          ttl: '6',
+          assunto: 'O texto literário e suas funções',
+          rota: 'ver-videoaula',
+          area: 'linguagens'
+        },
+        {
+          ttl: '7',
+          assunto: 'O texto literário e suas funções',
+          rota: 'ver-videoaula',
+          area: 'linguagens'
+        },
+        {
+          ttl: '8',
+          assunto: 'O texto literário e suas funções',
+          rota: 'ver-videoaula',
+          area: 'linguagens'
+        },
+        {
+          ttl: '9',
+          assunto: 'O texto literário e suas funções',
           rota: 'ver-videoaula',
           area: 'linguagens'
         },

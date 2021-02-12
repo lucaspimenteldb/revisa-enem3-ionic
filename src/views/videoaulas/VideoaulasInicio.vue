@@ -33,22 +33,24 @@
             lines="none"
         >
           <ion-label class="ion-padding-vertical text-white">
-            <h2 class="font-bold">
+            <h2 class="font-bold text-white text-xl">
               {{ disciplina.ttl }}
             </h2>
 
-            <ion-text class="mt-8">
-              <p>
-                50% concluído
-              </p>
-            </ion-text>
+            <article class="mt-8">
+              <ion-text>
+                <p>
+                  50% concluído
+                </p>
+              </ion-text>
 
-            <ion-progress-bar
-                value="0.5"
-                :color="disciplina.area"
-                buffer="0.5"
-                class="w-3/5"
-            ></ion-progress-bar>
+              <ion-progress-bar
+                  value="0.5"
+                  :color="disciplina.area"
+                  buffer="0.5"
+                  class="w-3/5"
+              />
+            </article>
           </ion-label>
 
           <ion-icon
@@ -82,7 +84,7 @@ export default {
       disciplinas: [
         {
           ttl: 'Matemática',
-          rota: 'ver-videoaula',
+          rota: 'videoaulas-assuntos',
           area: 'matematica'
         },
         {

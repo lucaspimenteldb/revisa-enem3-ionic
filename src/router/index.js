@@ -43,6 +43,14 @@ const routes = [
         component: () => import('@/views/videoaulas/VideoaulasInicio.vue')
       },
       {
+        path: 'videoaulas-assuntos',
+        component: () => import('@/views/videoaulas/VideoaulasAssuntos.vue')
+      },
+      {
+        path: 'ver-videoaula',
+        component: () => import('@/views/videoaulas/VerVideoaulas.vue')
+      },
+      {
         path: 'redacoes',
         component: () => import('@/views/Redacoes.vue')
       }
