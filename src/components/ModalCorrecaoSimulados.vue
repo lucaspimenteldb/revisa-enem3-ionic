@@ -36,13 +36,29 @@
       </p>
     </ion-item>
 
+
     <ion-slides :options="slideOpts" ref="slideQuestoes">
       <ion-slide
           v-for="(questao, i) in questoes"
           :key="questao.title"
           class="flex flex-column"
       >
-        <div class="mt-32 ion-margin-bottom w-full">
+        <ion-item
+            v-if="questao.alternativaMarcada != questao.gabarito"
+            color="danger"
+            class="ion-margin-top w-full rounded"
+        >
+          Você errou essa questão...
+        </ion-item>
+        <ion-item
+            v-else
+            color="success"
+            class="ion-margin-top w-full rounded"
+        >
+          Parabéns! Você arrasou na questão
+        </ion-item>
+
+        <div class="ion-margin-vertical w-full">
           <ion-label class="ion-text-wrap flex flex-column ion-align-items-start">
             <ion-text class="font-bold">
               {{ questao.title }}
@@ -59,8 +75,10 @@
             v-for="alternativa in questao.alternativas"
             :key="alternativa.alternativa+'alternativa'"
             class="ion-margin-bottom ion-no-padding border-primary rounded"
-            :class="todasQuestoes[i].alternativaMarcada === alternativa.alternativa ? 'alternativa__marcada text-white border-none' : 'border-2'"
-            @click="todasQuestoes[i].alternativaMarcada = alternativa.alternativa"
+            :class="{
+              'alternativa__correta text-white border-none': todasQuestoes[i].gabarito === alternativa.alternativa,
+              'alternativa__errada text-white border-none': questao.alternativaMarcada != todasQuestoes[i].gabarito && questao.alternativaMarcada === alternativa.alternativa
+            }"
         >
           <article
               class="ml-8 mr-8 flex ion-align-items-center ion-justify-content-center h-30 w-30 border-2 rounded-full"
@@ -95,16 +113,6 @@
       Próxima
       <ion-icon :icon="chevronForwardCircleOutline" class="ml-8"/>
     </ion-button>
-
-    <ion-button
-        expand="block"
-        class="ion-margin-vertical text-none shadow-btn"
-        @click="finalizarSimulado()"
-    >
-      Finalizar
-    </ion-button>
-
-
   </ion-content>
 </template>
 
@@ -114,7 +122,7 @@ import { closeCircleOutline, imageOutline, refreshCircleOutline, sendOutline, ch
 import { ref } from 'vue';
 
 export default {
-  name: 'ModalSimulados',
+  name: 'ModalCorrecaoSimulados',
   props: [ 'questoes', 'title', 'conteudo', 'fechar', 'alternativas', 'gabarito' ],
   components: { IonContent, IonText, IonButton, IonItem, IonLabel, IonIcon, IonSlides, IonSlide },
 
@@ -180,6 +188,7 @@ export default {
 
     async proxSlide () {
       const s = await this.slideQuestoes.$el.getSwiper();
+      console.log(this.slideQuestoes.$el);
       console.log(s);
       await s.slideNext();
     },
@@ -195,8 +204,11 @@ export default {
 </script>
 
 <style scoped>
-ion-item.alternativa__marcada {
-  --background: var(--ion-color-primary);
+ion-item.alternativa__errada {
+  --background: var(--ion-color-danger);
+}
+ion-item.alternativa__correta {
+  --background: var(--ion-color-success);
 }
 
 </style>

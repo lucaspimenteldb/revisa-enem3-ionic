@@ -3,7 +3,7 @@
     <ion-header>
       <ion-toolbar>
         <ion-title>
-          Atividades
+          Redações disponíveis
         </ion-title>
       </ion-toolbar>
     </ion-header>
@@ -20,15 +20,29 @@
             :key="opcao.ttl+ 'acessar'"
             @click="() => router.push(opcao.rota)"
             lines="none"
+            :disabled="opcao.status === 'bloqueada' ? true : false"
         >
-          <ion-label class="ion-padding-vertical text-white font-bold">
-            {{ opcao.ttl }}
+          <ion-label class="text-white font-bold">
+            <ion-text class="text-white">
+              <p>
+                Tema {{ opcao.tema }}
+              </p>
+            </ion-text>
 
-            <ion-icon
-                :icon="notifications"
-                class="inline-block vertical-middle text-xl"
-                v-if="opcao.notificacao"
-            />
+            <ion-text class="text-lg font-bold text-white">
+              {{ opcao.ttl }} temasinho
+            </ion-text>
+
+            <div class="mt-8">
+              <ion-text class="ion-margin-top text-white text-sm font-regular">
+                <p class="ion-margin-top">
+                  {{ opcao.inicio }}
+                </p>
+                <p>
+                  {{ opcao.fim }}
+                </p>
+              </ion-text>
+            </div>
           </ion-label>
 
           <ion-icon
@@ -60,19 +74,36 @@ export default {
 
       opcoes: [
         {
+          tema: 4,
           ttl: 'Redações',
-          notificacao: 1,
-          rota: 'redacoes-inicio',
+          inicio: '23/10/2021',
+          fim: '28/10/2021',
+          rota: 'ver-redacoes',
+          status: 'disponível',
         },
         {
-          ttl: 'Redações entregues',
-          notificacao: 0,
-          rota: 'redacoes-entregues',
+          tema: 3,
+          ttl: 'Redações asd',
+          inicio: '23/10/2021',
+          fim: '28/10/2021',
+          rota: 'ver-redacoes',
+          status: 'disponível',
         },
         {
-          ttl: 'Meu desempenho',
-          notificacao: 0,
-          rota: 'meu-desempenho-redacao',
+          tema: 2,
+          ttl: 'Redações ggg',
+          inicio: '23/10/2021',
+          fim: '28/10/2021',
+          rota: 'ver-redacoes',
+          status: 'expirada',
+        },
+        {
+          tema: 1,
+          ttl: 'Redaçõe ratts',
+          inicio: '23/10/2021',
+          fim: '28/10/2021',
+          rota: 'ver-redacoes',
+          status: 'bloqueada',
         },
       ]
     }
@@ -92,7 +123,7 @@ ion-item {
 }
 
 ion-list {
-  --background: url('../../public/assets/images/bg-principal.png') no-repeat center/100%;
-  background: url('../../public/assets/images/bg-principal.png') no-repeat center/100%;
+  --background: url('../../../public/assets/images/bg-principal.png') no-repeat center/100%;
+  background: url('../../../public/assets/images/bg-principal.png') no-repeat center/100%;
 }
 </style>

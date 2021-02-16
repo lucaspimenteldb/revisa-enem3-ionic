@@ -51,6 +51,10 @@ const routes = [
         component: () => import('@/views/atividades/VerSimulados.vue')
       },
       {
+        path: 'correcao-simulados-entregues',
+        component: () => import('@/views/atividades/CorrecaoSimuladosEntregues.vue')
+      },
+      {
         path: 'videoaulas',
         component: () => import('@/views/Videoaulas.vue')
       },
@@ -69,6 +73,10 @@ const routes = [
       {
         path: 'redacoes',
         component: () => import('@/views/Redacoes.vue')
+      },
+      {
+        path: 'redacoes-inicio',
+        component: () => import('@/views/redacoes/RedacoesInicio.vue')
       }
     ]
   }

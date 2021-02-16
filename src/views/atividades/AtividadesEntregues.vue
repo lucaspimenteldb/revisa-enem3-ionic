@@ -102,7 +102,7 @@ export default {
         {
           ttl: 'XYZ mais eu',
           tipo: 'Simulado',
-          rota: 'correcao-atividades-entregues',
+          rota: 'correcao-simulados-entregues',
           nota: '3,0'
         },
         {
@@ -114,7 +114,7 @@ export default {
         {
           ttl: 'Xablau brau',
           tipo: 'Simulado',
-          rota: 'correcao-atividades-entregues',
+          rota: 'correcao-simulados-entregues',
           nota: '3,0'
         },
       ]
