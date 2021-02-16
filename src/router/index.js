@@ -47,6 +47,10 @@ const routes = [
         component: () => import('@/views/atividades/VerAtividades.vue')
       },
       {
+        path: 'ver-simulados',
+        component: () => import('@/views/atividades/VerSimulados.vue')
+      },
+      {
         path: 'videoaulas',
         component: () => import('@/views/Videoaulas.vue')
       },

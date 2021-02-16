@@ -49,7 +49,7 @@
             class="ion-margin-top rounded"
             v-for="atividade in atividades"
             :key="atividade.ttl+ atividade.tipo"
-            @click="() => router.push( 'ver-atividades')"
+            @click="() => router.push( atividade.rota)"
             lines="none"
         >
           <div class="ion-padding-vertical">
@@ -102,19 +102,19 @@ export default {
         {
           ttl: 'XYZ mais eu',
           tipo: 'Simulado',
-          rota: 'atividades-disponiveis',
+          rota: 'ver-simulados',
           prazo: '22/10/2021'
         },
         {
           ttl: 'Pei pei pei',
           tipo: 'Atividade',
-          rota: 'atividades-entregues',
+          rota: 'ver-atividades',
           prazo: '22/10/2021'
         },
         {
           ttl: 'Xablau brau',
           tipo: 'Simulado',
-          rota: 'meu-desempenho',
+          rota: 'ver-simulados',
           prazo: '22/10/2021'
         },
       ]

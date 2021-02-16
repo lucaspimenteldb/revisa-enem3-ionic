@@ -23,6 +23,9 @@
 .rounded-full {
   border-radius: 50%;
 }
+.border-none {
+  border: none;
+}
 .border-2 {
   border-width: 2px;
   border-style: solid;
@@ -113,6 +116,10 @@
 .h-130 {
   height: 130px;
   min-height: 130px;
+}
+.w-full {
+  width: 100%;
+  min-width: 100%;
 }
 .w-30 {
   width: 30px;
