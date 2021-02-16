@@ -69,12 +69,18 @@
 .bg-white {
   background-color: white;
 }
+.bg-primary {
+  background-color: var(--ion-color-primary);
+}
 
 .text-white {
   color: white;
 }
 .font-bold {
   font-weight: 600;
+}
+.text-xs {
+  font-size: .8rem;
 }
 .text-sm {
   font-size: .9rem;
@@ -95,6 +101,18 @@
 .h-30 {
   height: 30px;
   min-height: 30px;
+}
+.h-100 {
+  height: 100px;
+  min-height: 100px;
+}
+.h-120 {
+  height: 120px;
+  min-height: 120px;
+}
+.h-130 {
+  height: 130px;
+  min-height: 130px;
 }
 .w-30 {
   width: 30px;
@@ -147,6 +165,9 @@
   left: 1rem;
 }
 
+.mr-4 {
+  margin-right: 4px;
+}
 .mr-8 {
   margin-right: 8px;
 }
@@ -169,9 +190,15 @@
   padding-top: 8px;
   padding-bottom: 8px;
 }
+.p-8 {
+  padding: 8px;
+}
 
 .flex {
   display: flex;
+}
+.flex-column {
+  flex-direction: column;
 }
 .inline-block {
   display: inline-block;

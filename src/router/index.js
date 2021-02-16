@@ -39,6 +39,10 @@ const routes = [
         component: () => import('@/views/atividades/CorrecaoAtividadesEntregues.vue')
       },
       {
+        path: 'meu-desempenho',
+        component: () => import('@/views/atividades/VerDesempenhoDisciplinas.vue')
+      },
+      {
         path: 'ver-atividades',
         component: () => import('@/views/atividades/VerAtividades.vue')
       },
