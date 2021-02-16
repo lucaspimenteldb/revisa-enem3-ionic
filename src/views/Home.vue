@@ -29,6 +29,7 @@
             :class="menu.class"
             v-for="menu in menus"
             :key="menu.ttl"
+            @click="() => router.push(menu.rota)"
         >
           <IonLabel class="ion-padding-vertical">
             <h1 class="text-white font-bold">
@@ -54,6 +55,7 @@
 <script>
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonImg, IonSlides, IonSlide } from '@ionic/vue';
 import { heart, airplaneOutline } from 'ionicons/icons'
+import { useRouter } from 'vue-router';
 
 export default  {
   name: 'Home',
@@ -63,6 +65,7 @@ export default  {
     return {
       airplaneOutline,
       heart,
+      router: useRouter(),
 
       menus: [
         {

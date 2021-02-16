@@ -52,13 +52,13 @@
 </template>
 
 <script>
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonIcon } from '@ionic/vue';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonIcon, IonImg } from '@ionic/vue';
 import {playCircleOutline, lockClosed} from 'ionicons/icons';
 import { useRouter } from 'vue-router'
 
 export default  {
   name: 'Videoaulas',
-  components: { IonHeader, IonToolbar, IonTitle, IonContent, IonPage, IonList, IonItem, IonLabel, IonIcon },
+  components: { IonHeader, IonToolbar, IonTitle, IonContent, IonPage, IonList, IonItem, IonLabel, IonIcon, IonImg },
 
   setup () {
     return {

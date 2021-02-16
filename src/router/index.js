@@ -31,6 +31,14 @@ const routes = [
         component: () => import('@/views/atividades/AtividadesDisponiveis.vue')
       },
       {
+        path: 'atividades-entregues',
+        component: () => import('@/views/atividades/AtividadesEntregues.vue')
+      },
+      {
+        path: 'correcao-atividades-entregues',
+        component: () => import('@/views/atividades/CorrecaoAtividadesEntregues.vue')
+      },
+      {
         path: 'ver-atividades',
         component: () => import('@/views/atividades/VerAtividades.vue')
       },
