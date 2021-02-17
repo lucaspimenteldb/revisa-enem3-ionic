@@ -9,7 +9,7 @@
     </ion-header>
 
     <ion-content :fullscreen="true">
-      <ion-list class="ion-padding h-full rounded-top">
+      <ion-list class="ion-padding h-full">
         <ion-label class="font-bold text-lg">
           Redações
         </ion-label>

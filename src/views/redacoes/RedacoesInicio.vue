@@ -9,7 +9,7 @@
     </ion-header>
 
     <ion-content :fullscreen="true">
-      <ion-list class="ion-padding h-full rounded-top">
+      <ion-list class="ion-padding h-full">
         <ion-label class="font-bold text-lg">
           Redações
         </ion-label>
@@ -47,11 +47,14 @@
 
           <ion-icon
               slot="end"
-              :icon="arrowForwardCircleOutline"
-              color="light"
-              size="large"
+              :icon="opcao.icon"
+              :color="opcao.status === 'encerrada' ? 'danger' : 'light'"
               class="mr-8"
+              style="font-size: 40px;"
           />
+          <ion-text class="absolute right-8 bottom-20 text-sm" :class="opcao.status === 'encerrada' ? 'text-red' : 'text-white'">
+            {{ opcao.status }}
+          </ion-text>
         </ion-item>
       </ion-list>
     </ion-content>
@@ -59,17 +62,19 @@
 </template>
 
 <script>
-import {IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel, IonList, IonIcon} from '@ionic/vue';
-import {notifications, arrowForwardCircleOutline} from 'ionicons/icons';
+import {IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel, IonList, IonIcon, IonText} from '@ionic/vue';
+import {notifications, arrowForwardCircleOutline, lockClosed, closeCircleOutline} from 'ionicons/icons';
 import { useRouter } from 'vue-router'
 export default {
   name: 'RedacoesInicio',
-  components: {IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel, IonList, IonIcon},
+  components: {IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel, IonList, IonIcon, IonText},
 
   setup () {
     return {
       notifications,
       arrowForwardCircleOutline,
+      lockClosed,
+      closeCircleOutline,
       router: useRouter(),
 
       opcoes: [
@@ -78,8 +83,9 @@ export default {
           ttl: 'Redações',
           inicio: '23/10/2021',
           fim: '28/10/2021',
-          rota: 'ver-redacoes',
+          rota: 'ver-rascunho-enviar-redacao',
           status: 'disponível',
+          icon: arrowForwardCircleOutline,
         },
         {
           tema: 3,
@@ -88,6 +94,7 @@ export default {
           fim: '28/10/2021',
           rota: 'ver-redacoes',
           status: 'disponível',
+          icon: arrowForwardCircleOutline,
         },
         {
           tema: 2,
@@ -95,7 +102,8 @@ export default {
           inicio: '23/10/2021',
           fim: '28/10/2021',
           rota: 'ver-redacoes',
-          status: 'expirada',
+          status: 'encerrada',
+          icon: closeCircleOutline,
         },
         {
           tema: 1,
@@ -104,6 +112,7 @@ export default {
           fim: '28/10/2021',
           rota: 'ver-redacoes',
           status: 'bloqueada',
+          icon: lockClosed,
         },
       ]
     }

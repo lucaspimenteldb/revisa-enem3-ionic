@@ -77,6 +77,18 @@ const routes = [
       {
         path: 'redacoes-inicio',
         component: () => import('@/views/redacoes/RedacoesInicio.vue')
+      },
+      {
+        path: 'ver-rascunho-enviar-redacao',
+        component: () => import('@/views/redacoes/VerRascunhoEnviarRedacao.vue')
+      },
+      {
+        path: 'ver-correcao-redacao',
+        component: () => import('@/views/redacoes/VerCorrecaoRedacao.vue')
+      },
+      {
+        path: 'redacoes-entregues',
+        component: () => import('@/views/redacoes/RedacoesEntregues.vue')
       }
     ]
   }
