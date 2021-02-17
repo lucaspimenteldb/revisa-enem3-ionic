@@ -104,7 +104,7 @@ ion-content {
   --background: var(--ion-color-primary);
 }
 ion-item {
-  --background: var(--ion-color-primary);
+  --background: url('../../../public/assets/images/atividade-secundario.png') var(--ion-color-primary) no-repeat center/100%;
 }
 .text-white {
   color: white;

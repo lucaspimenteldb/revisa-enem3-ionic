@@ -24,7 +24,7 @@
             lines="none"
         >
           <ion-label class="ion-padding ">
-            <h2 class="text-white">
+            <h2 class="text-white font-bold">
               {{ volume.ttl }}
             </h2>
           </ion-label>
@@ -95,13 +95,16 @@ ion-content {
   --background: var(--ion-color-primary);
 }
 .lista__professores {
-  --background: var(--ion-color-primary);
+  --background: url('../../public/assets/images/videoaula-secundario.png') var(--ion-color-primary) no-repeat center/100%;
 }
 p {
   color: white;
 }
 .text-lg {
   font-size: 1.15rem;
+}
+.font-bold {
+  font-weight: 600;
 }
 
 ion-list {

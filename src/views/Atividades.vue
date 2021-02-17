@@ -42,7 +42,7 @@
         >
           <ion-avatar
               slot="start"
-              class="border-3"
+              class="border-4 w-50 h-50"
               :class="`border__${professorDisciplina.area}`"
           >
             <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
@@ -57,14 +57,11 @@
             </p>
           </ion-label>
 
-          <div class="h-full w-80 absolute top-0 right-0" :class="`bg__${professorDisciplina.area}`">
-
-          </div>
           <ion-icon
               slot="end"
               :icon="arrowForwardCircleOutline"
-              color="dark"
-              size="large"
+              color="light"
+              style="font-size: 36px;"
               class="mr-8"
           />
         </ion-item>
@@ -140,7 +137,7 @@ ion-content {
   --background: var(--ion-color-primary);
 }
 .lista__professores {
-  --background: var(--ion-color-primary);
+  --background: url('../../public/assets/images/atividade-secundario.png') var(--ion-color-primary) no-repeat center/100%;
 }
 p {
   color: white;

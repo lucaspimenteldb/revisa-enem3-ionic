@@ -31,7 +31,7 @@
             :key="menu.ttl"
             @click="() => router.push(menu.rota)"
         >
-          <IonLabel class="ion-padding-vertical">
+          <IonLabel class="ion-padding-vertical ion-margin-vertical">
             <h1 class="text-white font-bold">
               {{ menu.ttl }}
             </h1>
