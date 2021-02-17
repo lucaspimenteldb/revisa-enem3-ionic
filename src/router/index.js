@@ -89,6 +89,10 @@ const routes = [
       {
         path: 'redacoes-entregues',
         component: () => import('@/views/redacoes/RedacoesEntregues.vue')
+      },
+      {
+        path: 'ranking',
+        component: () => import('@/views/ranking/RankingInicio.vue')
       }
     ]
   }
