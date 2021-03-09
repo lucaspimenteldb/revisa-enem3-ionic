@@ -98,6 +98,7 @@ export default {
       let volume = this.route.params.id;
       let dados = await api.get("/materias/"+volume);
      this.disciplinas = dados.data.materias;
+     console.log(this.route.params.id);
     }catch (e) {
         console.log(e);
     }

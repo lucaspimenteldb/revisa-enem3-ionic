@@ -69,7 +69,7 @@
 <script>
 import {IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel, IonList, IonIcon, modalController} from '@ionic/vue';
 import {notifications, arrowForwardCircleOutline, thumbsUpOutline, thumbsDownOutline, thumbsUp, thumbsDown} from 'ionicons/icons';
-import { useRouter } from 'vue-router'
+import {useRoute, useRouter} from 'vue-router'
 import ModalVideoaulas from '@/components/ModalVideoaulas';
 
 export default {
@@ -85,6 +85,7 @@ export default {
       thumbsUp,
       thumbsDown,
       router: useRouter(),
+      route: useRoute(),
 
       aulas: [
         {
@@ -159,6 +160,12 @@ export default {
       this.modal = modal;
       return modal.present();
     },
+  },
+
+   ionViewWillEnter () {
+
+      console.log(this.route.params);
+
   }
 }
 </script>

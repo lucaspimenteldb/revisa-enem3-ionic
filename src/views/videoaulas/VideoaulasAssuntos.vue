@@ -28,16 +28,16 @@
         <ion-item
             class="ion-margin-top lista__professores rounded"
             v-for="aula in aulas"
-            :key="aula.ttl+ 'acessar'"
-            @click="() => router.push(aula.rota)"
+            :key="aula.titulo+ 'acessar'"
+            @click="() => router.push('/tabs/ver-videoaula/'+aula.id, {aula})"
             lines="none"
         >
           <ion-label class="ion-padding-vertical text-white">
             <p class="text-white">
-              Aula {{ aula.ttl }}
+              Aula {{ aula.titulo }}
             </p>
             <p class="font-bold text-white text-xl">
-              {{ aula.assunto }}
+              {{ aula.descricao }}
             </p>
 
             <article class="mt-8">
@@ -49,7 +49,7 @@
 
               <ion-progress-bar
                   value="0.5"
-                  :color="aula.area"
+                  :color="'matematica'"
                   buffer="0.5"
               />
             </article>
@@ -64,6 +64,7 @@
           />
         </ion-item>
       </ion-list>
+      <Loading :isOpen="loading"></Loading>
     </ion-content>
   </ion-page>
 </template>
@@ -71,75 +72,43 @@
 <script>
 import {IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel, IonList, IonIcon, IonSelect, IonSelectOption, IonProgressBar, IonText} from '@ionic/vue';
 import {notifications, arrowForwardCircleOutline} from 'ionicons/icons';
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
+import Loading from "../../components/auxiliares/Loading";
+import api from '../../api/basicUrl';
+import { ref } from 'vue';
 
 export default {
   name: 'VideoaulasAssuntos',
-  components: {IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel, IonList, IonIcon, IonSelect, IonSelectOption, IonProgressBar, IonText},
+  components: { Loading, IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel, IonList, IonIcon, IonSelect, IonSelectOption, IonProgressBar, IonText},
 
   setup () {
+    const loading = ref(false);
     return {
       notifications,
       arrowForwardCircleOutline,
       router: useRouter(),
+      route: useRoute(),
+      loading,
 
       aulas: [
-        {
-          ttl: '1',
-          assunto: 'O texto literário e suas funções',
-          rota: 'ver-videoaula',
-          area: 'linguagens'
-        },
-        {
-          ttl: '2',
-          assunto: 'O texto literário e suas funções',
-          rota: 'ver-videoaula',
-          area: 'linguagens'
-        },
-        {
-          ttl: '3',
-          assunto: 'O texto literário e suas funções',
-          rota: 'ver-videoaula',
-          area: 'linguagens'
-        },
-        {
-          ttl: '4',
-          assunto: 'O texto literário e suas funções',
-          rota: 'ver-videoaula',
-          area: 'linguagens'
-        },
-        {
-          ttl: '5',
-          assunto: 'O texto literário e suas funções',
-          rota: 'ver-videoaula',
-          area: 'linguagens'
-        },
-        {
-          ttl: '6',
-          assunto: 'O texto literário e suas funções',
-          rota: 'ver-videoaula',
-          area: 'linguagens'
-        },
-        {
-          ttl: '7',
-          assunto: 'O texto literário e suas funções',
-          rota: 'ver-videoaula',
-          area: 'linguagens'
-        },
-        {
-          ttl: '8',
-          assunto: 'O texto literário e suas funções',
-          rota: 'ver-videoaula',
-          area: 'linguagens'
-        },
-        {
-          ttl: '9',
-          assunto: 'O texto literário e suas funções',
-          rota: 'ver-videoaula',
-          area: 'linguagens'
-        },
+
       ]
     }
+  },
+
+  async ionViewWillEnter () {
+    try {
+      this.loading = true;
+      let materia = this.route.params.id;
+      let volume = this.route.params.volume;
+       let dados = await api.get("/videos/"+materia+'/'+volume);
+       this.aulas = (dados.data.videos);
+    }catch (e) {
+      console.log(e);
+    }
+
+    this.loading = false;
+
   }
 }
 </script>

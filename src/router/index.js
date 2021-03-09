@@ -67,7 +67,7 @@ const routes = [
         component: () => import('@/views/videoaulas/VideoaulasAssuntos.vue')
       },
       {
-        path: 'ver-videoaula',
+        path: 'ver-videoaula/:id',
         component: () => import('@/views/videoaulas/VerVideoaulas.vue')
       },
       {
