@@ -20,7 +20,7 @@
             :disabled="!volume.liberado"
             v-for="volume in volumes"
             :key="volume.ttl+ 'acessar'"
-            @click="() => router.push('videoaulas-inicio')"
+            @click="() => router.push(`videoaulas-inicio/${volume.rota}`)"
             lines="none"
         >
           <ion-label class="ion-padding ">
@@ -47,6 +47,7 @@
           />
         </ion-item>
       </ion-list>
+      <Loading :isOpen="loading"></Loading>
     </ion-content>
   </ion-page>
 </template>
@@ -54,37 +55,41 @@
 <script>
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonIcon, IonImg } from '@ionic/vue';
 import {playCircleOutline, lockClosed} from 'ionicons/icons';
+import Loading from "../components/auxiliares/Loading";
+import api from '../api/basicUrl';
+import {ref} from 'vue';
+
 import { useRouter } from 'vue-router'
 
 export default  {
   name: 'Videoaulas',
-  components: { IonHeader, IonToolbar, IonTitle, IonContent, IonPage, IonList, IonItem, IonLabel, IonIcon, IonImg },
+  components: { Loading, IonHeader, IonToolbar, IonTitle, IonContent, IonPage, IonList, IonItem, IonLabel, IonIcon, IonImg },
 
   setup () {
+    const volumes = ref([]);
+    const loading = ref(false);
     return {
       playCircleOutline,
       lockClosed,
+      loading,
       router: useRouter(),
-
-      volumes: [
-        {
-          ttl: 'Volume 1',
-          liberado: true,
-          rota: 'videoaulas-inicio'
-        },
-        {
-          ttl: 'Volume 2',
-          liberado: true,
-          rota: 'videoaulas-inicio'
-        },
-        {
-          ttl: 'Volume 3',
-          liberado: false,
-          rota: 'videoaulas-inicio'
-        },
-      ]
+      volumes
     };
   },
+
+  async ionViewWillEnter () {
+    try {
+      this.loading = true;
+      let volumes = await api.get('/volumes');
+      this.volumes = volumes.data.volumes;
+    }catch (e) {
+        console.log(e);
+        alert("Não foi possível carregar as informações.Verifique a sua conexão e tente novamente");
+    }
+
+    this.loading = false;
+
+  }
 
 
 }

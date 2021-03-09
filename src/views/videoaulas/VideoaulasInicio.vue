@@ -29,7 +29,7 @@
             class="ion-margin-top lista__professores rounded"
             v-for="disciplina in disciplinas"
             :key="disciplina.ttl+ 'acessar'"
-            @click="() => router.push(disciplina.rota)"
+            @click="() => router.push('/tabs/videoaulas-assuntos/'+disciplina.id + '/volume/' + route.params.id)"
             lines="none"
         >
           <ion-label class="ion-padding-vertical text-white">
@@ -46,7 +46,7 @@
 
               <ion-progress-bar
                   value="0.5"
-                  :color="disciplina.area"
+                  :color="'matematica'"
                   buffer="0.5"
                   class="w-3/5"
               />
@@ -62,6 +62,7 @@
           />
         </ion-item>
       </ion-list>
+      <Loading :isOpen="loading"></Loading>
     </ion-content>
   </ion-page>
 </template>
@@ -69,66 +70,40 @@
 <script>
 import {IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel, IonList, IonIcon, IonSelect, IonSelectOption, IonProgressBar, IonText} from '@ionic/vue';
 import {notifications, arrowForwardCircleOutline} from 'ionicons/icons';
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
+import Loading from "../../components/auxiliares/Loading";
+import api from '../../api/basicUrl';
+import { ref } from 'vue';
 
 export default {
   name: 'Videoaulas',
-  components: {IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel, IonList, IonIcon, IonSelect, IonSelectOption, IonProgressBar, IonText},
+  components: {IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel, IonList, IonIcon, IonSelect, IonSelectOption, IonProgressBar, IonText, Loading},
 
   setup () {
+    const loading = ref(false);
+    const disciplinas = ref([]);
     return {
       notifications,
       arrowForwardCircleOutline,
       router: useRouter(),
-
-      disciplinas: [
-        {
-          ttl: 'Matemática',
-          rota: 'videoaulas-assuntos',
-          area: 'matematica'
-        },
-        {
-          ttl: 'Física',
-          rota: 'ver-videoaula',
-          area: 'natureza'
-        },
-        {
-          ttl: 'Biologia',
-          rota: 'ver-videoaula',
-          area: 'natureza'
-        },
-        {
-          ttl: 'Química',
-          rota: 'ver-videoaula',
-          area: 'natureza'
-        },
-        {
-          ttl: 'Geografia',
-          rota: 'ver-videoaula',
-          area: 'humanas'
-        },
-        {
-          ttl: 'Filosofia',
-          rota: 'ver-videoaula',
-          area: 'humanas'
-        },
-        {
-          ttl: 'História',
-          rota: 'ver-videoaula',
-          area: 'humanas'
-        },
-        {
-          ttl: 'Português',
-          rota: 'ver-videoaula',
-          area: 'linguagens'
-        },
-        {
-          ttl: 'Literatura',
-          rota: 'ver-videoaula',
-          area: 'linguagens'
-        },
-      ]
+      route: useRoute(),
+      loading,
+      disciplinas,
     }
+  },
+
+  async ionViewWillEnter () {
+    try {
+      this.loading = true;
+      let volume = this.route.params.id;
+      let dados = await api.get("/materias/"+volume);
+     this.disciplinas = dados.data.materias;
+    }catch (e) {
+        console.log(e);
+    }
+
+    this.loading = false;
+
   }
 }
 </script>
