@@ -59,15 +59,15 @@ const routes = [
         component: () => import('@/views/Videoaulas.vue')
       },
       {
-        path: 'videoaulas-inicio',
+        path: 'videoaulas-inicio/:id',
         component: () => import('@/views/videoaulas/VideoaulasInicio.vue')
       },
       {
-        path: 'videoaulas-assuntos',
+        path: 'videoaulas-assuntos/:id/volume/:volume',
         component: () => import('@/views/videoaulas/VideoaulasAssuntos.vue')
       },
       {
-        path: 'ver-videoaula',
+        path: 'ver-videoaula/:id',
         component: () => import('@/views/videoaulas/VerVideoaulas.vue')
       },
       {
