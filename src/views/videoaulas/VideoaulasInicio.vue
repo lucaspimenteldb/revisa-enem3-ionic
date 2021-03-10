@@ -3,7 +3,7 @@
     <ion-header>
       <ion-toolbar>
         <ion-title>
-          Videoaulas - Volume 1
+          Videoaulas - {{`Volume ${route.params.id}`}}
         </ion-title>
       </ion-toolbar>
     </ion-header>
@@ -15,21 +15,22 @@
           Selecionar disciplina...
         </ion-label>
 
-        <ion-select>
-          <ion-select-option>pei</ion-select-option>
+        <ion-select @IonChange="pesquisarMateria">
+          <ion-select-option :value="'todas'">Todas</ion-select-option>
+          <ion-select-option :value="disciplina.id" v-for="disciplina in disciplinasAuxiliar" :key="disciplina.id">{{disciplina.ttl}}</ion-select-option>
         </ion-select>
       </ion-item>
 
       <ion-list class="ion-padding rounded-top">
         <ion-label class="font-bold text-lg">
-          Volume 1
+          {{`Volume ${route.params.id}`}}
         </ion-label>
 
         <ion-item
             class="ion-margin-top lista__professores rounded"
             v-for="disciplina in disciplinas"
             :key="disciplina.ttl+ 'acessar'"
-            @click="() => router.push('/tabs/videoaulas-assuntos/'+disciplina.id + '/volume/' + route.params.id)"
+            @click="() => router.push({path: '/tabs/videoaulas-assuntos/'+disciplina.id + '/volume/' + route.params.id, query: {disciplina: disciplina.ttl}})"
             lines="none"
         >
           <ion-label class="ion-padding-vertical text-white">
@@ -82,6 +83,7 @@ export default {
   setup () {
     const loading = ref(false);
     const disciplinas = ref([]);
+    const disciplinasAuxiliar = ref([]);
     return {
       notifications,
       arrowForwardCircleOutline,
@@ -89,22 +91,38 @@ export default {
       route: useRoute(),
       loading,
       disciplinas,
+      disciplinasAuxiliar,
     }
   },
 
-  async ionViewWillEnter () {
-    try {
-      this.loading = true;
-      let volume = this.route.params.id;
-      let dados = await api.get("/materias/"+volume);
-     this.disciplinas = dados.data.materias;
-     console.log(this.route.params.id);
-    }catch (e) {
+  methods :{
+    async pesquisarMateria (event) {
+      let materia = (event.currentTarget.value);
+      if (materia == 'todas') {
+        this.disciplinas = this.disciplinasAuxiliar;
+      }
+      else {
+        this.disciplinas = this.disciplinasAuxiliar.filter((el) => el.id == materia);
+      }
+    },
+
+    async getMaterias (materia='') {
+      try {
+        this.loading = true;
+        let volume = this.route.params.id;
+        let dados = await api.get("/materias/"+volume+materia);
+        this.disciplinas = dados.data.materias;
+        this.disciplinasAuxiliar = dados.data.materias;
+      }catch (e) {
         console.log(e);
+      }
+      this.loading = false;
     }
 
-    this.loading = false;
+  },
 
+  async ionViewWillEnter () {
+     await this.getMaterias();
   }
 }
 </script>
