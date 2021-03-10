@@ -3,20 +3,20 @@
     <ion-header>
       <ion-toolbar>
         <ion-title>
-          Ver videoaulas
+          {{video.titulo}}
         </ion-title>
       </ion-toolbar>
     </ion-header>
 
     <ion-content :fullscreen="true" class="ion-padding-top">
       <ion-label class="ion-padding text-white">
-        Assunto da videoaula
+       {{video.descricao}}
       </ion-label>
 
       <iframe
           width="100%"
           height="250"
-          src="https://www.youtube.com/embed/mQ4zmFy4d7Y"
+          :src="video.url2"
           frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowfullscreen
@@ -42,14 +42,14 @@
       <ion-list class="ion-margin-top ion-padding rounded-top">
         <ion-item
             class="ion-margin-top lista__professores rounded"
-            v-for="aula in aulas"
-            :key="aula.ttl+ 'acessar'"
-            @click="abrirQuestao()"
+            v-for="(q, i) in questoes"
+            :key="q.id"
+            @click="abrirQuestao(q, `Questão `+ (i+1))"
             lines="none"
         >
           <ion-label class="ion-padding-vertical text-white">
             <p class="text-white">
-              {{ aula.ttl }}
+              {{ `Questão `+ (i+1) }}
             </p>
           </ion-label>
 
@@ -62,6 +62,7 @@
           />
         </ion-item>
       </ion-list>
+      <Loading :isOpen="loading"></Loading>
     </ion-content>
   </ion-page>
 </template>
@@ -70,13 +71,18 @@
 import {IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel, IonList, IonIcon, modalController} from '@ionic/vue';
 import {notifications, arrowForwardCircleOutline, thumbsUpOutline, thumbsDownOutline, thumbsUp, thumbsDown} from 'ionicons/icons';
 import {useRoute, useRouter} from 'vue-router'
+import api from '../../api/basicUrl'
 import ModalVideoaulas from '@/components/ModalVideoaulas';
+import {ref} from 'vue';
+import Loading from "../../components/auxiliares/Loading";
 
 export default {
   name: 'VideoaulasAssuntos',
-  components: {IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel, IonList, IonIcon},
+  components: {IonPage, Loading, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel, IonList, IonIcon},
 
   setup () {
+    const questoes = ref([]);
+    const loading = ref(false);
     return {
       notifications,
       arrowForwardCircleOutline,
@@ -86,28 +92,8 @@ export default {
       thumbsDown,
       router: useRouter(),
       route: useRoute(),
-
-      aulas: [
-        {
-          ttl: 'Questão 1',
-          rota: 'ver-videoaula',
-          feito: false,
-          acertou: false,
-        },
-        {
-          ttl: 'Questão 2',
-          rota: 'ver-videoaula',
-          feito: false,
-          acertou: false,
-        },
-        {
-          ttl: 'Questão 3',
-          rota: 'ver-videoaula',
-          feito: false,
-          acertou: false,
-        }
-      ],
-
+      questoes,
+      loading,
       modal: null,
     };
   },
@@ -116,38 +102,41 @@ export default {
     return {
       curtir: thumbsUpOutline,
       dislike: thumbsDownOutline,
+      video: {},
     };
   },
 
   methods: {
-    async abrirQuestao () {
+    async abrirQuestao (quest, titulo) {
       const modal = await modalController.create({
         component: ModalVideoaulas,
         cssClass: '',
         componentProps: {
-          title: 'Questão 1',
-          conteudo: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab alias architecto atque autem culpa cumque deleniti inventore mollitia natus necessitatibus numquam officiis quaerat quas, qui repellat ullam vel velit voluptatibus?',
+          title: titulo,
+          conteudo: quest.descricao,
           fechar: () => this.modal.dismiss(),
           alternativas: [
             {
               alternativa: 'A',
-              texto: 'lorem ipsum cosecntoer elit ab alias repellat ulam molitia'
+              texto: quest.ra
             },
             {
               alternativa: 'B',
-              texto: 'lorem ipsum cosecntoer elit ab alias repellat ulam molitia'
+              texto: quest.rb
             },
             {
               alternativa: 'C',
-              texto: 'lorem ipsum cosecntoer elit ab alias repellat ulam molitia'
+              texto: quest.rc
             },
+
             {
               alternativa: 'D',
-              texto: 'lorem ipsum cosecntoer elit ab alias repellat ulam molitia'
+              texto: quest.rd
             },
+
             {
               alternativa: 'E',
-              texto: 'lorem ipsum cosecntoer elit ab alias repellat ulam molitia'
+              texto: quest.re
             },
           ],
           gabarito: {
@@ -162,10 +151,17 @@ export default {
     },
   },
 
-   ionViewWillEnter () {
-
-      console.log(this.route.params);
-
+   async ionViewWillEnter () {
+    try {
+      this.loading = true;
+      let id_video = this.route.params.id;
+      let dados = await api.get("/questao-videos/"+id_video);
+      this.video = dados.data.video;
+      this.questoes = dados.data.questoes;
+    }catch (e) {
+      alert("Não foi possível carregar o vídeo. Por favor verifique a conexão e tente novamente.");
+    }
+    this.loading = false;
   }
 }
 </script>
