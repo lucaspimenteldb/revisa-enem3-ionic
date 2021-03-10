@@ -120,7 +120,7 @@ ion-content {
 }
 
 
-#app > ion-app > ion-router-outlet > div > ion-tabs > div > ion-router-outlet > div > ion-content > ion-list {
+ ion-list {
   --background: url('../../public/assets/images/bg-principal.png') no-repeat center/100%;
   background: url('../../public/assets/images/bg-principal.png') no-repeat center/100%;
 }
