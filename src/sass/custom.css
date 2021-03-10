@@ -148,23 +148,43 @@
   font-weight: 600;
 }
 
-.text-xxs {
-  font-size: 0.75rem !important;
+p.text-xxs, h1.text-xxs, h2.text-xxs, h3.text-xxs, h4.text-xxs, h5.text-xxs {
+  font-size: 0.75rem;
 }
 
-.text-xs {
+p.text-xs, h1.text-xs, h2.text-xs, h3.text-xs, h4.text-xs, h5.text-xs {
   font-size: 0.8rem;
 }
 
-.text-sm {
+p.text-sm, h1.text-sm, h2.text-sm, h3.text-sm, h4.text-sm, h5.text-sm {
   font-size: 0.9rem;
 }
 
-.text-lg {
+p.text-lg, h1.text-lg, h2.text-lg, h3.text-lg, h4.text-lg, h5.text-lg {
   font-size: 1.15rem;
 }
 
-.text-xl {
+p.text-xl, h1.text-xl, h2.text-xl, h3.text-xl, h4.text-xl, h5.text-xl {
+  font-size: 1.5rem;
+}
+
+text-xxs {
+  font-size: 0.75rem;
+}
+
+text-xs {
+  font-size: 0.8rem;
+}
+
+text-sm {
+  font-size: 0.9rem;
+}
+
+text-lg {
+  font-size: 1.15rem;
+}
+
+text-xl {
   font-size: 1.5rem;
 }
 
@@ -273,12 +293,20 @@
   top: 0;
 }
 
+.top-2 {
+  top: 2px;
+}
+
 .top-4 {
   top: 1rem;
 }
 
 .top-6 {
   top: 6px;
+}
+
+.top-8 {
+  top: 8px;
 }
 
 .top-28 {
@@ -394,6 +422,10 @@
   display: flex;
 }
 
+.inline-flex {
+  display: inline-flex;
+}
+
 .flex-1 {
   flex: 1;
 }
@@ -408,6 +440,10 @@
 
 .vertical-middle {
   vertical-align: middle;
+}
+
+.vertical-text-bottom {
+  vertical-align: text-bottom;
 }
 
 /*# sourceMappingURL=custom.css.map */

@@ -1,13 +1,5 @@
 <template>
   <ion-page>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>
-          Atividades Disponíveis
-        </ion-title>
-      </ion-toolbar>
-    </ion-header>
-
     <ion-content :fullscreen="true">
       <!-- select da materia e professor-->
       <ion-item class="ion-margin rounded">
@@ -57,6 +49,17 @@
             </p>
           </ion-label>
 
+          <article v-if="professorDisciplina.notificacao" class="absolute top-8 right-24">
+            <div class="flex ion-align-items-center ion-justify-content-center h-16 w-16 absolute top--6 right--8 rounded-full notificacao z-1">
+              <p class="ion-no-margin text-xxs">1</p>
+            </div>
+            <ion-icon
+                :icon="notifications"
+                class="text-lg text-white"
+                color="light"
+            />
+          </article>
+
           <ion-icon
               slot="end"
               :icon="arrowForwardCircleOutline"
@@ -71,60 +74,67 @@
 </template>
 
 <script>
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonSelect, IonList, IonSelectOption, IonLabel, IonAvatar } from '@ionic/vue';
-import { arrowForwardCircleOutline } from 'ionicons/icons'
+import { IonPage, IonContent, IonSelect, IonList, IonSelectOption, IonLabel, IonAvatar } from '@ionic/vue';
+import { arrowForwardCircleOutline, notifications } from 'ionicons/icons'
 import { useRouter} from 'vue-router';
 
 export default  {
   name: 'Atividades',
-  components: { IonHeader, IonToolbar, IonTitle, IonContent, IonPage, IonSelect, IonList, IonSelectOption, IonLabel, IonAvatar },
+  components: {IonContent, IonPage, IonSelect, IonList, IonSelectOption, IonLabel, IonAvatar },
 
   setup () {
     return {
       router: useRouter(),
       arrowForwardCircleOutline,
+      notifications,
       opcoes: [
         {
           ttl: 'Professor x - Matemática',
           disciplina: 'Matemática',
           name: 'professor-x',
           area: 'linguagens',
-          rota: 'atividades-inicio'
+          rota: 'atividades-inicio',
+          notificacao: false,
         },
         {
           ttl: 'Professor xz - Matemática',
           disciplina: 'Matemática',
           name: 'professor-x',
           area: 'matematica',
-          rota: 'atividades-inicio'
+          rota: 'atividades-inicio',
+          notificacao: true,
         },
         {
           ttl: 'Professor xyz - Matemática',
           disciplina: 'Matemática',
           name: 'professor-x',
           area: 'humanas',
-          rota: 'atividades-inicio'
+          rota: 'atividades-inicio',
+          notificacao: false,
         },
         {
           ttl: 'Professor xxsa - Matemática',
           disciplina: 'Matemática',
           name: 'professor-x',
           area: 'natureza',
-          rota: 'atividades-inicio'
+          rota: 'atividades-inicio',
+          notificacao: false,
         },
         {
           ttl: 'Professor yysa - Matemática',
           disciplina: 'Matemática',
           name: 'professor-x',
           area: 'natureza',
-          rota: 'atividades-inicio'
+          rota: 'atividades-inicio',
+          notificacao: false,
         },
         {
           ttl: 'Professor Par - Matemática',
           disciplina: 'Matemática',
           name: 'professor-x',
           area: 'linguagens',
-          rota: 'atividades-inicio'
+          rota: 'atividades-inicio',
+          notificacao: false,
         },
       ]
     }

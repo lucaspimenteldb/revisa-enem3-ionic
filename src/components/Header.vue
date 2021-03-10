@@ -1,5 +1,5 @@
 <template>
-  <ion-app>
+  <ion-page>
     <ion-header>
       <ion-toolbar>
         <ion-title slot="start" class="ion-no-padding flex">
@@ -28,21 +28,15 @@
         </ion-avatar>
       </ion-toolbar>
     </ion-header>
-
-    <ion-content>
-      <ion-router-outlet />
-    </ion-content>
-  </ion-app>
+  </ion-page>
 </template>
-
 <script>
-import { IonApp, IonRouterOutlet, IonTitle, IonHeader, IonToolbar, IonImg, IonButtons, IonText, IonBackButton, IonAvatar, IonContent } from '@ionic/vue';
-import { defineComponent } from 'vue';
+import { IonTitle, IonHeader, IonToolbar, IonImg, IonButtons, IonText, IonBackButton, IonAvatar, IonPage } from '@ionic/vue';
 
-export default defineComponent({
-  name: 'App',
+export default {
+  name: 'Header',
   components: {
-    IonApp, IonRouterOutlet,IonTitle, IonHeader, IonToolbar, IonImg, IonButtons, IonText, IonBackButton, IonAvatar, IonContent
+    IonTitle, IonHeader, IonToolbar, IonImg, IonButtons, IonText, IonBackButton, IonAvatar, IonPage
   }
-});
+}
 </script>

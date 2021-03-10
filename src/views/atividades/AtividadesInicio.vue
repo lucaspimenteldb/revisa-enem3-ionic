@@ -29,7 +29,7 @@
       </ion-item>
 
       <ion-list class="ion-padding h-full rounded-top">
-        <ion-label class="font-bold text-lg">
+        <ion-label class="font-bold text-xl">
           Atividades Escolares
         </ion-label>
 
@@ -40,15 +40,20 @@
             @click="() => router.push(opcao.rota)"
             lines="none"
         >
-          <ion-label class="ion-padding-vertical text-white font-bold">
+          <ion-label class="ion-margin-vertical ion-padding-vertical text-white font-bold">
             {{ opcao.ttl }}
+          </ion-label>
 
+          <article v-if="opcao.notificacao" class="absolute top-8 right-24">
+            <div class="flex ion-align-items-center ion-justify-content-center h-16 w-16 absolute top--6 right--8 rounded-full notificacao z-1">
+              <p class="ion-no-margin text-xxs text-white">1</p>
+            </div>
             <ion-icon
                 :icon="notifications"
-                class="inline-block vertical-middle text-xl"
-                v-if="opcao.notificacao"
+                class="text-lg text-white"
+                color="light"
             />
-          </ion-label>
+          </article>
 
           <ion-icon
               slot="end"

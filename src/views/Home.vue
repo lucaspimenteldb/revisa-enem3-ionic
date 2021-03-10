@@ -32,9 +32,16 @@
             @click="() => router.push(menu.rota)"
         >
           <IonLabel class="ion-padding-vertical ion-margin-vertical">
-            <h1 class="text-white font-bold">
+            <h2 class="text-white font-bold text-lg">
               {{ menu.ttl }}
-            </h1>
+
+              <ion-icon
+                  :icon="notifications"
+                  class="vertical-middle"
+                  color="white"
+                  v-if="menu.notificacao"
+              />
+            </h2>
           </IonLabel>
 
           <ion-icon
@@ -61,7 +68,7 @@
 
 <script>
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonImg, IonSlides, IonSlide } from '@ionic/vue';
-import { heart, airplaneOutline, arrowForwardCircleOutline } from 'ionicons/icons'
+import { heart, airplaneOutline, arrowForwardCircleOutline, notifications } from 'ionicons/icons'
 import { useRouter } from 'vue-router';
 
 export default  {
@@ -73,33 +80,39 @@ export default  {
       airplaneOutline,
       heart,
       arrowForwardCircleOutline,
+      notifications,
       router: useRouter(),
 
       menus: [
         {
           ttl: 'Atividades',
           rota: 'atividades',
-          class: 'atividades__fundo'
+          class: 'atividades__fundo',
+          notificacao: true,
         },
         {
           ttl: 'Videoaulas',
           rota: 'videoaulas',
-          class: 'videoaulas__fundo'
+          class: 'videoaulas__fundo',
+          notificacao: false,
         },
         {
           ttl: 'Redações',
           rota: 'redacoes',
-          class: 'redacoes__fundo'
+          class: 'redacoes__fundo',
+          notificacao: true,
         },
         {
           ttl: 'Ranking',
           rota: 'ranking',
-          class: 'ranking__fundo'
+          class: 'ranking__fundo',
+          notificacao: false,
         },
         {
           ttl: 'Praticar',
           rota: 'praticar',
-          class: 'praticar__fundo'
+          class: 'praticar__fundo',
+          notificacao: false,
         },
       ],
     };

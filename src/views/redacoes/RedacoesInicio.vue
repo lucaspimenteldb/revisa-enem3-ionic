@@ -1,14 +1,5 @@
 <template>
   <ion-page>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>
-          Redações disponíveis
-        </ion-title>
-      </ion-toolbar>
-    </ion-header>
-
-    <ion-content :fullscreen="true">
       <ion-list class="ion-padding h-full">
         <ion-label class="font-bold text-xl">
           Redações
@@ -58,17 +49,17 @@
           </ion-text>
         </ion-item>
       </ion-list>
-    </ion-content>
+
   </ion-page>
 </template>
 
 <script>
-import {IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel, IonList, IonIcon, IonText} from '@ionic/vue';
+import {IonPage,IonItem, IonLabel, IonList, IonIcon, IonText} from '@ionic/vue';
 import {notifications, arrowForwardCircleOutline, lockClosed, closeCircleOutline} from 'ionicons/icons';
 import { useRouter } from 'vue-router'
 export default {
   name: 'RedacoesInicio',
-  components: {IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel, IonList, IonIcon, IonText},
+  components: {IonPage, IonItem, IonLabel, IonList, IonIcon, IonText},
 
   setup () {
     return {
