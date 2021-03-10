@@ -1,8 +1,8 @@
 import axios from "axios";
-const API_URL = 'http://localhost:8000/api';
+import config from '../env';
 
 const object = axios.create({
-    baseURL: API_URL
+    baseURL: config.api
 })
 
 export default object;

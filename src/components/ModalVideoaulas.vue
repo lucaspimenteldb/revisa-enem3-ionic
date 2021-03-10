@@ -48,7 +48,7 @@
         :key="alternativa.alternativa+'alternativa'"
         class="ion-margin-vertical ion-no-padding border-2 border-primary rounded"
         :class="alternativaMarcada === alternativa.alternativa ? 'alternativa__marcada text-white' : ''"
-        @click="alternativaMarcada = alternativa.alternativa"
+        @click="marcarAlternativa(alternativa.alternativa)"
     >
       <article
           class="ml-8 mr-8 flex ion-align-items-center ion-justify-content-center h-30 w-30 border-2 rounded-full"
@@ -83,12 +83,14 @@
 <!--    </ion-button>-->
 
     <ion-button
+            @click="enviarAtividade"
         expand="block"
         class="ion-margin-vertical text-none shadow-btn"
     >
       Finalizar
     </ion-button>
 
+    <AlertGeneric :dialog="dialog" :text="text" :buttons="buttons" />
 
   </ion-content>
 </template>
@@ -96,11 +98,13 @@
 <script>
 import { IonContent, IonText, IonButton,IonItem, IonLabel, IonIcon, actionSheetController } from '@ionic/vue';
 import { closeCircleOutline, imageOutline, refreshCircleOutline, sendOutline, chevronBackCircleOutline, chevronForwardCircleOutline } from 'ionicons/icons'
+import AlertGeneric from "./auxiliares/AlertGeneric";
+import api from '../api/basicUrl';
 
 export default {
   name: 'ModalVideoaulas',
-  props: [ 'title', 'conteudo', 'fechar', 'alternativas', 'gabarito' ],
-  components: { IonContent, IonText, IonButton, IonItem, IonLabel, IonIcon },
+  props: [ 'title', 'conteudo', 'fechar', 'alternativas', 'gabarito', 'id'],
+  components: { AlertGeneric, IonContent, IonText, IonButton, IonItem, IonLabel, IonIcon },
 
   setup () {
     return {
@@ -119,6 +123,14 @@ export default {
       mensagemEnvio: null,
       verResolucao: false,
       alternativaMarcada: null,
+      dialog: false,
+      text: {
+        header: 'Ops!',
+        subHeader: '',
+        message: 'Selecione uma das alternativas :)',
+      },
+
+      buttons: [{text: 'Ok', handler: () => this.dialog = false}],
 
     }
   },
@@ -147,11 +159,41 @@ export default {
     },
 
     enviarAtividade () {
-      this.loading = true;
-      setTimeout(() => {
-        this.loading = false;
-        this.mensagemEnvio = 'Parabéns, sua atividade foi enviada!';
-      }, 3000);
+      this.reset();
+     if (!this.alternativaMarcada) {
+       this.dialog = true;
+       return;
+     }
+
+     let btn = [{text: 'Sim', handler: () => this.confirmEnvio()}, {text:'Não', role:'cancel', handler: () => { this.dialog = false }}];
+     this.setAlert('Tem certeza que deseja enviar a resposta ?', '',  btn);
+      this.dialog = true;
+    },
+
+    async confirmEnvio () {
+      try {
+        let objeto = {id_questao: this.id, resposta: this.alternativaMarcada};
+        await api.post('/enviar-resposta-video', objeto);
+      }catch (e) {
+        this.setAlert('Ops! Algo Deu Errado. Tente novamente.', '',  [{text: 'Ok', handler: () => this.dialog = false}]);
+      }
+
+    },
+
+    setAlert (header, message, buttons) {
+      this.text.header = header;
+      this.text.message = message;
+      this.buttons = buttons;
+    },
+
+    reset() {
+      this.text.header = 'Ops!';
+      this.text.message = 'Selecione uma das alternativas :)';
+      this.buttons = [{text: 'Ok', handler: () => this.dialog = false}];
+    },
+
+    marcarAlternativa (marcada) {
+      this.alternativaMarcada = marcada;
     }
   }
 

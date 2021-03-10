@@ -135,7 +135,8 @@ export default {
           gabarito: {
             marcada: null,
             gabarito: 'B'
-          }
+          },
+          id: quest.id
         },
       });
 
