@@ -1,6 +1,5 @@
 <template>
   <ion-page>
-
     <ion-content class="fundo">
       <div>
         <IonSlides :pager="true" class="ion-padding slide__principal">

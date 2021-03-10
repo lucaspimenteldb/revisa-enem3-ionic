@@ -1,7 +1,7 @@
 <template>
   <ion-page>
 
-    <ion-content>
+    <ion-content >
       <ion-list>
         <ion-label class="ion-padding font-bold text-lg">
           Correção da Redação - Tema 0
@@ -102,7 +102,8 @@ export default {
 
 <style scoped>
 ion-content {
-  --background: var(--ion-color-primary);
+  --background: url('../../../public/assets/images/bg-principal.png')  center/100%;
+  background: url('../../../public/assets/images/bg-principal.png') center/100%;
 }
 .text-white {
   color: white;

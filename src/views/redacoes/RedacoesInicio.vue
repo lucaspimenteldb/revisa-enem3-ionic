@@ -1,6 +1,7 @@
 <template>
   <ion-page>
-      <ion-list class="ion-padding h-full">
+    <ion-content :fullscreen="true" class="ion-padding-vertical">
+      <ion-list class="ion-padding">
         <ion-label class="font-bold text-xl">
           Redações
         </ion-label>
@@ -49,17 +50,17 @@
           </ion-text>
         </ion-item>
       </ion-list>
-
+    </ion-content>
   </ion-page>
 </template>
 
 <script>
-import {IonPage,IonItem, IonLabel, IonList, IonIcon, IonText} from '@ionic/vue';
+import {IonPage, IonContent, IonItem, IonLabel, IonList, IonIcon, IonText} from '@ionic/vue';
 import {notifications, arrowForwardCircleOutline, lockClosed, closeCircleOutline} from 'ionicons/icons';
 import { useRouter } from 'vue-router'
 export default {
   name: 'RedacoesInicio',
-  components: {IonPage, IonItem, IonLabel, IonList, IonIcon, IonText},
+  components: {IonPage, IonContent, IonItem, IonLabel, IonList, IonIcon, IonText},
 
   setup () {
     return {
@@ -114,7 +115,8 @@ export default {
 
 <style scoped>
 ion-content {
-  --background: var(--ion-color-primary);
+  --background: url('../../../public/assets/images/bg-principal.png') center/100%;
+  background: url('../../../public/assets/images/bg-principal.png')  center/100%;
 }
 ion-item {
   --background: url('../../../public/assets/images/redacao-secundario.png') var(--ion-color-primary) no-repeat center/100%;
@@ -124,7 +126,7 @@ ion-item {
 }
 
 ion-list {
-  --background: url('../../../public/assets/images/bg-principal.png') no-repeat center/100%;
-  background: url('../../../public/assets/images/bg-principal.png') no-repeat center/100%;
+  --background: transparent;
+  background: transparent;
 }
 </style>

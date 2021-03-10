@@ -13,7 +13,7 @@
       </ion-item>
 
       <!-- lista de atividades-->
-      <ion-list class="ion-padding h-full rounded-top">
+      <ion-list class="ion-padding rounded-top">
         <ion-label class="font-bold text-xl" color="primary">
           Redações Entregues
         </ion-label>
@@ -106,6 +106,14 @@ export default {
         {
           ttl: 'Xablau brausd',
           tema: '3',
+          rota: 'correcao-simulados-entregues',
+          nota: 100,
+          desempenho: 'muito-ruim',
+          corrigida: true
+        },
+        {
+          ttl: 'Xablau brausasdd',
+          tema: '34',
           rota: 'correcao-simulados-entregues',
           nota: 100,
           desempenho: 'muito-ruim',

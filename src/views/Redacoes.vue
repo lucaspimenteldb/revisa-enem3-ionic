@@ -1,6 +1,6 @@
 <template>
   <ion-page>
-
+    <ion-content >
       <ion-list class="ion-padding h-full">
         <ion-label class="font-bold text-xl">
           Redações
@@ -38,16 +38,17 @@
           />
         </ion-item>
       </ion-list>
+    </ion-content>
   </ion-page>
 </template>
 
 <script>
-import {IonPage, IonItem, IonLabel, IonList, IonIcon,} from '@ionic/vue';
+import {IonPage, IonContent, IonItem, IonLabel, IonList, IonIcon,} from '@ionic/vue';
 import {notifications, arrowForwardCircleOutline} from 'ionicons/icons';
 import { useRouter } from 'vue-router'
 export default {
   name: 'RedacoesInicio',
-  components: {IonPage, IonItem, IonLabel, IonList, IonIcon},
+  components: {IonPage, IonContent, IonItem, IonLabel, IonList, IonIcon},
 
   setup () {
     return {
