@@ -27,8 +27,8 @@
           {{ title }}
         </ion-text>
 
-        <p>
-          {{ conteudo }}
+        <p v-html="conteudo">
+
         </p>
       </ion-label>
     </div>
@@ -58,8 +58,8 @@
       </article>
 
       <ion-text>
-        <p>
-          {{ alternativa.texto }}
+        <p v-html="alternativa.texto">
+
         </p>
       </ion-text>
     </ion-item>

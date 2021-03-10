@@ -62,6 +62,7 @@
           />
         </ion-item>
       </ion-list>
+      <Loading :isOpen="loading"></Loading>
     </ion-content>
   </ion-page>
 </template>
@@ -73,13 +74,15 @@ import {useRoute, useRouter} from 'vue-router'
 import api from '../../api/basicUrl'
 import ModalVideoaulas from '@/components/ModalVideoaulas';
 import {ref} from 'vue';
+import Loading from "../../components/auxiliares/Loading";
 
 export default {
   name: 'VideoaulasAssuntos',
-  components: {IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel, IonList, IonIcon},
+  components: {IonPage, Loading, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel, IonList, IonIcon},
 
   setup () {
     const questoes = ref([]);
+    const loading = ref(false);
     return {
       notifications,
       arrowForwardCircleOutline,
@@ -90,6 +93,7 @@ export default {
       router: useRouter(),
       route: useRoute(),
       questoes,
+      loading,
       modal: null,
     };
   },
@@ -148,10 +152,16 @@ export default {
   },
 
    async ionViewWillEnter () {
-     let id_video = this.route.params.id;
+    try {
+      this.loading = true;
+      let id_video = this.route.params.id;
       let dados = await api.get("/questao-videos/"+id_video);
       this.video = dados.data.video;
       this.questoes = dados.data.questoes;
+    }catch (e) {
+      alert("Não foi possível carregar o vídeo. Por favor verifique a conexão e tente novamente.");
+    }
+    this.loading = false;
   }
 }
 </script>
