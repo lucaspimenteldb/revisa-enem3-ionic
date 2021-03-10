@@ -1,14 +1,7 @@
 <template>
   <ion-page>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>
-          Correção da redação
-        </ion-title>
-      </ion-toolbar>
-    </ion-header>
 
-    <ion-content :fullscreen="true">
+    <ion-content>
       <ion-list>
         <ion-label class="ion-padding font-bold text-lg">
           Correção da Redação - Tema 0
@@ -62,12 +55,12 @@
 </template>
 
 <script>
-import {IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel, IonList, IonText} from '@ionic/vue';
+import {IonPage, IonContent, IonItem, IonLabel, IonList, IonText} from '@ionic/vue';
 import {notifications, arrowForwardCircleOutline} from 'ionicons/icons';
 import { useRouter } from 'vue-router'
 export default {
   name: 'VerCorrecaoRedacao',
-  components: {IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel, IonList, IonText},
+  components: {IonPage, IonContent, IonItem, IonLabel, IonList, IonText},
 
   setup () {
     return {

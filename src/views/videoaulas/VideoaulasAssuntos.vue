@@ -1,14 +1,7 @@
 <template>
     <ion-page>
-        <ion-header>
-            <ion-toolbar>
-                <ion-title>
-                    {{nome}}
-                </ion-title>
-            </ion-toolbar>
-        </ion-header>
 
-        <ion-content :fullscreen="true">
+        <ion-content >
             <!-- selecionar videoaula -->
             <ion-item class="ion-margin ion-margin-bottom white rounded select">
                 <ion-label>
@@ -73,9 +66,6 @@
 <script>
     import {
         IonPage,
-        IonHeader,
-        IonToolbar,
-        IonTitle,
         IonContent,
         IonItem,
         IonLabel,
@@ -97,9 +87,6 @@
         components: {
             Loading,
             IonPage,
-            IonHeader,
-            IonToolbar,
-            IonTitle,
             IonContent,
             IonItem,
             IonLabel,

@@ -1,14 +1,7 @@
 <template>
   <ion-page>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>
-          {{video.titulo}}
-        </ion-title>
-      </ion-toolbar>
-    </ion-header>
 
-    <ion-content :fullscreen="true" class="ion-padding-top">
+    <ion-content class="ion-padding-top">
       <ion-label class="ion-padding text-white">
        {{video.descricao}}
       </ion-label>
@@ -68,7 +61,7 @@
 </template>
 
 <script>
-import {IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel, IonList, IonIcon, modalController} from '@ionic/vue';
+import {IonPage, IonContent, IonItem, IonLabel, IonList, IonIcon, modalController} from '@ionic/vue';
 import {notifications, arrowForwardCircleOutline, thumbsUpOutline, thumbsDownOutline, thumbsUp, thumbsDown} from 'ionicons/icons';
 import {useRoute, useRouter} from 'vue-router'
 import api from '../../api/basicUrl'
@@ -78,7 +71,7 @@ import Loading from "../../components/auxiliares/Loading";
 
 export default {
   name: 'VideoaulasAssuntos',
-  components: {IonPage, Loading, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel, IonList, IonIcon},
+  components: {IonPage, Loading, IonContent, IonItem, IonLabel, IonList, IonIcon},
 
   setup () {
     const questoes = ref([]);

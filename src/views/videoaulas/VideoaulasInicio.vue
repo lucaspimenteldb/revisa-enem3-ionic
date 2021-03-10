@@ -1,14 +1,10 @@
 <template>
   <ion-page>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>
-          Videoaulas - {{`Volume ${route.params.id}`}}
-        </ion-title>
-      </ion-toolbar>
-    </ion-header>
+    <ion-content>
+      <ion-title>
+        Videoaulas - {{`Volume ${route.params.id}`}}
+      </ion-title>
 
-    <ion-content :fullscreen="true">
       <!-- selecionar disciplina -->
       <ion-item class="ion-margin ion-margin-bottom white rounded select">
         <ion-label>
@@ -69,7 +65,7 @@
 </template>
 
 <script>
-import {IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel, IonList, IonIcon, IonSelect, IonSelectOption, IonProgressBar, IonText} from '@ionic/vue';
+import {IonPage,IonTitle, IonContent, IonItem, IonLabel, IonList, IonIcon, IonSelect, IonSelectOption, IonProgressBar, IonText} from '@ionic/vue';
 import {notifications, arrowForwardCircleOutline} from 'ionicons/icons';
 import { useRouter, useRoute } from 'vue-router'
 import Loading from "../../components/auxiliares/Loading";
@@ -78,7 +74,7 @@ import { ref } from 'vue';
 
 export default {
   name: 'Videoaulas',
-  components: {IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel, IonList, IonIcon, IonSelect, IonSelectOption, IonProgressBar, IonText, Loading},
+  components: {IonPage, IonTitle, IonContent, IonItem, IonLabel, IonList, IonIcon, IonSelect, IonSelectOption, IonProgressBar, IonText, Loading},
 
   setup () {
     const loading = ref(false);

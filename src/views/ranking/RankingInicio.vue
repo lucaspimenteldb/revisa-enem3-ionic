@@ -1,14 +1,7 @@
 <template>
   <ion-page>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>
-          Ranking
-        </ion-title>
-      </ion-toolbar>
-    </ion-header>
 
-    <ion-content :fullscreen="true">
+    <ion-content>
       <!-- selecionar videoaula -->
       <h4 class="ml-16 text-white">
         Ranking
@@ -242,13 +235,13 @@
 </template>
 
 <script>
-import {IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel, IonList, IonIcon, IonText, IonAvatar} from '@ionic/vue';
+import {IonPage, IonContent, IonItem, IonLabel, IonList, IonIcon, IonText, IonAvatar} from '@ionic/vue';
 import {notifications, arrowForwardCircleOutline, statsChart, star} from 'ionicons/icons';
 import { useRouter } from 'vue-router'
 
 export default {
   name: 'RankingInicio',
-  components: {IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel, IonList, IonIcon, IonText, IonAvatar},
+  components: {IonPage, IonContent, IonItem, IonLabel, IonList, IonIcon, IonText, IonAvatar},
 
   setup () {
     return {

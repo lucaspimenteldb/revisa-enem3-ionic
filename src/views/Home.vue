@@ -1,12 +1,7 @@
 <template>
   <ion-page>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Home</ion-title>
-      </ion-toolbar>
-    </ion-header>
 
-    <ion-content :fullscreen="true" class="fundo">
+    <ion-content class="fundo">
       <div>
         <IonSlides :pager="true" class="ion-padding slide__principal">
           <IonSlide class="ion-margin-end">
@@ -67,13 +62,13 @@
 </template>
 
 <script>
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonImg, IonSlides, IonSlide } from '@ionic/vue';
+import { IonPage, IonContent, IonList, IonItem, IonLabel, IonImg, IonSlides, IonSlide } from '@ionic/vue';
 import { heart, airplaneOutline, arrowForwardCircleOutline, notifications } from 'ionicons/icons'
 import { useRouter } from 'vue-router';
 
 export default  {
   name: 'Home',
-  components: {IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonPage, IonImg, IonSlides, IonSlide },
+  components: { IonContent, IonList, IonItem, IonLabel, IonPage, IonImg, IonSlides, IonSlide },
 
   setup() {
     return {

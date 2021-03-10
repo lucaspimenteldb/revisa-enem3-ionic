@@ -1,14 +1,5 @@
 <template>
   <ion-page>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>
-          Atividades Disponíveis
-        </ion-title>
-      </ion-toolbar>
-    </ion-header>
-
-    <ion-content :fullscreen="true">
       <ion-item lines="none">
         <ion-avatar
             slot="start"
@@ -29,12 +20,12 @@
       </ion-item>
 
       <!-- selecionar atividades -->
-      <ion-item class="ion-margin-horizontal ion-margin-bottom white rounded">
-        <ion-label>
-          Selecionar ativiade...
+      <ion-item class="ion-margin-horizontal ion-margin-vertical white rounded">
+        <ion-label class="">
+          Selecionar atividade...
         </ion-label>
 
-        <ion-select>
+        <ion-select class="ion-padding-vertical">
           <ion-select-option>pei</ion-select-option>
         </ion-select>
       </ion-item>
@@ -78,18 +69,17 @@
           />
         </ion-item>
       </ion-list>
-    </ion-content>
   </ion-page>
 </template>
 
 <script>
-import {IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonAvatar, IonLabel, IonList, IonIcon, IonSelect, IonSelectOption} from '@ionic/vue';
+import {IonPage,IonItem, IonAvatar, IonLabel, IonList, IonIcon, IonSelect, IonSelectOption} from '@ionic/vue';
 import {notifications, arrowForwardCircleOutline, appsOutline} from 'ionicons/icons';
 import { useRouter } from 'vue-router'
 
 export default {
   name: 'AtividadesDisponiveis',
-  components: {IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonAvatar, IonLabel, IonList, IonIcon, IonSelect, IonSelectOption},
+  components: {IonPage, IonItem, IonAvatar, IonLabel, IonList, IonIcon, IonSelect, IonSelectOption},
 
   setup () {
     return {

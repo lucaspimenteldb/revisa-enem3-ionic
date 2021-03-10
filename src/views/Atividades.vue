@@ -1,6 +1,6 @@
 <template>
   <ion-page>
-    <ion-content :fullscreen="true">
+    <ion-content >
       <!-- select da materia e professor-->
       <ion-item class="ion-margin rounded">
         <ion-label>

@@ -1,12 +1,6 @@
 <template>
   <ion-page>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Videoaulas</ion-title>
-      </ion-toolbar>
-    </ion-header>
-
-    <ion-content :fullscreen="true">
+    <ion-content >
       <!-- container dos volumes -->
       <ion-img src="assets/images/videoaulas-inicio-fundo.png"/>
 
@@ -53,7 +47,7 @@
 </template>
 
 <script>
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonIcon, IonImg } from '@ionic/vue';
+import { IonPage, IonContent, IonList, IonItem, IonLabel, IonIcon, IonImg } from '@ionic/vue';
 import {playCircleOutline, lockClosed} from 'ionicons/icons';
 import Loading from "../components/auxiliares/Loading";
 import api from '../api/basicUrl';
@@ -63,7 +57,7 @@ import { useRouter } from 'vue-router'
 
 export default  {
   name: 'Videoaulas',
-  components: { Loading, IonHeader, IonToolbar, IonTitle, IonContent, IonPage, IonList, IonItem, IonLabel, IonIcon, IonImg },
+  components: { Loading, IonContent, IonPage, IonList, IonItem, IonLabel, IonIcon, IonImg },
 
   setup () {
     const volumes = ref([]);

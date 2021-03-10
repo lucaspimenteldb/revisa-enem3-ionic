@@ -1,14 +1,6 @@
 <template>
   <ion-page>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>
-          Ver Atividades
-        </ion-title>
-      </ion-toolbar>
-    </ion-header>
-
-    <ion-content :fullscreen="true" class="rounded-top">
+    <ion-content class="rounded-top">
       <ion-item lines="none">
         <ion-avatar
             slot="start"
@@ -234,12 +226,12 @@
 </template>
 
 <script>
-import { IonPage, IonToolbar, IonTitle, IonContent, IonText, IonButton, IonSelect, IonIcon } from '@ionic/vue';
+import { IonPage, IonContent, IonText, IonButton, IonSelect, IonIcon } from '@ionic/vue';
 import { barChart, checkmarkCircle, closeCircle, happyOutline, sadOutline } from 'ionicons/icons'
 
 export default {
   name: 'VerDesemepnhoDisciplinas',
-  components: {IonPage, IonToolbar, IonContent, IonText, IonSelect, IonTitle, IonButton, IonIcon},
+  components: {IonPage, IonContent, IonText, IonSelect, IonButton, IonIcon},
 
   setup () {
     return {

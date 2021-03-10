@@ -1,14 +1,5 @@
 <template>
   <ion-page>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>
-          Atividades Entregues
-        </ion-title>
-      </ion-toolbar>
-    </ion-header>
-
-    <ion-content :fullscreen="true">
       <ion-item lines="none">
         <ion-avatar
             slot="start"
@@ -77,18 +68,17 @@
           />
         </ion-item>
       </ion-list>
-    </ion-content>
   </ion-page>
 </template>
 
 <script>
-import {IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonAvatar, IonLabel, IonList, IonIcon, IonSelect, IonSelectOption} from '@ionic/vue';
+import {IonPage, IonItem, IonAvatar, IonLabel, IonList, IonIcon, IonSelect, IonSelectOption} from '@ionic/vue';
 import {notifications, arrowForwardCircleOutline, appsOutline, checkmarkDoneOutline} from 'ionicons/icons';
 import { useRouter } from 'vue-router'
 
 export default {
   name: 'AtividadesEntregues',
-  components: {IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonAvatar, IonLabel, IonList, IonIcon, IonSelect, IonSelectOption},
+  components: {IonPage, IonItem, IonAvatar, IonLabel, IonList, IonIcon, IonSelect, IonSelectOption},
 
   setup () {
     return {

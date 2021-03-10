@@ -1,14 +1,6 @@
 <template>
   <ion-page>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>
-          Ver Simulados Entregues
-        </ion-title>
-      </ion-toolbar>
-    </ion-header>
-
-    <ion-content :fullscreen="true" class="bg__principal">
+    <ion-content class="bg__principal">
       <ion-item class="ttl" lines="none">
         <ion-label class="font-bold">
           <h2>
@@ -119,7 +111,7 @@
 
 <script>
 import {
-  IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel, IonIcon, IonText, IonButton, modalController
+  IonPage, IonContent, IonItem, IonLabel, IonIcon, IonText, IonButton, modalController
 } from '@ionic/vue';
 import {notifications, arrowForwardCircleOutline, appsOutline, downloadOutline, sendOutline} from 'ionicons/icons';
 import { useRouter } from 'vue-router';
@@ -127,7 +119,7 @@ import Modal from '@/components/ModalCorrecaoSimulados';
 
 export default {
   name: 'CorrecaoAtividadesEntregues',
-  components: {IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel, IonIcon, IonText, IonButton},
+  components: {IonPage, IonContent, IonItem, IonLabel, IonIcon, IonText, IonButton},
 
   setup () {
     return {

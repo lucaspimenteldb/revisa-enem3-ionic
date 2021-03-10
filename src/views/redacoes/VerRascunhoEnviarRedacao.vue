@@ -1,14 +1,6 @@
 <template>
   <ion-page>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>
-          Ver rascunho e enviar redacao
-        </ion-title>
-      </ion-toolbar>
-    </ion-header>
-
-    <ion-content :fullscreen="true">
+    <ion-content>
       <ion-list class="h-full">
         <ion-label class="ion-padding font-bold text-lg">
           Tema da redação
@@ -45,14 +37,14 @@
 </template>
 
 <script>
-import {IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonLabel, IonList, modalController} from '@ionic/vue';
+import {IonPage, IonContent, IonLabel, IonList, modalController} from '@ionic/vue';
 import {notifications, arrowForwardCircleOutline, lockClosed, closeCircleOutline} from 'ionicons/icons';
 import { useRouter } from 'vue-router'
 import Modal from '../../components/ModalRedacoes'
 
 export default {
   name: 'VerRascunhoEnviarRedacao',
-  components: {IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonLabel, IonList},
+  components: {IonPage, IonContent, IonLabel, IonList},
 
   setup () {
     return {

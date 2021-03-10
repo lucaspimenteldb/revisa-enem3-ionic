@@ -29,7 +29,7 @@
       </ion-toolbar>
     </ion-header>
 
-    <ion-content>
+    <ion-content >
       <ion-router-outlet />
     </ion-content>
   </ion-app>

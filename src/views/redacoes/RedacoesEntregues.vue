@@ -1,14 +1,6 @@
 <template>
   <ion-page>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>
-          Redações Entregues
-        </ion-title>
-      </ion-toolbar>
-    </ion-header>
-
-    <ion-content :fullscreen="true" class="ion-padding-top">
+    <ion-content class="ion-padding-top">
       <!-- selecionar atividades -->
       <ion-item class="ion-margin-horizontal ion-margin-bottom white rounded">
         <ion-label>
@@ -69,13 +61,13 @@
 </template>
 
 <script>
-import {IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel, IonList, IonIcon, IonSelect, IonSelectOption, IonText} from '@ionic/vue';
+import {IonPage, IonContent, IonItem, IonLabel, IonList, IonIcon, IonSelect, IonSelectOption, IonText} from '@ionic/vue';
 import {notifications, arrowForwardCircleOutline, appsOutline, checkmarkDoneOutline, alarmOutline} from 'ionicons/icons';
 import { useRouter } from 'vue-router'
 
 export default {
   name: 'RedaçõesEntregues',
-  components: {IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel, IonList, IonIcon, IonSelect, IonSelectOption, IonText},
+  components: {IonPage, IonContent, IonItem, IonLabel, IonList, IonIcon, IonSelect, IonSelectOption, IonText},
 
   setup () {
     return {
