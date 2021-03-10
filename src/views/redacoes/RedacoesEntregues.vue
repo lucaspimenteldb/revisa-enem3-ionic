@@ -8,7 +8,7 @@
       </ion-toolbar>
     </ion-header>
 
-    <ion-content :fullscreen="true">
+    <ion-content :fullscreen="true" class="ion-padding-top">
       <!-- selecionar atividades -->
       <ion-item class="ion-margin-horizontal ion-margin-bottom white rounded">
         <ion-label>
@@ -22,7 +22,7 @@
 
       <!-- lista de atividades-->
       <ion-list class="ion-padding h-full rounded-top">
-        <ion-label class="font-bold text-lg">
+        <ion-label class="font-bold text-xl" color="primary">
           Redações Entregues
         </ion-label>
 
@@ -35,7 +35,7 @@
         >
           <div class="ion-padding-vertical flex flex-1 ion-justify-content-between ion-align-items-center">
             <ion-label class="text-white text-lg font-bold">
-              <p class="text-white">
+              <p class="text-white font-regular">
                 Tema {{ atividade.tema }}
               </p>
 
@@ -43,7 +43,8 @@
             </ion-label>
 
             <div
-                class="flex ion-align-items-center ion-justify-content-center w-60 h-60 bg-white border-2 rounded-full"
+                class="flex ion-align-items-center ion-justify-content-center w-60 h-60 bg-white border-3 rounded-full"
+                :class="`border-${atividade.desempenho}`"
                 v-if="atividade.corrigida"
             >
               <ion-text class="font-bold text-lg" color="primary">
@@ -91,6 +92,7 @@ export default {
           tema: '0',
           rota: 'correcao-simulados-entregues',
           nota: 880,
+          desempenho: 'excelente',
           corrigida: true
         },
         {
@@ -98,6 +100,7 @@ export default {
           tema: '1',
           rota: 'correcao-atividades-entregues',
           nota: 800,
+          desempenho: 'excelente',
           corrigida: true
         },
         {
@@ -105,6 +108,7 @@ export default {
           tema: '2',
           rota: 'correcao-simulados-entregues',
           nota: 920,
+          desempenho: 'excelente',
           corrigida: false
         },
         {
@@ -112,6 +116,7 @@ export default {
           tema: '3',
           rota: 'correcao-simulados-entregues',
           nota: 100,
+          desempenho: 'muito-ruim',
           corrigida: true
         },
       ]

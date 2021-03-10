@@ -2,10 +2,10 @@
 http://ionicframework.com/docs/theming/ */
 
 /*Fontes*/
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
-* {
-  font-family: 'Montserrat', sans-serif;
-}
+/*@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');*/
+/** {*/
+/*  font-family: 'Montserrat', sans-serif;*/
+/*}*/
 
 /** Ionic CSS Variables **/
 :root {
