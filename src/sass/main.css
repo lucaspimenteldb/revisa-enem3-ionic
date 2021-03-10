@@ -14,5 +14,8 @@ ion-button {
     transform: rotate(360deg);
   }
 }
+.slide__principal {
+  --bullet-background-active: white;
+}
 
 /*# sourceMappingURL=main.css.map */

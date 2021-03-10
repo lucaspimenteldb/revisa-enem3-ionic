@@ -62,7 +62,7 @@
               :icon="arrowForwardCircleOutline"
               color="light"
               style="font-size: 36px;"
-              class="mr-8"
+              class=""
           />
         </ion-item>
       </ion-list>

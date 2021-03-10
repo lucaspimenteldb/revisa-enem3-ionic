@@ -10,7 +10,7 @@
 
     <ion-content :fullscreen="true">
       <ion-list class="ion-padding h-full">
-        <ion-label class="font-bold text-lg">
+        <ion-label class="font-bold text-xl">
           Redações
         </ion-label>
 
@@ -21,14 +21,19 @@
             @click="() => router.push(opcao.rota)"
             lines="none"
         >
-          <ion-label class="ion-padding-vertical text-white font-bold">
+          <ion-label class="ion-margin-vertical ion-padding-vertical text-white font-bold">
             {{ opcao.ttl }}
 
-            <ion-icon
-                :icon="notifications"
-                class="inline-block vertical-middle text-xl"
-                v-if="opcao.notificacao"
-            />
+            <article v-if="opcao.notificacao" class="absolute top-6 right-24">
+              <div class="flex ion-align-items-center ion-justify-content-center h-16 w-16 absolute top--6 right--8 rounded-full notificacao z-1">
+                <p class="ion-no-margin text-xxs">1</p>
+              </div>
+              <ion-icon
+                  :icon="notifications"
+                  class="text-lg"
+              />
+            </article>
+
           </ion-label>
 
           <ion-icon
@@ -36,7 +41,7 @@
               :icon="arrowForwardCircleOutline"
               color="light"
               size="large"
-              class="mr-8"
+              class=""
           />
         </ion-item>
       </ion-list>
@@ -81,6 +86,9 @@ export default {
 </script>
 
 <style scoped>
+.notificacao {
+  background: var(--ion-color-danger);
+}
 ion-content {
   --background: var(--ion-color-primary);
 }

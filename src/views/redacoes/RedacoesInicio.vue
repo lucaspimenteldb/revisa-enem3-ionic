@@ -10,7 +10,7 @@
 
     <ion-content :fullscreen="true">
       <ion-list class="ion-padding h-full">
-        <ion-label class="font-bold text-lg">
+        <ion-label class="font-bold text-xl">
           Redações
         </ion-label>
 
@@ -36,10 +36,11 @@
             <div class="mt-8">
               <ion-text class="ion-margin-top text-white text-sm font-regular">
                 <p class="ion-margin-top">
-                  {{ opcao.inicio }}
+                  Início: {{ opcao.inicio }}
                 </p>
+
                 <p>
-                  {{ opcao.fim }}
+                  Prazo de entrega:  <span class="text-red font-bold">{{ opcao.fim }}</span>
                 </p>
               </ion-text>
             </div>
@@ -52,7 +53,7 @@
               class="mr-8"
               style="font-size: 40px;"
           />
-          <ion-text class="absolute right-8 bottom-20 text-sm" :class="opcao.status === 'encerrada' ? 'text-red' : 'text-white'">
+          <ion-text class="absolute right-14 bottom-20 text-sm" :class="opcao.status === 'encerrada' ? 'text-red' : 'text-white'">
             {{ opcao.status }}
           </ion-text>
         </ion-item>

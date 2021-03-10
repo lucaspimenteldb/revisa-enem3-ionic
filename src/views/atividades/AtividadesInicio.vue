@@ -55,7 +55,7 @@
               :icon="arrowForwardCircleOutline"
               color="light"
               size="large"
-              class="mr-8"
+              class=""
           />
         </ion-item>
       </ion-list>
