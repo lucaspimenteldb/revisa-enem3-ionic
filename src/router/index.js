@@ -4,7 +4,11 @@ import Tabs from '../views/Tabs.vue'
 const routes = [
   {
     path: '/',
-    redirect: '/tabs/home'
+    redirect: '/login',
+  },
+  {
+    path: '/login',
+    component: () => import('@/views/Login.vue'),
   },
   {
     path: '/tabs/',
