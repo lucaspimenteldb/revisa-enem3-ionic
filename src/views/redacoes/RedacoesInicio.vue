@@ -17,22 +17,22 @@
           <ion-label class="text-white font-bold">
             <ion-text class="text-white">
               <p>
-                Tema {{ opcao.tema }}
+<!--                Tema {{ 'Tema 1' }}-->
               </p>
             </ion-text>
 
             <ion-text class="text-lg font-bold text-white">
-              {{ opcao.ttl }} temasinho
+              {{ opcao.titulo }}
             </ion-text>
 
             <div class="mt-8">
               <ion-text class="ion-margin-top text-white text-sm font-regular">
                 <p class="ion-margin-top">
-                  Início: {{ opcao.inicio }}
+                  Início: {{ opcao.data_inicio }}
                 </p>
 
                 <p>
-                  Prazo de entrega:  <span class="text-red font-bold">{{ opcao.fim }}</span>
+                  Prazo:  <span class="text-red font-bold">{{ opcao.data_fim }}</span>
                 </p>
               </ion-text>
             </div>
@@ -41,15 +41,16 @@
           <ion-icon
               slot="end"
               :icon="opcao.icon"
-              :color="opcao.status === 'encerrada' ? 'danger' : 'light'"
+              :color="opcao.encerrada ? 'danger' : 'light'"
               class="mr-8"
               style="font-size: 40px;"
           />
-          <ion-text class="absolute right-14 bottom-20 text-sm" :class="opcao.status === 'encerrada' ? 'text-red' : 'text-white'">
+          <ion-text class="absolute right-14 bottom-20 text-sm" :class="opcao.encerrada ? 'text-red' : 'text-white'">
             {{ opcao.status }}
           </ion-text>
         </ion-item>
       </ion-list>
+      <Loading :isOpen="loading"></Loading>
     </ion-content>
   </ion-page>
 </template>
@@ -57,59 +58,42 @@
 <script>
 import {IonPage, IonContent, IonItem, IonLabel, IonList, IonIcon, IonText} from '@ionic/vue';
 import {notifications, arrowForwardCircleOutline, lockClosed, closeCircleOutline} from 'ionicons/icons';
+import Loading from "../../components/auxiliares/Loading";
 import { useRouter } from 'vue-router'
+import {ref} from "vue";
+import api from "../../api/basicUrl";
+
 export default {
   name: 'RedacoesInicio',
-  components: {IonPage, IonContent, IonItem, IonLabel, IonList, IonIcon, IonText},
+  components: {IonPage, Loading, IonContent, IonItem, IonLabel, IonList, IonIcon, IonText},
 
   setup () {
+    const loading = ref(false);
+    const opcoes = ref([]);
     return {
       notifications,
       arrowForwardCircleOutline,
       lockClosed,
       closeCircleOutline,
       router: useRouter(),
+      loading,
 
-      opcoes: [
-        {
-          tema: 4,
-          ttl: 'Redações',
-          inicio: '23/10/2021',
-          fim: '28/10/2021',
-          rota: 'ver-rascunho-enviar-redacao',
-          status: 'disponível',
-          icon: arrowForwardCircleOutline,
-        },
-        {
-          tema: 3,
-          ttl: 'Redações asd',
-          inicio: '23/10/2021',
-          fim: '28/10/2021',
-          rota: 'ver-redacoes',
-          status: 'disponível',
-          icon: arrowForwardCircleOutline,
-        },
-        {
-          tema: 2,
-          ttl: 'Redações ggg',
-          inicio: '23/10/2021',
-          fim: '28/10/2021',
-          rota: 'ver-redacoes',
-          status: 'encerrada',
-          icon: closeCircleOutline,
-        },
-        {
-          tema: 1,
-          ttl: 'Redaçõe ratts',
-          inicio: '23/10/2021',
-          fim: '28/10/2021',
-          rota: 'ver-redacoes',
-          status: 'bloqueada',
-          icon: lockClosed,
-        },
-      ]
+      opcoes,
     }
+  },
+
+
+  async ionViewWillEnter () {
+    try {
+      this.loading = true;
+      let dados = await api.get("/redacoes");
+      this.opcoes = dados.data.redacoes;
+    }catch (e) {
+      alert("Não foi possível carregar o vídeo. Por favor verifique a conexão e tente novamente.");
+    }
+    this.loading = false;
   }
+
 }
 </script>
 
