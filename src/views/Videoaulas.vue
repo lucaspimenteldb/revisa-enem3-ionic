@@ -4,7 +4,7 @@
       <!-- container dos volumes -->
       <ion-img src="assets/images/videoaulas-inicio-fundo.png" class="fundo absolute top-0 right-0 z--1"/>
 
-      <div class="ion-margin-vertical flex ion-justify-content-center ab">
+      <div class="ion-margin-vertical ion-padding-top flex ion-justify-content-center ab">
         <div
             v-for="(playlist,i) in playlists"
             :key="playlist.nome"
