@@ -12,7 +12,7 @@
             :key="opcao.ttl+ 'acessar'"
             @click="() => router.push(opcao.rota)"
             lines="none"
-            :disabled="opcao.status === 'bloqueada' ? true : false"
+            :disabled="opcao.bloqueada ? true : false"
         >
           <ion-label class="text-white font-bold">
             <ion-text class="text-white">
