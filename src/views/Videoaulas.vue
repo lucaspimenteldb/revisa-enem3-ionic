@@ -2,7 +2,27 @@
   <ion-page>
     <ion-content >
       <!-- container dos volumes -->
-      <ion-img src="assets/images/videoaulas-inicio-fundo.png"/>
+      <ion-img src="assets/images/videoaulas-inicio-fundo.png" class="fundo absolute top-0 right-0 z--1"/>
+
+      <div class="ion-margin-vertical flex ion-justify-content-center ab">
+        <div
+            v-for="(playlist,i) in playlists"
+            :key="playlist.nome"
+            @click="() => router.push(playlist.rota)"
+            class="p-8 inline-flex flex-column ion-justify-content-center ion-align-items-center w-80 bg-white rounded"
+            :class="{'mx-8': i === 1, 'mr-8': i === 2}"
+        >
+          <ion-img
+              :src="`/assets/icon/${playlist.icon}`"
+              class="ion-no-margin"
+              :class="{ 'w-26': i === 0 || i === 2, 'w-32': i === 1 || i === 3}"
+          />
+
+          <h5 class="ion-no-margin mt-8 ion-color-primary text-sm font-bold" :class="{'relative top-2': i === 1}">
+            {{ playlist.nome }}
+          </h5>
+        </div>
+      </div>
 
       <ion-list class="ion-margin-top ion-padding h-full rounded-top">
         <ion-label class="font-bold text-lg">
@@ -17,7 +37,7 @@
             @click="() => router.push(`videoaulas-inicio/${volume.rota}`)"
             lines="none"
         >
-          <ion-label class="ion-padding ">
+          <ion-label class="ion-padding-end ion-padding-vertical">
             <h2 class="text-white font-bold">
               {{ volume.ttl }}
             </h2>
@@ -47,7 +67,7 @@
 </template>
 
 <script>
-import { IonPage, IonContent, IonList, IonItem, IonLabel, IonIcon, IonImg } from '@ionic/vue';
+import { IonPage, IonContent, IonList, IonItem, IonLabel, IonIcon, IonImg, } from '@ionic/vue';
 import {playCircleOutline, lockClosed} from 'ionicons/icons';
 import Loading from "../components/auxiliares/Loading";
 import api from '../api/basicUrl';
@@ -57,7 +77,7 @@ import { useRouter } from 'vue-router'
 
 export default  {
   name: 'Videoaulas',
-  components: { Loading, IonContent, IonPage, IonList, IonItem, IonLabel, IonIcon, IonImg },
+  components: { Loading, IonContent, IonPage, IonList, IonItem, IonLabel, IonIcon, IonImg, },
 
   setup () {
     const volumes = ref([]);
@@ -67,9 +87,34 @@ export default  {
       lockClosed,
       loading,
       router: useRouter(),
-      volumes
+      volumes,
     };
   },
+
+  data: () => ({
+    playlists: [
+      {
+        nome: 'explore',
+        icon: 'explore.png',
+        route: '',
+      },
+      {
+        nome: 'downloads',
+        icon: 'downloads.png',
+        route: '',
+      },
+      {
+        nome: 'favoritas',
+        icon: 'favorite.png',
+        route: '',
+      },
+      {
+        nome: 'lembretes',
+        icon: 'assistir-depois.png',
+        route: '',
+      },
+    ],
+  }),
 
   async ionViewWillEnter () {
     try {
@@ -99,6 +144,9 @@ ion-content {
 p {
   color: white;
 }
+.text-sm {
+  font-size: .8rem;
+}
 .text-lg {
   font-size: 1.15rem;
 }
@@ -111,9 +159,16 @@ ion-list {
   background: url('../../public/assets/images/bg-principal.png') no-repeat center/100%;
 }
 
-ion-img {
+ion-img.fundo {
   margin-left: auto;
   display: block;
   width: 220px;
+}
+ion-img.ion-no-margin {
+  margin: 0;
+}
+
+.w-30 {
+  width: 30px;
 }
 </style>

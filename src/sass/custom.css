@@ -246,9 +246,19 @@ text-xl {
   min-width: 16px;
 }
 
+.w-26 {
+  width: 26px;
+  min-width: 26px;
+}
+
 .w-30 {
   width: 30px;
   min-width: 30px;
+}
+
+.w-32 {
+  width: 32px;
+  min-width: 32px;
 }
 
 .w-40 {
@@ -383,6 +393,11 @@ text-xl {
 
 .mr-8 {
   margin-right: 8px;
+}
+
+.mx-8 {
+  margin-right: 8px;
+  margin-left: 8px;
 }
 
 .ml-8 {
