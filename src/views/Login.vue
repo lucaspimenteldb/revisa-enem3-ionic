@@ -15,7 +15,21 @@
 
         <br>
 
-        <ion-button
+        <IonItem class="rounded shadow">
+          <IonLabel position="floating">
+            Matrícula
+          </IonLabel>
+
+          <IonInput v-model="matricula" value="{{matricula}}"/>
+        </IonItem>
+
+        <ion-button expand="block" class="ion-margin-top shadow-btn">
+          <ion-label class="text-none font-bold">
+            Entrar
+          </ion-label>
+        </ion-button>
+
+        <!--<ion-button
             class="ion-margin-top"
             expand="block"
             color="light"
@@ -36,7 +50,7 @@
           </ion-label>
 
           <ion-img src="assets/images/face-logo.png" class="ion-margin-start w-30"/>
-        </ion-button>
+        </ion-button>-->
 
         <ion-button color="transparent" class=" ion-margin-top btn__ajuda">
           <ion-label class="text-none text-sm" color="primary">
@@ -48,16 +62,16 @@
   </ion-page>
 </template>
 <script>
-import { IonImg, IonText, IonLabel, IonButton } from '@ionic/vue';
+import { IonImg, IonText, IonLabel, IonButton, IonItem, IonInput } from '@ionic/vue';
 import { useRouter } from 'vue-router'
 
 export default {
-  components: { IonImg, IonText, IonLabel, IonButton },
+  components: { IonImg, IonText, IonLabel, IonButton, IonItem, IonInput },
   vueRouter: useRouter(),
   name: 'Login',
 
   data: () => ({
-
+    matricula: '',
   }),
 }
 </script>
