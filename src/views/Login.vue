@@ -72,6 +72,7 @@ import AlertGeneric from "../components/auxiliares/AlertGeneric";
 import {ref} from 'vue';
 import api from "../api/basicUrl";
 import object from "../storage/StorageKey";
+import browser from "../plugins/browser";
 
 export default {
   components: { Loading, AlertGeneric, IonImg, IonText, IonLabel, IonButton, IonItem, IonInput },
@@ -111,8 +112,9 @@ export default {
       }catch (e) {
         if(e.response) {
          if (e.response.status == 401) {
-          window.open('https://ro.revisaenem.com.br/google');
-            
+          // window.open('https://ro.revisaenem.com.br/google');
+           await browser.open('https://ro.revisaenem.com.br/google');
+
          }
          else if(e.response.status == 400) {
             //ok
