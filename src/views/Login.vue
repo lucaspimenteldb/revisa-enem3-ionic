@@ -1,6 +1,7 @@
 <template>
   <ion-page>
     <ion-content>
+      <Loading :isOpen="loading"></Loading>
       <div class="ion-padding flex ion-justify-content-center">
         <ion-img src="assets/images/logo-revisa.png" class="ion-margin-end w-80"/>
         <ion-img src="assets/images/logo-mvc.png" class="ion-margin-start w-80"/>
@@ -14,7 +15,7 @@
         </ion-text>
 
         <br>
-
+        <form @submit.prevent="formMatricula">
         <IonItem class="rounded shadow">
           <IonLabel position="floating">
             Matrícula
@@ -23,11 +24,12 @@
           <IonInput v-model="matricula" value="{{matricula}}"/>
         </IonItem>
 
-        <ion-button expand="block" class="ion-margin-top shadow-btn">
+        <ion-button type="submit" expand="block" class="ion-margin-top shadow-btn">
           <ion-label class="text-none font-bold">
             Entrar
           </ion-label>
         </ion-button>
+        </form>
 
         <!--<ion-button
             class="ion-margin-top"
@@ -52,27 +54,82 @@
           <ion-img src="assets/images/face-logo.png" class="ion-margin-start w-30"/>
         </ion-button>-->
 
-        <ion-button color="transparent" class=" ion-margin-top btn__ajuda">
+        <ion-button  color="transparent" class=" ion-margin-top btn__ajuda">
           <ion-label class="text-none text-sm" color="primary">
             Preciso de ajuda
           </ion-label>
         </ion-button>
       </div>
     </ion-content>
+    <AlertGeneric :dialog="dialog" :text="text" :buttons="buttons" />
   </ion-page>
 </template>
 <script>
 import { IonImg, IonText, IonLabel, IonButton, IonItem, IonInput } from '@ionic/vue';
 import { useRouter } from 'vue-router'
+import  Loading  from '../components/auxiliares/Loading';
+import AlertGeneric from "../components/auxiliares/AlertGeneric";
+import {ref} from 'vue';
+import api from "../api/basicUrl";
+import object from "../storage/StorageKey";
 
 export default {
-  components: { IonImg, IonText, IonLabel, IonButton, IonItem, IonInput },
+  components: { Loading, AlertGeneric, IonImg, IonText, IonLabel, IonButton, IonItem, IonInput },
   vueRouter: useRouter(),
   name: 'Login',
 
-  data: () => ({
-    matricula: '',
-  }),
+  setup () {
+    const loading = ref(false);
+    const matricula = ref('');
+    const dialog =  ref(false);
+    const text =  ref({
+      header: 'Ops!',
+      subHeader: '',
+      message: 'Selecione uma das alternativas :)',
+    });
+
+    const buttons = [];
+    const router = useRouter();
+    return {
+      loading,
+      router,
+      matricula,
+      dialog,
+      text,
+      buttons
+    }
+  },
+
+  methods : {
+    async formMatricula() {
+      try{
+        this.loading= true;
+        let user = await api.post('/login', {matricula: this.matricula});
+        user = user.data.user;
+        await object.set('user', JSON.stringify(user));
+        this.router.replace('tabs');
+      }catch (e) {
+        if(e.response) {
+         if (e.response.status == 401) {
+          window.open('https://ro.revisaenem.com.br/google');
+            
+         }
+         else if(e.response.status == 400) {
+            //ok
+           this.text.message = 'Preencha os campos obrigatórios';
+           this.buttons = [{text: 'Ok', handler: () => this.dialog = false}]
+           this.dialog = true;
+         }
+        }
+        else {
+          this.text.message = 'Sem conexão com o servidor';
+          this.buttons = [{text: 'Ok', handler: () => this.dialog = false}]
+        }
+      }
+
+      this.loading = false;
+    }
+  }
 }
 </script>
 <style scoped>

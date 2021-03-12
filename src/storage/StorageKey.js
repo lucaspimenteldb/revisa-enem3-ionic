@@ -1,0 +1,18 @@
+import {Plugins} from '@capacitor/core';
+
+const {Storage} = Plugins;
+
+let setKey = (key, value) => {
+    return Storage.set({
+        key,
+        value
+    });
+}
+
+let getkey = (key) => {
+    return Storage.get({key});
+}
+
+let object = {set: setKey, get: getkey};
+
+export default object;
