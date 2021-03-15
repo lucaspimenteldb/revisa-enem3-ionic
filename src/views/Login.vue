@@ -106,12 +106,14 @@ export default {
       try{
         this.loading= true;
         let user = await api.post('/login', {matricula: this.matricula});
+        let xyz = this.formandoXyz(user.data.xyz, user.data.xyz_type);
         user = user.data.user;
         await object.set('user', JSON.stringify(user));
+        await object.set('xyz', JSON.stringify(xyz));
         this.router.replace('tabs');
       }catch (e) {
         if(e.response) {
-         if (e.response.status == 401) {
+         if (e.response.status == 403) {
           // window.open('https://ro.revisaenem.com.br/google');
            await browser.open('https://ro.revisaenem.com.br/google');
 
@@ -130,6 +132,16 @@ export default {
       }
 
       this.loading = false;
+    },
+
+    formandoXyz (xyz, xyz_type) {
+      let xyz_local = {
+        xyz,
+        xyz_type,
+        xyz_completo: xyz_type + ' '+xyz
+      }
+
+      return xyz_local;
     }
   }
 }
