@@ -16,8 +16,8 @@
     </ion-button>
 
     <ion-item class=" ion-no-padding" v-if="verResolucao">
-      <p class="text-sm">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem commodi cum distinctio ea exercitationem explicabo, harum labore neque odio officia pariatur quam similique tempore unde veniam. Eius repellendus reprehenderit vel?
+      <p class="text-sm" v-html="resolucao">
+
       </p>
     </ion-item>
 
@@ -47,7 +47,7 @@
         v-for="alternativa in alternativas"
         :key="alternativa.alternativa+'alternativa'"
         class="ion-margin-vertical ion-no-padding border-2 border-primary rounded"
-        :class="alternativaMarcada === alternativa.alternativa ? 'alternativa__marcada text-white' : ''"
+        :class="[alternativaMarcada === alternativa.alternativa ? 'alternativa__marcada text-white' : '', acertou[alternativa.alternativa] === true ? 'alternativa__certa' : acertou[alternativa.alternativa] === false ? 'alternativa__errada' : '']"
         @click="marcarAlternativa(alternativa.alternativa)"
     >
       <article
@@ -91,7 +91,7 @@
     </ion-button>
 
     <AlertGeneric :dialog="dialog" :text="text" :buttons="buttons" />
-
+    <Loading :isOpen="loading"></Loading>
   </ion-content>
 </template>
 
@@ -100,11 +100,12 @@ import { IonContent, IonText, IonButton,IonItem, IonLabel, IonIcon, actionSheetC
 import { closeCircleOutline, imageOutline, refreshCircleOutline, sendOutline, chevronBackCircleOutline, chevronForwardCircleOutline } from 'ionicons/icons'
 import AlertGeneric from "./auxiliares/AlertGeneric";
 import api from '../api/basicUrl';
+import Loading from "./auxiliares/Loading";
 
 export default {
   name: 'ModalVideoaulas',
-  props: [ 'title', 'conteudo', 'fechar', 'alternativas', 'gabarito', 'id'],
-  components: { AlertGeneric, IonContent, IonText, IonButton, IonItem, IonLabel, IonIcon },
+  props: [ 'title', 'conteudo', 'fechar', 'alternativas', 'gabarito', 'id', 'user'],
+  components: { Loading, AlertGeneric, IonContent, IonText, IonButton, IonItem, IonLabel, IonIcon },
 
   setup () {
     return {
@@ -123,7 +124,9 @@ export default {
       mensagemEnvio: null,
       verResolucao: false,
       alternativaMarcada: null,
+      acertou: {'A': null, 'B': null, 'C': null, 'D': null, 'E': null},
       dialog: false,
+      resolucao: 'Você ainda não respondeu a questão',
       text: {
         header: 'Ops!',
         subHeader: '',
@@ -172,11 +175,23 @@ export default {
 
     async confirmEnvio () {
       try {
-        let objeto = {id_questao: this.id, resposta: this.alternativaMarcada};
-        await api.post('/enviar-resposta-video', objeto);
+        this.loading = true;
+        let objeto = {id_questao: this.id, resposta: this.alternativaMarcada, id_user: this.user};
+        let dados = await api.post('/enviar-resposta-video', objeto);
+        this.acertou[this.alternativaMarcada] = dados.data.acertou;
+        this.acertou[dados.data.gabarito] = true;
+        this.alternativaMarcada = '';
+        this.resolucao = dados.data.comentario;
+        this.setAlert(dados.data.message, '',  [{text: 'Ok', handler: () => this.dialog = false}]);
       }catch (e) {
-        this.setAlert('Ops! Algo Deu Errado. Tente novamente.', '',  [{text: 'Ok', handler: () => this.dialog = false}]);
+        let msg = 'Ops! Algo Deu Errado. Tente novamente.';
+        if (e.response) {
+          msg = e.response.data.message;
+        }
+        this.setAlert(msg, '',  [{text: 'Ok', handler: () => this.dialog = false}]);
       }
+
+      this.loading = false;
 
     },
 
@@ -201,6 +216,20 @@ export default {
 </script>
 
 <style scoped>
+ion-item.alternativa__errada {
+  --background: var(--ion-color-danger);
+  --ion-text-color: var(--ion-color-light);
+  --ion-border-color:var(--ion-color-light);
+
+}
+
+
+ion-item.alternativa__certa {
+  --background: var(--ion-color-success);
+  --ion-text-color: var(--ion-color-light);
+  --ion-border-color:var(--ion-color-light);
+}
+
 ion-item.alternativa__marcada {
   --background: var(--ion-color-primary);
 }

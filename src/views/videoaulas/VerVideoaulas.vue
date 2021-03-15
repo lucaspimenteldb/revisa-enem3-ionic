@@ -37,7 +37,7 @@
             class="ion-margin-top lista__professores rounded"
             v-for="(q, i) in questoes"
             :key="q.id"
-            @click="abrirQuestao(q, `Questão `+ (i+1))"
+            @click="abrirQuestao(q, `Questão `+ (i+1), user)"
             lines="none"
         >
           <ion-label class="ion-padding-vertical text-white">
@@ -68,6 +68,7 @@ import api from '../../api/basicUrl'
 import ModalVideoaulas from '@/components/ModalVideoaulas';
 import {ref} from 'vue';
 import Loading from "../../components/auxiliares/Loading";
+import storage from '../../storage/StorageKey';
 
 export default {
   name: 'VideoaulasAssuntos',
@@ -76,6 +77,7 @@ export default {
   setup () {
     const questoes = ref([]);
     const loading = ref(false);
+    const user = ref({});
     return {
       notifications,
       arrowForwardCircleOutline,
@@ -88,6 +90,7 @@ export default {
       questoes,
       loading,
       modal: null,
+      user
     };
   },
 
@@ -100,7 +103,7 @@ export default {
   },
 
   methods: {
-    async abrirQuestao (quest, titulo) {
+    async abrirQuestao (quest, titulo, user) {
       const modal = await modalController.create({
         component: ModalVideoaulas,
         cssClass: '',
@@ -136,7 +139,8 @@ export default {
             marcada: null,
             gabarito: 'B'
           },
-          id: quest.id
+          id: quest.id,
+          user: user.id,
         },
       });
 
@@ -147,6 +151,9 @@ export default {
 
    async ionViewWillEnter () {
     try {
+      let usuario = await storage.get('user');
+      usuario = JSON.parse(usuario.value);
+      this.user = usuario;
       this.loading = true;
       let id_video = this.route.params.id;
       let dados = await api.get("/questao-videos/"+id_video);
