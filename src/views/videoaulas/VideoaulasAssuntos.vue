@@ -37,14 +37,14 @@
                         <article class="mt-8">
                             <ion-text>
                                 <p class="text-sm">
-                                    50% concluído <span class="ion-float-right">2/3 questões</span>
+                                    {{aula.msg}} <span class="ion-float-right">{{aula.msgQuest}}</span>
                                 </p>
                             </ion-text>
 
                             <ion-progress-bar
-                                    value="0.5"
+                                    :value="aula.progresso"
                                     :color="'matematica'"
-                                    buffer="0.5"
+                                    :buffer="aula.progresso"
                             />
                         </article>
                     </ion-label>
@@ -80,6 +80,8 @@
     import {useRouter, useRoute} from 'vue-router'
     import Loading from "../../components/auxiliares/Loading";
     import api from '../../api/basicUrl';
+    import storage from '../../storage/StorageKey';
+
     import {ref} from 'vue';
 
     export default {
@@ -103,6 +105,7 @@
             const nome = ref('');
             const aulas = ref([]);
             const aulasAuxiliar = ref([]);
+            const user = ref({});
             return {
                 notifications,
                 arrowForwardCircleOutline,
@@ -112,6 +115,7 @@
                 nome,
                 aulas,
                 aulasAuxiliar,
+                user,
             }
         },
 
@@ -128,11 +132,14 @@
 
         async ionViewWillEnter() {
             try {
+                let usuario = await storage.get('user');
+                usuario = JSON.parse(usuario.value);
+                this.user = usuario;
                 this.loading = true;
                 let materia = this.route.params.id;
                 let volume = this.route.params.volume;
                 this.nome = 'Volume ' + volume + ' - ' + this.route.query.disciplina;
-                let dados = await api.get("/videos/" + materia + '/' + volume);
+                let dados = await api.get("/videos/" + materia + '/' + volume+ '/'+this.user.id);
                 this.aulas = (dados.data.videos);
                 this.aulasAuxiliar = (dados.data.videos);
             } catch (e) {
