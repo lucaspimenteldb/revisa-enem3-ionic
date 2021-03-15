@@ -37,14 +37,14 @@
             <article class="mt-8">
               <ion-text>
                 <p>
-                  50% concluído
+                  {{disciplina.msg}}
                 </p>
               </ion-text>
 
               <ion-progress-bar
-                  value="0.5"
-                  :color="'matematica'"
-                  buffer="0.5"
+                  :value="disciplina.progresso"
+                  :color="'humanas'"
+                  :buffer="disciplina.progresso"
                   class="w-3/5"
               />
             </article>
@@ -71,6 +71,7 @@ import { useRouter, useRoute } from 'vue-router'
 import Loading from "../../components/auxiliares/Loading";
 import api from '../../api/basicUrl';
 import { ref } from 'vue';
+import storage from '../../storage/StorageKey';
 
 export default {
   name: 'Videoaulas',
@@ -80,6 +81,8 @@ export default {
     const loading = ref(false);
     const disciplinas = ref([]);
     const disciplinasAuxiliar = ref([]);
+    const user = ref({});
+
     return {
       notifications,
       arrowForwardCircleOutline,
@@ -88,6 +91,7 @@ export default {
       loading,
       disciplinas,
       disciplinasAuxiliar,
+      user
     }
   },
 
@@ -102,11 +106,12 @@ export default {
       }
     },
 
-    async getMaterias (materia='') {
+    async getMaterias () {
       try {
         this.loading = true;
         let volume = this.route.params.id;
-        let dados = await api.get("/materias/"+volume+materia);
+        let dados = await api.get("/materias/"+volume+'/'+this.user.id);
+        console.log(dados);
         this.disciplinas = dados.data.materias;
         this.disciplinasAuxiliar = dados.data.materias;
       }catch (e) {
@@ -118,7 +123,10 @@ export default {
   },
 
   async ionViewWillEnter () {
-     await this.getMaterias();
+    let usuario = await storage.get('user');
+    usuario = JSON.parse(usuario.value);
+    this.user = usuario;
+    await this.getMaterias();
   }
 }
 </script>
