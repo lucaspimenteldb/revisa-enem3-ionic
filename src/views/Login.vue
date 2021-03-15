@@ -120,7 +120,7 @@ export default {
          }
          else if(e.response.status == 400) {
             //ok
-           this.text.message = 'Preencha os campos obrigatórios';
+           this.text.message = e.response.data.message;
            this.buttons = [{text: 'Ok', handler: () => this.dialog = false}]
            this.dialog = true;
          }

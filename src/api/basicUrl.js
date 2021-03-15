@@ -1,11 +1,31 @@
 import axios from "axios";
 import config from '../env';
-
-let xyz_global = window.localStorage.getItem('_cap_xyz') ? JSON.parse(window.localStorage.getItem('_cap_xyz')).xyz_completo : '';
+import storage from '../storage/StorageKey';
 
 const object = axios.create({
     baseURL: config.api,
-    headers: {Authorization: xyz_global}
 })
+
+const requestHandler = async request => {
+
+    try {
+        let xyz = await storage.get('xyz');
+        if (xyz) {
+            xyz = JSON.parse(xyz.value);
+           request.headers.Authorization = xyz.xyz_completo;
+        }
+    } catch (e) {
+        console.log(e);
+    }
+
+    return request;
+};
+
+const errorHandler = error => {
+    return Promise.reject(error);
+};
+
+object.interceptors.request.use((request) => requestHandler(request), (error) => errorHandler(error));
+
 
 export default object;
