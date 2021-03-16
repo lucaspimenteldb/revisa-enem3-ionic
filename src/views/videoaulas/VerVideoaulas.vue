@@ -32,6 +32,12 @@
         />
       </section>
 
+      <section v-if="!finalizada" class="secao-finalizar inline-block rounded-right">
+        <ion-label @click="finalizarAula" class="classes" size="small">
+          Finalizar
+        </ion-label>
+      </section>
+
       <ion-list class="ion-margin-top ion-padding rounded-top">
         <ion-item
             class="ion-margin-top lista__professores rounded"
@@ -102,6 +108,7 @@ export default {
       dislike: thumbsDownOutline,
       curtiu: null,
       alertMod: false,
+      finalizada: true,
       video: {},
       text: {
         header:'Sua reação ao vídeo não foi enviada, por favor verifique a conexão e tente novamente.'
@@ -131,12 +138,32 @@ export default {
         await api.post('/reacao-video/', objeto);
 
       }catch (e) {
+        this.text.header = 'Sua reação ao vídeo não foi enviada, por favor verifique a conexão e tente novamente.';
         this.alertMod = true;
         this.curtir = thumbsUpOutline;
         this.dislike = thumbsDownOutline;
         this.curtiu = null;
       }
 
+    },
+
+    async finalizarAula () {
+     try{
+       this.loading = true;
+       let id_video = this.route.params.id;
+       let id_user = this.user.id;
+       let objeto = {id_video, id_user};
+       await api.post('/finalizar-aula', objeto);
+
+       this.text.header = 'Aula Finalizada Com Sucesso!';
+       this.alertMod = true;
+       this.finalizada = true;
+     }catch (e) {
+       this.text.header = 'Aula NÃO finalizada! Por favor verifique a conexão e tente novamente';
+       this.alertMod = true;
+     }
+
+     this.loading = false;
     },
 
     async abrirQuestao (quest, titulo, user) {
@@ -199,6 +226,7 @@ export default {
       this.video = dados.data.video;
       this.questoes = dados.data.questoes;
       this.curtiu = dados.data.curtiu;
+      this.finalizada = this.video.finalizada;
      if (this.curtiu === false) {
         this.dislike = thumbsDown;
      }
@@ -226,6 +254,24 @@ ion-item.select {
 }
 .text-white {
   color: white;
+}
+.classes {
+  background: #000952;
+  /* border-radius: 38px; */
+  /* font-weight: bold; */
+  /* background: none; */
+  border-style: solid;
+  border-radius: 5px;
+  border-color: white;
+  color: white;
+  border-size: 1px;
+  border-width: 3px;
+  padding: 22px;
+  display: block;
+}
+
+.secao-finalizar {
+  float: right;
 }
 
 h2.font-bold {
