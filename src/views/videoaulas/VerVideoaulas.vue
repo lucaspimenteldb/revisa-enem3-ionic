@@ -104,6 +104,7 @@ export default {
 
   methods: {
     async abrirQuestao (quest, titulo, user) {
+      console.log('oi',quest.acertou);
       const modal = await modalController.create({
         component: ModalVideoaulas,
         cssClass: '',
@@ -136,8 +137,10 @@ export default {
             },
           ],
           gabarito: {
-            marcada: null,
-            gabarito: 'B'
+            marcada: quest.resposta || null,
+            gabarito: quest.rgabarito || '',
+            acertou: quest.acertou,
+            comentario: quest.comentario || '',
           },
           id: quest.id,
           user: user.id,

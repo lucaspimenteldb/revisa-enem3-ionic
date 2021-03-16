@@ -83,6 +83,7 @@
 <!--    </ion-button>-->
 
     <ion-button
+            v-if="temNull"
             @click="enviarAtividade"
         expand="block"
         class="ion-margin-vertical text-none shadow-btn"
@@ -106,7 +107,6 @@ export default {
   name: 'ModalVideoaulas',
   props: [ 'title', 'conteudo', 'fechar', 'alternativas', 'gabarito', 'id', 'user'],
   components: { Loading, AlertGeneric, IonContent, IonText, IonButton, IonItem, IonLabel, IonIcon },
-
   setup () {
     return {
       closeCircleOutline,
@@ -118,9 +118,19 @@ export default {
     };
   },
 
+  created() {
+   if (this.gabarito.marcada) {
+     this.acertou[this.gabarito.marcada] = this.gabarito.acertou;
+     this.acertou[this.gabarito.gabarito] = true;
+     this.resolucao = this.gabarito.comentario;
+     this.temNull = false;
+   }
+  },
+
   data () {
     return {
       loading: false,
+      temNull: true,
       mensagemEnvio: null,
       verResolucao: false,
       alternativaMarcada: null,
@@ -182,6 +192,7 @@ export default {
         this.acertou[dados.data.gabarito] = true;
         this.alternativaMarcada = '';
         this.resolucao = dados.data.comentario;
+        this.temNull = false;
         this.setAlert(dados.data.message, '',  [{text: 'Ok', handler: () => this.dialog = false}]);
       }catch (e) {
         let msg = 'Ops! Algo Deu Errado. Tente novamente.';
@@ -210,7 +221,7 @@ export default {
     marcarAlternativa (marcada) {
       this.alternativaMarcada = marcada;
     }
-  }
+  },
 
 };
 </script>
