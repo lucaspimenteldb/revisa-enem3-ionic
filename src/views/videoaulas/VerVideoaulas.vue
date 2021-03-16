@@ -21,14 +21,14 @@
             :icon="curtir"
             size="large"
             class="ion-margin-end"
-            @click="curtir = thumbsUp; dislike = thumbsDownOutline"
-            :color="curtir === thumbsUp ? 'success' : ''"
+            @click="curtida(1)"
+            :color="curtiu === true ? 'success' : ''"
         />
         <ion-icon
             :icon="dislike"
             size="large"
-            @click="dislike = thumbsDown; curtir = thumbsUpOutline"
-            :color="dislike === thumbsDown ? 'danger' : ''"
+            @click="curtida(0)"
+            :color="curtiu === false ? 'danger' : ''"
         />
       </section>
 
@@ -56,6 +56,7 @@
         </ion-item>
       </ion-list>
       <Loading :isOpen="loading"></Loading>
+      <AlertGeneric :dialog="alertMod" :text="text" :buttons="[{text: 'Ok', handler: () => alertMod = false}]"></AlertGeneric>
     </ion-content>
   </ion-page>
 </template>
@@ -69,10 +70,11 @@ import ModalVideoaulas from '@/components/ModalVideoaulas';
 import {ref} from 'vue';
 import Loading from "../../components/auxiliares/Loading";
 import storage from '../../storage/StorageKey';
+import AlertGeneric from "../../components/auxiliares/AlertGeneric";
 
 export default {
   name: 'VideoaulasAssuntos',
-  components: {IonPage, Loading, IonContent, IonItem, IonLabel, IonList, IonIcon},
+  components: {IonPage,AlertGeneric, Loading, IonContent, IonItem, IonLabel, IonList, IonIcon},
 
   setup () {
     const questoes = ref([]);
@@ -98,11 +100,45 @@ export default {
     return {
       curtir: thumbsUpOutline,
       dislike: thumbsDownOutline,
+      curtiu: null,
+      alertMod: false,
       video: {},
+      text: {
+        header:'Sua reação ao vídeo não foi enviada, por favor verifique a conexão e tente novamente.'
+      }
     };
   },
 
   methods: {
+
+   async curtida (curtida) {
+      try{
+        if (curtida === 0) {
+          this.dislike = thumbsDown;
+          this.curtir = thumbsUpOutline;
+          this.curtiu = false;
+        }
+        else {
+          this.curtir = thumbsUp;
+          this.dislike = thumbsDownOutline
+          this.curtiu = true;
+        }
+
+        let id_video = this.route.params.id;
+
+        let objeto = { id_user: this.user.id, id_video, reacao: curtida };
+
+        await api.post('/reacao-video/', objeto);
+
+      }catch (e) {
+        this.alertMod = true;
+        this.curtir = thumbsUpOutline;
+        this.dislike = thumbsDownOutline;
+        this.curtiu = null;
+      }
+
+    },
+
     async abrirQuestao (quest, titulo, user) {
       console.log('oi',quest.acertou);
       const modal = await modalController.create({
@@ -162,8 +198,16 @@ export default {
       let dados = await api.get("/questao-videos/"+id_video+'/'+this.user.id);
       this.video = dados.data.video;
       this.questoes = dados.data.questoes;
+      this.curtiu = dados.data.curtiu;
+     if (this.curtiu === false) {
+        this.dislike = thumbsDown;
+     }
+     else if(this.curtiu === true) {
+       this.curtir = thumbsUp;
+     }
     }catch (e) {
-      alert("Não foi possível carregar o vídeo. Por favor verifique a conexão e tente novamente.");
+      this.text.header = 'Não foi possível carregar o vídeo. Por favor verifique a conexão e tente novamente.';
+      this.alertMod = true;
     }
     this.loading = false;
   }
