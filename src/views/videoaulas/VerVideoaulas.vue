@@ -156,7 +156,7 @@ export default {
       this.user = usuario;
       this.loading = true;
       let id_video = this.route.params.id;
-      let dados = await api.get("/questao-videos/"+id_video);
+      let dados = await api.get("/questao-videos/"+id_video+'/'+this.user.id);
       this.video = dados.data.video;
       this.questoes = dados.data.questoes;
     }catch (e) {
