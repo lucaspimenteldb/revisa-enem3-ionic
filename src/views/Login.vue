@@ -110,7 +110,7 @@ export default {
         user = user.data.user;
         await object.set('user', JSON.stringify(user));
         await object.set('xyz', JSON.stringify(xyz));
-        this.router.replace('tabs');
+        this.router.push('/tabs/home');
       }catch (e) {
         if(e.response) {
          if (e.response.status == 403) {

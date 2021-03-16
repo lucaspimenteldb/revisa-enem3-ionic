@@ -21,11 +21,30 @@ const requestHandler = async request => {
     return request;
 };
 
+const responseHandler = async response => {
+
+    try {
+        console.log('ok')
+    } catch (e) {
+        console.log(e);
+    }
+
+    return response;
+};
+
 const errorHandler = error => {
     return Promise.reject(error);
 };
 
+const errorHandlerResponse = error => {
+    if(error.response.status == 401){
+        window.location.href = '/login';
+    }
+    return Promise.reject(error);
+};
+
 object.interceptors.request.use((request) => requestHandler(request), (error) => errorHandler(error));
+object.interceptors.response.use((response) => responseHandler(response), (error) => errorHandlerResponse(error));
 
 
 export default object;
