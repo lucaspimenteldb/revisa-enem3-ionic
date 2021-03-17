@@ -10,7 +10,7 @@
             class="ion-margin-top lista__professores rounded"
             v-for="opcao in opcoes"
             :key="opcao.ttl+ 'acessar'"
-            @click="() => router.push(opcao.rota)"
+            @click="irRedacao(opcao.bloqueada, opcao.encerrada, opcao.id)"
             lines="none"
             :disabled="opcao.bloqueada ? true : false"
         >
@@ -81,6 +81,14 @@ export default {
       opcoes,
     }
   },
+
+    methods: {
+      irRedacao (bloqueada, encerrada, id){
+          if (!encerrada || !bloqueada){
+              this.router.push('ver-rascunho-enviar-redacao/'+id);
+          }
+      }
+    },
 
 
   async ionViewWillEnter () {

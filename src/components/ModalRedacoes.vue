@@ -9,7 +9,7 @@
           </ion-text>
 
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate dolor, eaque explicabo neque obcaecati optio reprehenderit? A, accusantium asperiores dolores ea harum magnam minus quia repudiandae vitae. Fugit, iusto, vel!
+            <ion-img :src="imagem"></ion-img>
           </p>
         </ion-label>
       </ion-item>
@@ -88,13 +88,13 @@
 </template>
 
 <script>
-import { IonContent, IonTitle, IonText, IonButton,IonItem, IonLabel, IonIcon, actionSheetController, IonNote } from '@ionic/vue';
+import { IonContent, IonImg, IonTitle, IonText, IonButton,IonItem, IonLabel, IonIcon, actionSheetController, IonNote } from '@ionic/vue';
 import { closeCircleOutline, imageOutline, refreshCircleOutline, sendOutline, cameraOutline } from 'ionicons/icons'
 
 export default {
   name: 'Modal',
-  props: [ 'title', 'conteudo', 'fechar' ],
-  components: { IonContent, IonTitle, IonText, IonButton, IonItem, IonLabel, IonIcon, IonNote },
+  props: [ 'title', 'conteudo', 'fechar', 'imagem'],
+  components: { IonImg, IonContent, IonTitle, IonText, IonButton, IonItem, IonLabel, IonIcon, IonNote },
 
   setup () {
     return {

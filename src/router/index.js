@@ -83,7 +83,7 @@ const routes = [
         component: () => import('@/views/redacoes/RedacoesInicio.vue')
       },
       {
-        path: 'ver-rascunho-enviar-redacao',
+        path: 'ver-rascunho-enviar-redacao/:id',
         component: () => import('@/views/redacoes/VerRascunhoEnviarRedacao.vue')
       },
       {
