@@ -61,9 +61,9 @@
           Arquivo:
         </ion-label>
 
-        <ion-text>
-          {{ arquivoEscolhido }}
-        </ion-text>
+        <ion-img :src="arquivoEscolhido">
+
+        </ion-img>
       </ion-item>
       <ion-button
           class="ion-no-margin text-none"
@@ -78,9 +78,15 @@
         />
       </ion-button>
 
-      <ion-note color="success">
+      <ion-note color="success" v-if="mensagemEnvio">
         <p class="font-bold">
           {{ mensagemEnvio }}
+        </p>
+      </ion-note>
+
+      <ion-note color="danger" v-if="mensagemErro">
+        <p class="font-bold">
+          {{ mensagemErro }}
         </p>
       </ion-note>
     </div>
@@ -89,11 +95,14 @@
 
 <script>
 import { IonContent, IonImg, IonTitle, IonText, IonButton,IonItem, IonLabel, IonIcon, actionSheetController, IonNote } from '@ionic/vue';
-import { closeCircleOutline, imageOutline, refreshCircleOutline, sendOutline, cameraOutline } from 'ionicons/icons'
+import { closeCircleOutline, imageOutline, refreshCircleOutline, sendOutline, cameraOutline } from 'ionicons/icons';
+import camera from "../plugins/camera";
+import api from '../api/basicUrl';
+import {useRouter, useRoute} from 'vue-router';
 
 export default {
   name: 'Modal',
-  props: [ 'title', 'conteudo', 'fechar', 'imagem'],
+  props: [ 'title', 'conteudo', 'fechar', 'imagem', 'user'],
   components: { IonImg, IonContent, IonTitle, IonText, IonButton, IonItem, IonLabel, IonIcon, IonNote },
 
   setup () {
@@ -102,7 +111,9 @@ export default {
       cameraOutline,
       imageOutline,
       refreshCircleOutline,
-      sendOutline
+      sendOutline,
+      route: useRoute(),
+      router: useRouter(),
     };
   },
 
@@ -111,6 +122,7 @@ export default {
       arquivoEscolhido: null,
       loading: false,
       mensagemEnvio: null,
+      mensagemErro: null,
       termosAceitos: false,
     }
   },
@@ -124,7 +136,17 @@ export default {
           {
             text: 'Tirar foto',
             icon: cameraOutline,
-            handler: () => this.arquivoEscolhido = 'selecionei esse asd.jpg',
+            handler: async () => {
+              let image = await camera.takePicture({
+                quality: 90,
+                width: 1920,
+                preserveAspectRatio: true,
+                allowEditing: false,
+                uri: true
+              })
+
+              this.arquivoEscolhido = image.dataUrl;
+            },
           },
           {
             text: 'Galeria de fotos',
@@ -143,12 +165,27 @@ export default {
       return actionSheet.present();
     },
 
-    enviarAtividade () {
-      this.loading = true;
-      setTimeout(() => {
-        this.loading = false;
-        this.mensagemEnvio = 'Parabéns, sua atividade foi enviada!';
-      }, 3000);
+   async enviarAtividade () {
+      try {
+        this.loading = true;
+        this.mensagemEnvio = null;
+        this.mensagemErro = null;
+        let id_redacao = this.route.params.id;
+        let id_user = this.user.id;
+        let objeto = { arquivo: this.arquivoEscolhido, id_redacao, id_user }
+        let dados = await api.post('/enviar-redacao', objeto);
+       this.mensagemEnvio = dados.data.message;
+
+      }catch (e) {
+        console.log(e);
+        if (e.response) {
+          this.mensagemErro = e.response.data.message;
+        }
+        else {
+          this.mensagemErro = 'Erro Interno';
+        }
+      }
+      this.loading = false;
     }
   }
 

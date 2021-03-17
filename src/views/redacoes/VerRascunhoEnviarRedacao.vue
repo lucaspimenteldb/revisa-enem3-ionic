@@ -46,6 +46,7 @@
     import {ref} from 'vue';
     import Loading from "../../components/auxiliares/Loading";
     import api from '../../api/basicUrl';
+    import storage from "../../storage/StorageKey";
 
     export default {
         name: 'VerRascunhoEnviarRedacao',
@@ -58,6 +59,7 @@
             const imagem = ref('');
             const conteudo = ref('');
             const title = ref('');
+            const user = ref({});
             return {
                 notifications,
                 arrowForwardCircleOutline,
@@ -66,6 +68,7 @@
                 router: useRouter(),
                 route: useRoute(),
                 loading,
+                user,
                 video,
                 termo,
                 imagem,
@@ -122,6 +125,7 @@
                         title: this.title,
                         imagem: this.imagem,
                         conteudo: this.conteudo,
+                        user: this.user,
                         fechar: () => this.modal.dismiss(),
                     },
                 });
@@ -132,6 +136,9 @@
 
         async created() {
             try {
+                let usuario = await storage.get('user');
+                usuario = JSON.parse(usuario.value);
+                this.user = usuario;
                 this.loading = true;
                 let dados = await api.get('/redacoes-informacoes');
                 this.video = dados.data.video_tutorial;
