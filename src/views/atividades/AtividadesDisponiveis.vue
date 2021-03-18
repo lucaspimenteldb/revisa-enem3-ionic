@@ -1,21 +1,21 @@
 <template>
   <ion-page>
     <ion-content>
-      <ion-item lines="none">
+      <ion-item lines="none" v-if="professor">
         <ion-avatar
             slot="start"
             class="border-3"
-            :class="`border__linguagens`"
+            :class="`border__${professor.comp}`"
         >
-          <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+          <img :src="professor.photo">
         </ion-avatar>
 
         <ion-label class="ion-padding">
           <h2 class="text-white">
-            Prof. Andersoion Moura
+            {{professor.name}}
           </h2>
           <p class="ion-no-margin text-white">
-            Literatura
+            {{professor.disciplina}}
           </p>
         </ion-label>
       </ion-item>
@@ -70,6 +70,7 @@
           />
         </ion-item>
       </ion-list>
+      <Loading :isOpen="loading"></Loading>
     </ion-content>
   </ion-page>
 </template>
@@ -77,18 +78,25 @@
 <script>
 import { IonContent, IonPage,IonItem, IonAvatar, IonLabel, IonList, IonIcon, IonSelect, IonSelectOption} from '@ionic/vue';
 import {notifications, arrowForwardCircleOutline, appsOutline} from 'ionicons/icons';
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
+import Loading from "../../components/auxiliares/Loading";
+import {ref} from 'vue';
 
 export default {
   name: 'AtividadesDisponiveis',
-  components: { IonContent, IonPage, IonItem, IonAvatar, IonLabel, IonList, IonIcon, IonSelect, IonSelectOption},
+  components: { Loading, IonContent, IonPage, IonItem, IonAvatar, IonLabel, IonList, IonIcon, IonSelect, IonSelectOption},
 
   setup () {
+    const loading = ref(false);
+    const professor = ref({});
     return {
       router: useRouter(),
+      route: useRoute(),
       notifications,
       arrowForwardCircleOutline,
       appsOutline,
+      loading,
+      professor,
 
       atividades: [
         {
@@ -110,6 +118,14 @@ export default {
           prazo: '22/10/2021'
         },
       ]
+    }
+  },
+
+  async ionViewWillEnter () {
+    try {
+      this.professor = JSON.parse(this.route.query.professor);
+    }catch (e) {
+      console.log(e);
     }
   }
 }

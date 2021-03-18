@@ -28,21 +28,21 @@
         <ion-item
             class="ion-margin-top lista__professores rounded"
             v-for="professorDisciplina in opcoes"
-            :key="professorDisciplina.ttl+ 'acessar'"
-            @click="() => router.push('atividades-inicio')"
+            :key="professorDisciplina.id+ 'acessar'"
+            @click="irAtividade(professorDisciplina)"
             lines="none"
         >
           <ion-avatar
               slot="start"
               class="border-4 w-50 h-50"
-              :class="`border__${professorDisciplina.area}`"
+              :class="`border__${professorDisciplina.comp}`"
           >
-            <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+            <img :src="professorDisciplina.photo">
           </ion-avatar>
 
           <ion-label class="ion-padding ">
             <h2 class="text-white">
-              {{ professorDisciplina.ttl.split('-')[0] }}
+              {{professorDisciplina.name}}
             </h2>
             <p class="ion-no-margin text-white text-lg">
               {{ professorDisciplina.disciplina }}
@@ -69,6 +69,7 @@
           />
         </ion-item>
       </ion-list>
+      <Loading :isOpen="loading"></Loading>
     </ion-content>
   </ion-page>
 </template>
@@ -77,68 +78,101 @@
 import { IonPage, IonContent, IonSelect, IonList, IonSelectOption, IonLabel, IonAvatar } from '@ionic/vue';
 import { arrowForwardCircleOutline, notifications } from 'ionicons/icons'
 import { useRouter} from 'vue-router';
+import Loading from "../components/auxiliares/Loading";
+import {ref} from 'vue';
+import api from "../api/basicUrl";
+import storage from "../storage/StorageKey";
 
 export default  {
   name: 'Atividades',
-  components: {IonContent, IonPage, IonSelect, IonList, IonSelectOption, IonLabel, IonAvatar },
+  components: {Loading, IonContent, IonPage, IonSelect, IonList, IonSelectOption, IonLabel, IonAvatar },
 
   setup () {
+    const loading = ref(false);
+    const user = ref({});
     return {
       router: useRouter(),
       arrowForwardCircleOutline,
       notifications,
       opcoes: [
-        {
-          ttl: 'Professor x - Matemática',
-          disciplina: 'Matemática',
-          name: 'professor-x',
-          area: 'linguagens',
-          rota: 'atividades-inicio',
-          notificacao: false,
-        },
-        {
-          ttl: 'Professor xz - Matemática',
-          disciplina: 'Matemática',
-          name: 'professor-x',
-          area: 'matematica',
-          rota: 'atividades-inicio',
-          notificacao: true,
-        },
-        {
-          ttl: 'Professor xyz - Matemática',
-          disciplina: 'Matemática',
-          name: 'professor-x',
-          area: 'humanas',
-          rota: 'atividades-inicio',
-          notificacao: false,
-        },
-        {
-          ttl: 'Professor xxsa - Matemática',
-          disciplina: 'Matemática',
-          name: 'professor-x',
-          area: 'natureza',
-          rota: 'atividades-inicio',
-          notificacao: false,
-        },
-        {
-          ttl: 'Professor yysa - Matemática',
-          disciplina: 'Matemática',
-          name: 'professor-x',
-          area: 'natureza',
-          rota: 'atividades-inicio',
-          notificacao: false,
-        },
-        {
-          ttl: 'Professor Par - Matemática',
-          disciplina: 'Matemática',
-          name: 'professor-x',
-          area: 'linguagens',
-          rota: 'atividades-inicio',
-          notificacao: false,
-        },
-      ]
+        // {
+        //   ttl: 'Professor x - Matemática',
+        //   disciplina: 'Matemática',
+        //   name: 'professor-x',
+        //   area: 'linguagens',
+        //   rota: 'atividades-inicio',
+        //   notificacao: false,
+        // },
+        // {
+        //   ttl: 'Professor xz - Matemática',
+        //   disciplina: 'Matemática',
+        //   name: 'professor-x',
+        //   area: 'matematica',
+        //   rota: 'atividades-inicio',
+        //   notificacao: true,
+        // },
+        // {
+        //   ttl: 'Professor xyz - Matemática',
+        //   disciplina: 'Matemática',
+        //   name: 'professor-x',
+        //   area: 'humanas',
+        //   rota: 'atividades-inicio',
+        //   notificacao: false,
+        // },
+        // {
+        //   ttl: 'Professor xxsa - Matemática',
+        //   disciplina: 'Matemática',
+        //   name: 'professor-x',
+        //   area: 'natureza',
+        //   rota: 'atividades-inicio',
+        //   notificacao: false,
+        // },
+        // {
+        //   ttl: 'Professor yysa - Matemática',
+        //   disciplina: 'Matemática',
+        //   name: 'professor-x',
+        //   area: 'natureza',
+        //   rota: 'atividades-inicio',
+        //   notificacao: false,
+        // },
+        // {
+        //   ttl: 'Professor Par - Matemática',
+        //   disciplina: 'Matemática',
+        //   name: 'professor-x',
+        //   area: 'linguagens',
+        //   rota: 'atividades-inicio',
+        //   notificacao: false,
+        // },
+      ],
+      loading,
+      user
     }
+  },
+
+  methods : {
+    irAtividade(professor) {
+        this.router.push({path: 'atividades-inicio', query: { professor: JSON.stringify(professor) }});
+    }
+  },
+
+  async ionViewWillEnter () {
+    try {
+      this.loading = true;
+      let usuario = await storage.get('user');
+      usuario = JSON.parse(usuario.value);
+      this.user = usuario;
+      let dados = await api.get('/professores/'+this.user.id_escola+"/"+this.user.id_turma);
+      this.opcoes = dados.data.professores;
+
+    }catch (e) {
+      console.log(e);
+
+    }
+
+    this.loading = false;
+
   }
+
 }
 </script>
 
