@@ -115,7 +115,7 @@ export default {
         if(e.response) {
          if (e.response.status == 403) {
           // window.open('https://ro.revisaenem.com.br/google');
-           await browser.open('https://ro.revisaenem.com.br/google');
+           await browser.open(e.response.data.message);
 
          }
          else if(e.response.status == 400) {
