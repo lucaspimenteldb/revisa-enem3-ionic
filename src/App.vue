@@ -1,7 +1,7 @@
 <template>
   <ion-app>
     <ion-header>
-      <ion-toolbar>
+      <ion-toolbar v-if="!(route.name == 'login')">
         <ion-title slot="start" class="ion-no-padding flex">
           <ion-buttons class="inline-block">
             <ion-back-button default-href="/tabs">voltar</ion-back-button>
@@ -38,11 +38,17 @@
 <script>
 import { IonApp, IonRouterOutlet, IonTitle, IonHeader, IonToolbar, IonImg, IonButtons, IonText, IonBackButton, IonAvatar, IonContent } from '@ionic/vue';
 import { defineComponent } from 'vue';
+import { useRoute } from 'vue-router';
 
 export default defineComponent({
   name: 'App',
   components: {
     IonApp, IonRouterOutlet,IonTitle, IonHeader, IonToolbar, IonImg, IonButtons, IonText, IonBackButton, IonAvatar, IonContent
+  },
+  setup (){
+    return {
+      route: useRoute()
+    }
   }
 });
 </script>
