@@ -41,15 +41,15 @@
             class="ion-margin-top rounded"
             v-for="atividade in atividades"
             :key="atividade.ttl+ atividade.tipo"
-            @click="() => router.push( atividade.rota)"
+            @click="irAtividade(atividade.tipo)"
             lines="none"
         >
           <div class="ion-padding-vertical">
             <ion-label class="ion-margin-top text-white text-lg font-bold">
-              {{ atividade.tipo }} - {{ atividade.ttl }}
+              {{ atividade.tipo }} - {{ atividade.titulo }}
             </ion-label>
             <p class="ion-no-margin ion-margin-bottom text-white" slot="start">
-              Prazo de entrega: {{ atividade.prazo }}
+              Prazo: {{ atividade.prazo }}
             </p>
           </div>
 
@@ -81,6 +81,8 @@ import {notifications, arrowForwardCircleOutline, appsOutline} from 'ionicons/ic
 import { useRouter, useRoute } from 'vue-router'
 import Loading from "../../components/auxiliares/Loading";
 import {ref} from 'vue';
+import api from '../../api/basicUrl';
+import storage from "../../storage/StorageKey";
 
 export default {
   name: 'AtividadesDisponiveis',
@@ -89,6 +91,7 @@ export default {
   setup () {
     const loading = ref(false);
     const professor = ref({});
+    const user = ref({});
     return {
       router: useRouter(),
       route: useRoute(),
@@ -97,36 +100,56 @@ export default {
       appsOutline,
       loading,
       professor,
+      user,
 
       atividades: [
-        {
-          ttl: 'XYZ mais eu',
-          tipo: 'Simulado',
-          rota: 'ver-simulados',
-          prazo: '22/10/2021'
-        },
-        {
-          ttl: 'Pei pei pei',
-          tipo: 'Atividade',
-          rota: 'ver-atividades',
-          prazo: '22/10/2021'
-        },
-        {
-          ttl: 'Xablau brau',
-          tipo: 'Simulado',
-          rota: 'ver-simulados',
-          prazo: '22/10/2021'
-        },
+        // {
+        //   ttl: 'XYZ mais eu',
+        //   tipo: 'Simulado',
+        //   rota: 'ver-simulados',
+        //   prazo: '22/10/2021'
+        // },
+        // {
+        //   ttl: 'Pei pei pei',
+        //   tipo: 'Atividade',
+        //   rota: 'ver-atividades',
+        //   prazo: '22/10/2021'
+        // },
+        // {
+        //   ttl: 'Xablau brau',
+        //   tipo: 'Simulado',
+        //   rota: 'ver-simulados',
+        //   prazo: '22/10/2021'
+        // },
       ]
+    }
+  },
+
+  methods: {
+    irAtividade (tipo) {
+      if(tipo == 'Atividade') {
+        this.router.push('ver-atividades')
+      }else {
+        this.router.push('ver-simulados')
+      }
     }
   },
 
   async ionViewWillEnter () {
     try {
+      this.loading = true;
+      let usuario = await storage.get('user');
+      usuario = JSON.parse(usuario.value);
+      this.user = usuario;
       this.professor = JSON.parse(this.route.query.professor);
+      let dados = await api.get('/listar-atividade/'+this.user.id+'/'+this.professor.id);
+      this.atividades = dados.data.atividades;
+      console.log(this.atividades);
     }catch (e) {
       console.log(e);
     }
+
+    this.loading = false;
   }
 }
 </script>
