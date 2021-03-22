@@ -67,11 +67,11 @@ export default {
           notificacao: 0,
           rota: 'redacoes-entregues',
         },
-        {
-          ttl: 'Meu desempenho',
-          notificacao: 0,
-          rota: 'meu-desempenho-redacao',
-        },
+        // {
+        //   ttl: 'Meu desempenho',
+        //   notificacao: 0,
+        //   rota: 'meu-desempenho-redacao',
+        // },
       ]
     }
   }

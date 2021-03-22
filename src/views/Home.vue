@@ -21,14 +21,15 @@
             <IonList class="ion-margin-top ion-padding rounded-top">
                 <IonItem
                         class="ion-margin-top rounded"
-                        :class="menu.class"
+                        :disabled="menu.disabled"
+                        :class="menu.slug + '__fundo'"
                         v-for="menu in menus"
-                        :key="menu.ttl"
-                        @click="() => router.push(menu.rota)"
+                        :key="menu.id"
+                        @click="() => router.push(menu.slug)"
                 >
                     <IonLabel class="ion-padding-vertical ion-margin-vertical">
                         <h2 class="text-white font-bold text-lg">
-                            {{ menu.ttl }}
+                            {{ menu.nome }}
 
                             <ion-icon
                                     :icon="notifications"
@@ -94,38 +95,38 @@
                 noticias,
                 slideOpts,
 
-                menus: [
-                    {
-                        ttl: 'Atividades',
-                        rota: 'atividades',
-                        class: 'atividades__fundo',
-                        notificacao: true,
-                    },
-                    {
-                        ttl: 'Videoaulas',
-                        rota: 'videoaulas',
-                        class: 'videoaulas__fundo',
-                        notificacao: false,
-                    },
-                    {
-                        ttl: 'Redações',
-                        rota: 'redacoes',
-                        class: 'redacoes__fundo',
-                        notificacao: true,
-                    },
-                    {
-                        ttl: 'Ranking',
-                        rota: 'ranking',
-                        class: 'ranking__fundo',
-                        notificacao: false,
-                    },
-                    {
-                        ttl: 'Praticar',
-                        rota: 'praticar',
-                        class: 'praticar__fundo',
-                        notificacao: false,
-                    },
-                ],
+                menus: ref([
+                    // {
+                    //     ttl: 'Atividades',
+                    //     rota: 'atividades',
+                    //     class: 'atividades__fundo',
+                    //     notificacao: true,
+                    // },
+                    // {
+                    //     ttl: 'Videoaulas',
+                    //     rota: 'videoaulas',
+                    //     class: 'videoaulas__fundo',
+                    //     notificacao: false,
+                    // },
+                    // {
+                    //     ttl: 'Redações',
+                    //     rota: 'redacoes',
+                    //     class: 'redacoes__fundo',
+                    //     notificacao: true,
+                    // },
+                    // {
+                    //     ttl: 'Ranking',
+                    //     rota: 'ranking',
+                    //     class: 'ranking__fundo',
+                    //     notificacao: false,
+                    // },
+                    // {
+                    //     ttl: 'Praticar',
+                    //     rota: 'praticar',
+                    //     class: 'praticar__fundo',
+                    //     notificacao: false,
+                    // },
+                ]),
             };
         },
 
@@ -135,6 +136,7 @@
                 let dados = await api.get('/noticias');
                 this.noticias = dados.data.noticias;
                 this.loading = false;
+                this.menus = dados.data.menus;
             } catch (e) {
                 console.log(e);
 
