@@ -15,8 +15,8 @@
                 <p class="ion-no-margin text-xs font-bold">
                   Você tem
                 </p>
-                <p class="ion-no-margin text-sm">
-                  3335xp
+                <p class="ion-no-margin text-sm" v-if="user.pontos">
+                  {{user.pontos +' ponto(s)'}}
                 </p>
               </ion-text>
             </div>
@@ -24,7 +24,7 @@
         </ion-title>
 
         <ion-avatar class="ion-margin-end w-40 h-40 border-2 border-primary" slot="secondary">
-          <img src="assets/images/banner-home.png" >
+          <img :src="user.photo" >
         </ion-avatar>
       </ion-toolbar>
     </ion-header>
@@ -37,8 +37,9 @@
 
 <script>
 import { IonApp, IonRouterOutlet, IonTitle, IonHeader, IonToolbar, IonImg, IonButtons, IonText, IonBackButton, IonAvatar, IonContent } from '@ionic/vue';
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
 import { useRoute } from 'vue-router';
+import storage from "./storage/StorageKey";
 
 export default defineComponent({
   name: 'App',
@@ -46,9 +47,22 @@ export default defineComponent({
     IonApp, IonRouterOutlet,IonTitle, IonHeader, IonToolbar, IonImg, IonButtons, IonText, IonBackButton, IonAvatar, IonContent
   },
   setup (){
+    const user = ref({});
     return {
-      route: useRoute()
+      route: useRoute(),
+      user,
     }
+  },
+
+  async created() {
+    let usuario = await storage.get('user');
+    usuario = JSON.parse(usuario.value);
+    this.user = usuario;
+
+    this.emitter.on('perfil', (emitter) => {
+      this.user = emitter;
+    })
+
   }
 });
 </script>

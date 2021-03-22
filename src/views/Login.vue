@@ -110,6 +110,7 @@ export default {
         user = user.data.user;
         await object.set('user', JSON.stringify(user));
         await object.set('xyz', JSON.stringify(xyz));
+        this.emitter.emit('perfil', user);
         this.router.push('/tabs/home');
       }catch (e) {
         if(e.response) {
