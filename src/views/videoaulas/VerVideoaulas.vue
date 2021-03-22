@@ -153,13 +153,16 @@ export default {
        let id_video = this.route.params.id;
        let id_user = this.user.id;
        let objeto = {id_video, id_user};
-       await api.post('/finalizar-aula', objeto);
+       let dados = await api.post('/finalizar-aula', objeto);
 
-       this.text.header = 'Aula Finalizada Com Sucesso!';
+       this.text.header = dados.data.message;
        this.alertMod = true;
        this.finalizada = true;
+       this.user.pontos = dados.data.pontos ? this.user.pontos + dados.data.pontos : this.user.pontos;
+       this.emitter.emit('perfil', this.user);
+       storage.set('user', JSON.stringify(this.user));
      }catch (e) {
-       this.text.header = 'Aula NÃO finalizada! Por favor verifique a conexão e tente novamente';
+       this.text.header = e.response ? e.response.data.message : 'Aula NÃO finalizada! Por favor verifique a conexão e tente novamente';
        this.alertMod = true;
      }
 
