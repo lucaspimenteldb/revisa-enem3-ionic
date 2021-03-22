@@ -158,9 +158,7 @@ export default {
        this.text.header = dados.data.message;
        this.alertMod = true;
        this.finalizada = true;
-       this.user.pontos = dados.data.pontos ? this.user.pontos + dados.data.pontos : this.user.pontos;
-       this.emitter.emit('perfil', this.user);
-       storage.set('user', JSON.stringify(this.user));
+      this.emitter.emit('pontos', dados.data.pontos);
      }catch (e) {
        this.text.header = e.response ? e.response.data.message : 'Aula NÃO finalizada! Por favor verifique a conexão e tente novamente';
        this.alertMod = true;

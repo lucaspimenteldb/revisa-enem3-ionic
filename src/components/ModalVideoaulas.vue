@@ -193,6 +193,7 @@ export default {
         this.alternativaMarcada = '';
         this.resolucao = dados.data.comentario;
         this.temNull = false;
+        this.emitter.emit('pontos', dados.data.pontos);
         this.setAlert(dados.data.message, '',  [{text: 'Ok', handler: () => this.dialog = false}]);
       }catch (e) {
         let msg = 'Ops! Algo Deu Errado. Tente novamente.';

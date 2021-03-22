@@ -63,6 +63,11 @@ export default defineComponent({
       this.user = emitter;
     })
 
+    this.emitter.on('pontos', async (pontos) => {
+      this.user.pontos = pontos ? this.user.pontos + pontos : this.user.pontos;
+      storage.set('user', JSON.stringify(this.user));
+    })
+
   }
 });
 </script>

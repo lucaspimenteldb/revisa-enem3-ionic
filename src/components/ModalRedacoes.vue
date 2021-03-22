@@ -175,6 +175,7 @@ export default {
         let objeto = { arquivo: this.arquivoEscolhido, id_redacao, id_user }
         let dados = await api.post('/enviar-redacao', objeto);
        this.mensagemEnvio = dados.data.message;
+       this.emitter.emit('pontos', dados.data.pontos);
 
       }catch (e) {
         console.log(e);
