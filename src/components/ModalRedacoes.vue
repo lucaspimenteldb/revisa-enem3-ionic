@@ -155,23 +155,17 @@ export default {
           {
             text: 'Tirar foto',
             icon: cameraOutline,
-            handler: async () => {
-              let image = await camera.takePicture({
-                quality: 90,
-                width: 1920,
-                preserveAspectRatio: true,
-                allowEditing: false,
-                uri: true
-              })
-
-              this.arquivoEscolhido = image.dataUrl;
+            handler: () => {
+                this.sourceCamera(0);
             },
           },
-          // {
-          //   text: 'Galeria de fotos',
-          //   icon: imageOutline,
-          //   handler: () => this.arquivoEscolhido = 'selecionei esse asd.jpg',
-          // },
+          {
+            text: 'Galeria de fotos',
+            icon: imageOutline,
+            handler: () => {
+              this.sourceCamera(1);
+            },
+          },
           {
             text: 'cancelar',
             role: 'cancel',
@@ -186,6 +180,19 @@ export default {
 
     previa () {
       this.dialog = true;
+    },
+
+    async sourceCamera (source) {
+      let image = await camera.takePicture({
+        quality: 90,
+        width: 1920,
+        preserveAspectRatio: true,
+        allowEditing: false,
+        uri: true,
+        source
+      })
+
+      this.arquivoEscolhido = image.dataUrl;
     },
 
    async enviarAtividade () {
