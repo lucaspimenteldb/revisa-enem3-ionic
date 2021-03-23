@@ -40,6 +40,7 @@ import { IonApp, IonRouterOutlet, IonTitle, IonHeader, IonToolbar, IonImg, IonBu
 import { defineComponent, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import storage from "./storage/StorageKey";
+import api from './api/basicUrl';
 
 export default defineComponent({
   name: 'App',
@@ -68,6 +69,20 @@ export default defineComponent({
       storage.set('user', JSON.stringify(this.user));
     })
 
+    this.emitter.on(' sair', () => {
+      this.sair();
+    })
+
+  },
+
+  unmounted() {
+    this.sair();
+  },
+
+  methods: {
+    sair () {
+      api.get('/home-saiu/'+this.user.id);
+    }
   }
 });
 </script>
