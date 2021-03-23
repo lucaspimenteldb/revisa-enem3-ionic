@@ -7,13 +7,15 @@
           Selecionar redação...
         </ion-label>
 
-        <ion-select>
-          <ion-select-option>pei</ion-select-option>
+        <ion-select @IonChange="pesquisarRedacao">
+          <ion-select-option :value="'todas'">Todas</ion-select-option>
+          <ion-select-option :value="atividade.id"   v-for="atividade in atividadesAuxiliar"
+                               :key="atividade.id">{{atividade.titulo}}</ion-select-option>
         </ion-select>
       </ion-item>
 
       <!-- lista de atividades-->
-      <ion-list class="ion-padding rounded-top">
+      <ion-list class="ion-padding rounded-top h-full">
         <ion-label class="font-bold text-xl" color="primary">
           Redações Entregues
         </ion-label>
@@ -76,6 +78,8 @@ export default {
   setup () {
     const loading = ref(false);
     const user = ref({});
+    const atividades = ref([]);
+    const atividadesAuxiliar = ref([]);
     return {
       router: useRouter(),
       notifications,
@@ -85,48 +89,9 @@ export default {
       alarmOutline,
       loading,
       user,
-      atividades: [
-        // {
-        //   ttl: 'XYZ mais eu',
-        //   tema: '0',
-        //   rota: 'correcao-simulados-entregues',
-        //   nota: 880,
-        //   desempenho: 'excelente',
-        //   corrigida: true
-        // },
-        // {
-        //   ttl: 'Pei pei pei',
-        //   tema: '1',
-        //   rota: 'correcao-atividades-entregues',
-        //   nota: 800,
-        //   desempenho: 'excelente',
-        //   corrigida: true
-        // },
-        // {
-        //   ttl: 'Xablau brau',
-        //   tema: '2',
-        //   rota: 'correcao-simulados-entregues',
-        //   nota: 920,
-        //   desempenho: 'excelente',
-        //   corrigida: false
-        // },
-        // {
-        //   ttl: 'Xablau brausd',
-        //   tema: '3',
-        //   rota: 'correcao-simulados-entregues',
-        //   nota: 100,
-        //   desempenho: 'muito-ruim',
-        //   corrigida: true
-        // },
-        // {
-        //   ttl: 'Xablau brausasdd',
-        //   tema: '34',
-        //   rota: 'correcao-simulados-entregues',
-        //   nota: 100,
-        //   desempenho: 'muito-ruim',
-        //   corrigida: true
-        // },
-      ]
+      atividades,
+      atividadesAuxiliar,
+
     }
   },
 
@@ -135,7 +100,19 @@ export default {
       if (redacao.resultado) {
         this.router.push({path:'ver-correcao-redacao' , query: {redacao: JSON.stringify(redacao)}});
       }
-    }
+    },
+
+    async pesquisarRedacao (event) {
+      let redacao = (event.currentTarget.value);
+      if (redacao == 'todas') {
+        this.atividades = this.atividadesAuxiliar;
+      }
+      else {
+        console.log(this.atividades);
+        this.atividades = this.atividadesAuxiliar.filter((el) => el.id == redacao);
+      }
+    },
+
   },
 
   async ionViewWillEnter() {
@@ -147,6 +124,7 @@ export default {
 
       let dados = await api.get('/redacoes-entregues/'+this.user.id);
       this.atividades = dados.data.redacoes;
+      this.atividadesAuxiliar = dados.data.redacoes;
 
     }catch (e) {
       console.log(e);
