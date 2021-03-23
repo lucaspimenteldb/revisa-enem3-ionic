@@ -41,11 +41,15 @@ import { defineComponent, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import storage from "./storage/StorageKey";
 import api from './api/basicUrl';
+import { Plugins } from '@capacitor/core';
+
+const { App } = Plugins;
+
 
 export default defineComponent({
   name: 'App',
   components: {
-    IonApp, IonRouterOutlet,IonTitle, IonHeader, IonToolbar, IonImg, IonButtons, IonText, IonBackButton, IonAvatar, IonContent
+    IonApp, IonRouterOutlet,IonTitle,  IonHeader, IonToolbar, IonImg, IonButtons, IonText, IonBackButton, IonAvatar, IonContent
   },
   setup (){
     const user = ref({});
@@ -59,24 +63,24 @@ export default defineComponent({
     let usuario = await storage.get('user');
     usuario = JSON.parse(usuario.value);
     this.user = usuario;
-
     this.emitter.on('perfil', (emitter) => {
       this.user = emitter;
     })
+
+    App.addListener('appStateChange' , (states) => {
+      if (!states.isActive) {
+        this.sair();
+      }
+    });
 
     this.emitter.on('pontos', async (pontos) => {
       this.user.pontos = pontos ? this.user.pontos + pontos : this.user.pontos;
       storage.set('user', JSON.stringify(this.user));
     })
 
-    this.emitter.on(' sair', () => {
+    this.emitter.on('sair', () => {
       this.sair();
     })
-
-  },
-
-  unmounted() {
-    this.sair();
   },
 
   methods: {
