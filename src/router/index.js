@@ -12,15 +12,16 @@ const routes = [
     component: () => import('@/views/Login.vue'),
   },
   {
-    path: '/tabs/',
+    path: '/',
     component: Tabs,
     children: [
       {
         path: '',
-        redirect: '/tabs/home'
+        redirect: '/home'
       },
       {
         path: 'home',
+        name: 'home',
         component: () => import('@/views/Home.vue')
       },
       {

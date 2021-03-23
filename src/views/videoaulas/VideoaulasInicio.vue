@@ -26,7 +26,7 @@
             class="ion-margin-top lista__professores rounded"
             v-for="disciplina in disciplinas"
             :key="disciplina.ttl+ 'acessar'"
-            @click="() => router.push({path: '/tabs/videoaulas-assuntos/'+disciplina.id + '/volume/' + route.params.id, query: {disciplina: disciplina.ttl}})"
+            @click="() => router.push({path: '/videoaulas-assuntos/'+disciplina.id + '/volume/' + route.params.id, query: {disciplina: disciplina.ttl}})"
             lines="none"
         >
           <ion-label class="ion-padding-vertical text-white">

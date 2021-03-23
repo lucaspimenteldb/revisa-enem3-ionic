@@ -4,7 +4,7 @@
       <ion-toolbar>
         <ion-title slot="start" class="ion-no-padding flex">
           <ion-buttons class="inline-block">
-            <ion-back-button default-href="/tabs">voltar</ion-back-button>
+            <ion-back-button default-href="/home">voltar</ion-back-button>
           </ion-buttons>
 
           <section class="inline-flex ion-align-items-center vertical-text-bottom">

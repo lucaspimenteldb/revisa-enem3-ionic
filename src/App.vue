@@ -1,10 +1,10 @@
 <template>
   <ion-app>
     <ion-header>
-      <ion-toolbar v-if="!(route.name == 'login')">
+      <ion-toolbar v-if="!(route.name == 'login')" :class="[(route.name == 'home') ? 'ml-2' : '']">
         <ion-title slot="start" class="ion-no-padding flex">
-          <ion-buttons class="inline-block">
-            <ion-back-button default-href="/tabs">voltar</ion-back-button>
+          <ion-buttons v-if="!(route.name == 'home')"  class="inline-block">
+            <ion-back-button default-href="/home">voltar</ion-back-button>
           </ion-buttons>
 
           <section class="inline-flex ion-align-items-center vertical-text-bottom">
@@ -23,14 +23,20 @@
           </section>
         </ion-title>
 
+        <ion-avatar @click="saida" class="ion-margin-end w-40 h-40" slot="secondary">
+          <img src="assets/icon/sair.svg" >
+        </ion-avatar>
+
         <ion-avatar class="ion-margin-end w-40 h-40 border-2 border-primary" slot="secondary">
           <img :src="user.photo" >
         </ion-avatar>
+
       </ion-toolbar>
     </ion-header>
 
     <ion-content >
       <ion-router-outlet />
+      <AlertGeneric :dialog="dialog" :text="text" :buttons="buttons" />
     </ion-content>
   </ion-app>
 </template>
@@ -38,10 +44,11 @@
 <script>
 import { IonApp, IonRouterOutlet, IonTitle, IonHeader, IonToolbar, IonImg, IonButtons, IonText, IonBackButton, IonAvatar, IonContent } from '@ionic/vue';
 import { defineComponent, ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import storage from "./storage/StorageKey";
 import api from './api/basicUrl';
 import { Plugins } from '@capacitor/core';
+import AlertGeneric from "./components/auxiliares/AlertGeneric";
 
 const { App } = Plugins;
 
@@ -49,13 +56,24 @@ const { App } = Plugins;
 export default defineComponent({
   name: 'App',
   components: {
-    IonApp, IonRouterOutlet,IonTitle,  IonHeader, IonToolbar, IonImg, IonButtons, IonText, IonBackButton, IonAvatar, IonContent
+    IonApp, AlertGeneric, IonRouterOutlet,IonTitle,  IonHeader, IonToolbar, IonImg, IonButtons, IonText, IonBackButton, IonAvatar, IonContent
   },
   setup (){
+    const text = ref( {
+      header: 'Tem certeza que deseja sair ?',
+              subHeader: '',
+              message: '',
+    });
+    const dialog = ref(false);
     const user = ref({});
+    const buttons = ref([]);
     return {
       route: useRoute(),
+      router: useRouter(),
       user,
+      text,
+      dialog,
+      buttons,
     }
   },
 
@@ -86,7 +104,18 @@ export default defineComponent({
   methods: {
     sair () {
       api.get('/home-saiu/'+this.user.id);
+    },
+
+    saida () {
+      this.buttons = [{text: 'Quero Estudar', handler: () => this.dialog = false}, {text: 'Sair', handler: () => {this.router.push('/login')}}]
+      this.dialog = true;
     }
   }
 });
 </script>
+
+<style scoped>
+  .ml-2 {
+    margin-left: 10px;
+  }
+</style>

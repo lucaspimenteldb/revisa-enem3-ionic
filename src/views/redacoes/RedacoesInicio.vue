@@ -89,7 +89,7 @@
             irRedacao(bloqueada, encerrada, id) {
                 console.log('e', encerrada);
                 if (!encerrada && !bloqueada) {
-                    this.router.push('ver-rascunho-enviar-redacao/' + id);
+                    this.router.push('/ver-rascunho-enviar-redacao/' + id);
                 }
             }
         },

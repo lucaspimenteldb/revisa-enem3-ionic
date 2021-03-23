@@ -23,7 +23,7 @@
                         class="ion-margin-top lista__professores rounded"
                         v-for="aula in aulas"
                         :key="aula.titulo+ 'acessar'"
-                        @click="() => router.push({path: '/tabs/ver-videoaula/'+aula.id})"
+                        @click="() => router.push({path: '/ver-videoaula/'+aula.id})"
                         lines="none"
                 >
                     <ion-label class="ion-padding-vertical text-white">

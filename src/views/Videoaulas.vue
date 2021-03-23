@@ -34,7 +34,7 @@
             :disabled="!volume.liberado"
             v-for="volume in volumes"
             :key="volume.ttl+ 'acessar'"
-            @click="() => router.push(`videoaulas-inicio/${volume.rota}`)"
+            @click="() => router.push(`/videoaulas-inicio/${volume.rota}`)"
             lines="none"
         >
           <ion-label class="ion-padding-end ion-padding-vertical">
