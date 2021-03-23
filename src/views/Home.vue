@@ -18,7 +18,7 @@
                 </IonSlides>
             </div>
 
-            <IonList class="ion-margin-top ion-padding rounded-top">
+            <IonList class="ion-margin-top ion-padding rounded-top h-full">
                 <IonItem
                         class="ion-margin-top rounded"
                         :disabled="menu.disabled"
