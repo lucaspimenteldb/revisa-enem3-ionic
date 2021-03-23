@@ -6,6 +6,7 @@
             :message="text.message"
             css-class="my-custom-class"
             :buttons="buttons"
+            :backdrop-dismiss="false"
     >
     </ion-alert>
 

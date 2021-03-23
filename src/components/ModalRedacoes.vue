@@ -61,13 +61,14 @@
           Arquivo:
         </ion-label>
 
-        <ion-img :src="arquivoEscolhido">
+        <ion-img style="height: 750px" :src="arquivoEscolhido">
 
         </ion-img>
       </ion-item>
       <ion-button
+              :disabled="loading"
           class="ion-no-margin text-none"
-          @click="enviarAtividade()"
+          @click="previa()"
       >
         Enviar redação
 
@@ -90,6 +91,8 @@
         </p>
       </ion-note>
     </div>
+    <AlertGeneric :dialog="dialog" :text="text" :buttons="buttons" />
+    <AlertGeneric :dialog="dialog2" :text="text2" :buttons="buttons2" />
   </ion-content>
 </template>
 
@@ -99,11 +102,12 @@ import { closeCircleOutline, imageOutline, refreshCircleOutline, sendOutline, ca
 import camera from "../plugins/camera";
 import api from '../api/basicUrl';
 import {useRouter, useRoute} from 'vue-router';
+import AlertGeneric from "./auxiliares/AlertGeneric";
 
 export default {
   name: 'Modal',
   props: [ 'title', 'conteudo', 'fechar', 'imagem', 'user'],
-  components: { IonImg, IonContent, IonTitle, IonText, IonButton, IonItem, IonLabel, IonIcon, IonNote },
+  components: { IonImg, AlertGeneric, IonContent, IonTitle, IonText, IonButton, IonItem, IonLabel, IonIcon, IonNote },
 
   setup () {
     return {
@@ -124,6 +128,21 @@ export default {
       mensagemEnvio: null,
       mensagemErro: null,
       termosAceitos: false,
+      dialog: false,
+      text: {
+        header: 'Tem certeza que deseja enviar a redação?',
+        subHeader: '',
+        message: '',
+      },
+      buttons: [{text: 'Sim', handler: () => this.enviarAtividade()}, {text:'Não', handler: () => {  this.dialog = false  }}],
+
+      text2: {
+        header: 'Falha ao enviar!',
+        subHeader: '',
+        message: '',
+      },
+      buttons2: [{text:'Ok', handler: () => {  this.dialog2 = false  }}],
+      dialog2: false,
     }
   },
 
@@ -148,11 +167,11 @@ export default {
               this.arquivoEscolhido = image.dataUrl;
             },
           },
-          {
-            text: 'Galeria de fotos',
-            icon: imageOutline,
-            handler: () => this.arquivoEscolhido = 'selecionei esse asd.jpg',
-          },
+          // {
+          //   text: 'Galeria de fotos',
+          //   icon: imageOutline,
+          //   handler: () => this.arquivoEscolhido = 'selecionei esse asd.jpg',
+          // },
           {
             text: 'cancelar',
             role: 'cancel',
@@ -165,26 +184,34 @@ export default {
       return actionSheet.present();
     },
 
+    previa () {
+      this.dialog = true;
+    },
+
    async enviarAtividade () {
       try {
         this.loading = true;
+        this.dialog = false;
         this.mensagemEnvio = null;
         this.mensagemErro = null;
         let id_redacao = this.route.params.id;
         let id_user = this.user.id;
         let objeto = { arquivo: this.arquivoEscolhido, id_redacao, id_user }
         let dados = await api.post('/enviar-redacao', objeto);
-       this.mensagemEnvio = dados.data.message;
        this.emitter.emit('pontos', dados.data.pontos);
+       this.text2.header = dados.data.message;
+       this.dialog2 = true;
 
       }catch (e) {
         console.log(e);
         if (e.response) {
-          this.mensagemErro = e.response.data.message;
+          this.text2.header = e.response.data.message;
         }
         else {
-          this.mensagemErro = 'Erro Interno';
+          this.text2.header = 'Erro Interno';
         }
+
+        this.dialog2 = true;
       }
       this.loading = false;
     }
