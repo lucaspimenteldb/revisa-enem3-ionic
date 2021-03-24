@@ -2,8 +2,8 @@
   <ion-page>
     <ion-tabs>
       <ion-tab-bar slot="bottom">
-        <ion-tab-button tab="home" href="/home">
-          <ion-icon :icon="triangle" />
+        <ion-tab-button class="tabs" tab="home" href="/home">
+          <ion-icon icon="/assets/icon/tabs/home.svg" />
           <ion-label>
             Home
           </ion-label>
@@ -16,15 +16,15 @@
 <!--          </ion-label>-->
 <!--        </ion-tab-button>-->
 
-        <ion-tab-button tab="videoaulas" href="/videoaulas">
-          <ion-icon :icon="square" />
+        <ion-tab-button class="tabs" tab="videoaulas" href="/videoaulas">
+          <ion-icon icon="/assets/icon/tabs/videoaula.svg" />
           <ion-label>
             Videoaulas
           </ion-label>
         </ion-tab-button>
 
-        <ion-tab-button tab="redacoes" href="/redacoes">
-          <ion-icon :icon="square" />
+        <ion-tab-button class="tabs" tab="redacoes" href="/redacoes">
+          <ion-icon icon="/assets/icon/tabs/redacao.svg" />
           <ion-label>
             Redações
           </ion-label>
@@ -50,3 +50,15 @@ export default {
   }
 }
 </script>
+<style scoped>
+  .tabs {
+    background: #000952;
+    --color: #fff;
+    --color-selected: #fff;
+  }
+
+  .tabs.tab-selected {
+    opacity: 0.6;
+  }
+
+</style>
