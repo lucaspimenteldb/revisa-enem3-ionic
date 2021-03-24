@@ -2,28 +2,28 @@
   <ion-page>
     <ion-tabs>
       <ion-tab-bar slot="bottom">
-        <ion-tab-button tab="home" href="/tabs/home">
+        <ion-tab-button tab="home" href="/home">
           <ion-icon :icon="triangle" />
           <ion-label>
             Home
           </ion-label>
         </ion-tab-button>
 
-        <ion-tab-button tab="atividades" href="/tabs/atividades">
-          <ion-icon :icon="ellipse" />
-          <ion-label>
-            Atividades
-          </ion-label>
-        </ion-tab-button>
+<!--        <ion-tab-button tab="atividades" href="/atividades">-->
+<!--          <ion-icon :icon="ellipse" />-->
+<!--          <ion-label>-->
+<!--            Atividades-->
+<!--          </ion-label>-->
+<!--        </ion-tab-button>-->
 
-        <ion-tab-button tab="videoaulas" href="/tabs/videoaulas">
+        <ion-tab-button tab="videoaulas" href="/videoaulas">
           <ion-icon :icon="square" />
           <ion-label>
             Videoaulas
           </ion-label>
         </ion-tab-button>
 
-        <ion-tab-button tab="redacoes" href="/tabs/redacoes">
+        <ion-tab-button tab="redacoes" href="/redacoes">
           <ion-icon :icon="square" />
           <ion-label>
             Redações

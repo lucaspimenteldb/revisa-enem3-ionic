@@ -65,7 +65,7 @@
   </ion-page>
 </template>
 <script>
-import { IonImg, IonText, IonLabel, IonButton, IonItem, IonInput } from '@ionic/vue';
+import { IonImg, IonPage, IonText, IonLabel, IonButton, IonItem, IonInput } from '@ionic/vue';
 import { useRouter } from 'vue-router'
 import  Loading  from '../components/auxiliares/Loading';
 import AlertGeneric from "../components/auxiliares/AlertGeneric";
@@ -75,7 +75,7 @@ import object from "../storage/StorageKey";
 import browser from "../plugins/browser";
 
 export default {
-  components: { Loading, AlertGeneric, IonImg, IonText, IonLabel, IonButton, IonItem, IonInput },
+  components: { Loading, AlertGeneric, IonImg, IonPage , IonText, IonLabel, IonButton, IonItem, IonInput },
   vueRouter: useRouter(),
   name: 'Login',
 
@@ -111,7 +111,7 @@ export default {
         await object.set('user', JSON.stringify(user));
         await object.set('xyz', JSON.stringify(xyz));
         this.emitter.emit('perfil', user);
-        this.router.push('/home');
+        this.router.replace('/home');
       }catch (e) {
         if(e.response) {
          if (e.response.status == 403) {
