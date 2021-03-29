@@ -3,13 +3,15 @@
         <ion-content>
             <ion-list class="h-full">
                 <ion-label class="ion-padding font-bold text-lg">
-                    Tema 01 - Descrição da redação
+                   {{redacao.titulo || ""}}
                 </ion-label>
 
-                <br>
+                <ion-label class="ion-padding text-xs" style="display: block">
+                    {{redacao.descricao || ""}}
+                </ion-label>
 
                 <section class="ion-padding">
-                    <ion-button class="ion-no-margin mt-8 mr-8 text-none" fill="outline">
+                    <ion-button class="ion-no-margin mt-8 mr-8 text-none" fill="outline" @click="baixarRas">
                         Baixar rascunho
                     </ion-button>
                     <ion-button class="ion-no-margin mt-8 text-none" @click="enviarRedacao()">
@@ -48,6 +50,7 @@
     import Loading from "../../components/auxiliares/Loading";
     import api from '../../api/basicUrl';
     import storage from "../../storage/StorageKey";
+    import browser from "../../plugins/browser";
 
     export default {
         name: 'VerRascunhoEnviarRedacao',
@@ -61,6 +64,7 @@
             const conteudo = ref('');
             const title = ref('');
             const user = ref({});
+            const redacao = ref({});
             return {
                 notifications,
                 arrowForwardCircleOutline,
@@ -69,6 +73,7 @@
                 router: useRouter(),
                 route: useRoute(),
                 loading,
+                redacao,
                 user,
                 video,
                 termo,
@@ -132,6 +137,11 @@
                 });
                 this.modal = modal;
                 return modal.present();
+            },
+
+            async baixarRas () {
+                if(this.redacao.arquivo)
+                await browser.open(this.redacao.arquivo);
             }
         },
 
@@ -141,11 +151,12 @@
                 usuario = JSON.parse(usuario.value);
                 this.user = usuario;
                 this.loading = true;
-                let dados = await api.get('/redacoes-informacoes');
+                let dados = await api.get('/redacoes-informacoes/'+this.route.params.id);
                 this.video = dados.data.video_tutorial;
                 this.imagem = dados.data.termo;
                 this.title = dados.data.title;
                 this.conteudo = dados.data.conteudo;
+                this.redacao = dados.data.redacao;
             } catch (e) {
                 console.log(e);
             }
