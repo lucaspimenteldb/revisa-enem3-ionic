@@ -21,7 +21,7 @@
             Matrícula
           </IonLabel>
 
-          <IonInput v-model="matricula" value="{{matricula}}"/>
+          <IonInput type="number" v-model="matricula" value="{{matricula}}"/>
         </IonItem>
 
         <ion-button type="submit" expand="block" class="ion-margin-top shadow-btn">
@@ -54,7 +54,7 @@
           <ion-img src="assets/images/face-logo.png" class="ion-margin-start w-30"/>
         </ion-button>-->
 
-        <ion-button  color="transparent" class=" ion-margin-top btn__ajuda">
+        <ion-button  color="transparent" class=" ion-margin-top btn__ajuda" @click="irPraVideo">
           <ion-label class="text-none text-sm" color="primary">
             Preciso de ajuda
           </ion-label>
@@ -133,6 +133,10 @@ export default {
       }
 
       this.loading = false;
+    },
+
+    async irPraVideo() {
+      await browser.open('https://youtu.be/JycKsBIRLFc');
     },
 
     formandoXyz (xyz, xyz_type) {

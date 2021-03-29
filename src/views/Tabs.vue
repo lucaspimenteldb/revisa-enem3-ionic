@@ -51,7 +51,7 @@ export default {
 }
 </script>
 <style scoped>
-  .tabs {
+  .tabs, ion-tab-bar {
     background: #000952;
     --color: #fff;
     --color-selected: #fff;
