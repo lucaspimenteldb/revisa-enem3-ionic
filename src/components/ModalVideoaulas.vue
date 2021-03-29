@@ -188,12 +188,14 @@ export default {
         this.loading = true;
         let objeto = {id_questao: this.id, resposta: this.alternativaMarcada, id_user: this.user};
         let dados = await api.post('/enviar-resposta-video', objeto);
+        let gabarito = {id_questao: this.id, alternativa: this.alternativaMarcada, gabarito: dados.data.gabarito, comentario: dados.data.comentario, acertou: dados.data.acertou};
         this.acertou[this.alternativaMarcada] = dados.data.acertou;
         this.acertou[dados.data.gabarito] = true;
         this.alternativaMarcada = '';
         this.resolucao = dados.data.comentario;
         this.temNull = false;
         this.emitter.emit('pontos', dados.data.pontos);
+        this.emitter.emit('preencherGabarito', gabarito)
         this.setAlert(dados.data.message, '',  [{text: 'Ok', handler: () => this.dialog = false}]);
       }catch (e) {
         let msg = 'Ops! Algo Deu Errado. Tente novamente.';

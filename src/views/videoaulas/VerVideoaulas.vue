@@ -135,7 +135,7 @@ export default {
 
         let objeto = { id_user: this.user.id, id_video, reacao: curtida };
 
-        await api.post('/reacao-video/', objeto);
+        await api.post('/reacao-video', objeto);
 
       }catch (e) {
         this.text.header = 'Sua reação ao vídeo não foi enviada, por favor verifique a conexão e tente novamente.';
@@ -168,7 +168,6 @@ export default {
     },
 
     async abrirQuestao (quest, titulo, user) {
-      console.log('oi',quest.acertou);
       const modal = await modalController.create({
         component: ModalVideoaulas,
         cssClass: '',
@@ -239,6 +238,21 @@ export default {
       this.alertMod = true;
     }
     this.loading = false;
+  },
+
+  created() {
+    this.emitter.on('preencherGabarito', (gabarito) => {
+       for (let i = 0; i < this.questoes.length; i++) {
+         if (this.questoes[i].id == gabarito.id_questao) {
+            let quest = this.questoes[i];
+             quest.rgabarito = gabarito.gabarito;
+             quest.resposta = gabarito.alternativa;
+             quest.acertou = gabarito.acertou;
+             quest.comentario = gabarito.comentario;
+             this.questoes.splice(i, 1, quest);
+         }
+       }
+    })
   }
 }
 </script>
