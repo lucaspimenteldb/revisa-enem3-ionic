@@ -78,10 +78,19 @@
             </p>
 
             <ion-icon
+                    v-if="q.acertou === true"
                 :icon="checkmarkCircleOutline"
                 size="large"
                 color="success"
             />
+
+            <ion-icon
+                    v-if="q.acertou === false"
+                    :icon="closeCircleOutline"
+                    size="large"
+                    color="danger"
+            />
+
           </ion-label>
 
           <ion-icon
@@ -101,7 +110,7 @@
 
 <script>
 import {IonPage, IonContent, IonItem, IonLabel, IonList, IonIcon, modalController} from '@ionic/vue';
-import {notifications, arrowForwardCircleOutline, thumbsUpOutline, thumbsDownOutline, thumbsUp, thumbsDown, checkmarkCircleOutline} from 'ionicons/icons';
+import {notifications, arrowForwardCircleOutline, closeCircleOutline, thumbsUpOutline, thumbsDownOutline, thumbsUp, thumbsDown, checkmarkCircleOutline} from 'ionicons/icons';
 import {useRoute, useRouter} from 'vue-router'
 import api from '../../api/basicUrl'
 import ModalVideoaulas from '@/components/ModalVideoaulas';
@@ -121,6 +130,7 @@ export default {
     const finalizada = ref(false);
     return {
       notifications,
+      closeCircleOutline,
       arrowForwardCircleOutline,
       checkmarkCircleOutline,
       thumbsDownOutline,
