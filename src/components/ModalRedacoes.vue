@@ -61,7 +61,7 @@
           Arquivo:
         </ion-label>
 
-        <ion-img :src="arquivoEscolhido">
+        <ion-img class="img-selected" :src="arquivoEscolhido">
 
         </ion-img>
       </ion-item>
@@ -228,5 +228,7 @@ export default {
 </script>
 
 <style scoped>
-
+  .img-selected::part(image) {
+    max-height: 246px;
+}
 </style>
