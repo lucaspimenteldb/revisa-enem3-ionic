@@ -1,7 +1,7 @@
 <template>
   <ion-page>
 
-    <ion-content class="ion-padding-top">
+    <ion-content class="ion-padding-top h-full">
       <ion-label class="ion-padding text-white">
        {{video.descricao}}
       </ion-label>
@@ -32,10 +32,25 @@
         />
       </section>
 
-      <section v-if="!finalizada" class="secao-finalizar inline-block rounded-right">
-        <ion-label @click="finalizarAula" class="classes" size="small">
-          Finalizar
-        </ion-label>
+      <section class="secao-finalizar inline-block rounded-right ion-margin-end">
+        <ion-button
+            @click="finalizarAula"
+            class="classes"
+            :class="{'classes-finalizadas': finalizada}"
+        >
+          <ion-label
+              size="small"
+              class="ion-margin-end text-none"
+              v-text="finalizada ? 'Finalizada' : 'Finalizar'"
+              :color="finalizada ? 'success' : ''"
+          />
+
+          <ion-icon
+              :icon="checkmarkCircleOutline"
+              v-if="finalizada"
+              color="success"
+          />
+        </ion-button>
       </section>
 
       <ion-list class="ion-margin-top ion-padding rounded-top">
@@ -46,10 +61,16 @@
             @click="abrirQuestao(q, `Questão `+ (i+1), user)"
             lines="none"
         >
-          <ion-label class="ion-padding-vertical text-white">
-            <p class="text-white">
+          <ion-label class="ion-padding-vertical  ion-align-items-center text-white">
+            <p class="ion-margin-end text-white inline-block" style="margin-bottom: 4px">
               {{ `Questão `+ (i+1) }}
             </p>
+
+            <ion-icon
+                :icon="checkmarkCircleOutline"
+                size="large"
+                color="success"
+            />
           </ion-label>
 
           <ion-icon
@@ -69,7 +90,7 @@
 
 <script>
 import {IonPage, IonContent, IonItem, IonLabel, IonList, IonIcon, modalController} from '@ionic/vue';
-import {notifications, arrowForwardCircleOutline, thumbsUpOutline, thumbsDownOutline, thumbsUp, thumbsDown} from 'ionicons/icons';
+import {notifications, arrowForwardCircleOutline, thumbsUpOutline, thumbsDownOutline, thumbsUp, thumbsDown, checkmarkCircleOutline} from 'ionicons/icons';
 import {useRoute, useRouter} from 'vue-router'
 import api from '../../api/basicUrl'
 import ModalVideoaulas from '@/components/ModalVideoaulas';
@@ -89,6 +110,7 @@ export default {
     return {
       notifications,
       arrowForwardCircleOutline,
+      checkmarkCircleOutline,
       thumbsDownOutline,
       thumbsUpOutline,
       thumbsUp,
@@ -281,8 +303,10 @@ ion-item.select {
   color: white;
   border-size: 1px;
   border-width: 3px;
-  padding: 22px;
   display: block;
+}
+.classes-finalizadas {
+  border-color: #24c16c;
 }
 
 .secao-finalizar {
