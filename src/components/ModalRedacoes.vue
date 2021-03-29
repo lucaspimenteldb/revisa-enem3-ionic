@@ -61,7 +61,7 @@
           Arquivo:
         </ion-label>
 
-        <ion-img style="height: 750px" :src="arquivoEscolhido">
+        <ion-img :src="arquivoEscolhido">
 
         </ion-img>
       </ion-item>

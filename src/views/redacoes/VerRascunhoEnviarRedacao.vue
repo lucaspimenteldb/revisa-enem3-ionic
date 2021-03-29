@@ -3,8 +3,9 @@
         <ion-content>
             <ion-list class="h-full">
                 <ion-label class="ion-padding font-bold text-lg">
-                    Tema da redação
+                    Tema 01 - Descrição da redação
                 </ion-label>
+
                 <br>
 
                 <section class="ion-padding">
