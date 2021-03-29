@@ -34,23 +34,34 @@
 
       <section class="secao-finalizar inline-block rounded-right ion-margin-end">
         <ion-button
+                v-if="!finalizada"
             @click="finalizarAula"
             class="classes"
-            :class="{'classes-finalizadas': finalizada}"
         >
           <ion-label
               size="small"
               class="ion-margin-end text-none"
-              v-text="finalizada ? 'Finalizada' : 'Finalizar'"
-              :color="finalizada ? 'success' : ''"
+              v-text="'Finalizar'"
+          />
+        </ion-button>
+
+        <ion-button
+                v-else
+                class="classes classes-finalizadas"
+        >
+          <ion-label
+                  size="small"
+                  class="ion-margin-end text-none"
+                  color="success"
+                  v-text="'Finalizada'"
           />
 
           <ion-icon
-              :icon="checkmarkCircleOutline"
-              v-if="finalizada"
-              color="success"
+                  :icon="checkmarkCircleOutline"
+                  color="success"
           />
         </ion-button>
+
       </section>
 
       <ion-list class="ion-margin-top ion-padding rounded-top">
@@ -107,6 +118,7 @@ export default {
     const questoes = ref([]);
     const loading = ref(false);
     const user = ref({});
+    const finalizada = ref(false);
     return {
       notifications,
       arrowForwardCircleOutline,
@@ -118,6 +130,7 @@ export default {
       router: useRouter(),
       route: useRoute(),
       questoes,
+      finalizada,
       loading,
       modal: null,
       user
@@ -130,7 +143,6 @@ export default {
       dislike: thumbsDownOutline,
       curtiu: null,
       alertMod: false,
-      finalizada: true,
       video: {},
       text: {
         header:'Sua reação ao vídeo não foi enviada, por favor verifique a conexão e tente novamente.'
