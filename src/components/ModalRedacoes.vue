@@ -2,15 +2,8 @@
   <ion-content class="ion-padding relative">
     <!-- dicas da atividade -->
     <div v-if="!termosAceitos">
-      <ion-item class="mt-48 ion-margin-bottom ion-no-padding " lines="none">
-        <ion-label class="ion-text-wrap">
-          <ion-text class="font-bold">
-            Termos de compromisso
-          </ion-text>
-
-          <p>
-            <ion-img :src="imagem"></ion-img>
-          </p>
+      <ion-item class="ion-no-padding " lines="none">
+        <ion-label class="label-termo" v-html="imagem">
         </ion-label>
       </ion-item>
 
@@ -231,4 +224,9 @@ export default {
   .img-selected::part(image) {
     max-height: 246px;
 }
+
+  .label-termo{
+    white-space: inherit;
+  }
+
 </style>
