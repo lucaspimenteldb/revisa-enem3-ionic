@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router';
+import sqlite from "./storage/Sqlite";
 import mitt from 'mitt';
 const emitter = mitt();
 
@@ -32,6 +33,9 @@ const app = createApp(App)
   .use(router);
 
 app.config.globalProperties.emitter = emitter;
+sqlite.home().then((db) => {
+  app.config.globalProperties.sqlite = db;
+})
 router.isReady().then(() => {
   app.mount('#app');
 });

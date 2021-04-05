@@ -932,6 +932,20 @@
     "cssnano-preset-default" "^4.0.0"
     "postcss" "^7.0.0"
 
+"@ionic-native/core@^5.1.0":
+  "integrity" "sha512-dbJHezSuY8OqyFwyQiS+5QscA/BONhWitXgniljEblC5kQeLOCe+8p30JYHXj9xDciYzfqFP8ICmyaGOqUHJYw=="
+  "resolved" "https://registry.npmjs.org/@ionic-native/core/-/core-5.31.1.tgz"
+  "version" "5.31.1"
+  dependencies:
+    "@types/cordova" "latest"
+
+"@ionic-native/sqlite@^5.31.1":
+  "integrity" "sha512-X26n+6mvqyv94ADG67lHOmDj/Ha+ZVbHztwsWzbvBqmnmgck9y+mo8ndC47UKIXRA/8lwoGMyAtJAfE81eT3mg=="
+  "resolved" "https://registry.npmjs.org/@ionic-native/sqlite/-/sqlite-5.31.1.tgz"
+  "version" "5.31.1"
+  dependencies:
+    "@types/cordova" "latest"
+
 "@ionic/core@5.5.4":
   "integrity" "sha512-IjbGN8vh3XuJ2ulo3BMlMflcWlUhvEGEexr29JKFvb+O4bWKP5sC2fkqSrswrIstOmv7axm7CeIi2MNRkwYwVA=="
   "resolved" "https://registry.npmjs.org/@ionic/core/-/core-5.5.4.tgz"
@@ -1194,6 +1208,11 @@
   "version" "3.4.34"
   dependencies:
     "@types/node" "*"
+
+"@types/cordova@latest":
+  "integrity" "sha1-6nrd907Ow9dimCegw54smt3HPQQ="
+  "resolved" "https://registry.npmjs.org/@types/cordova/-/cordova-0.0.34.tgz"
+  "version" "0.0.34"
 
 "@types/express-serve-static-core@*", "@types/express-serve-static-core@^4.17.18":
   "integrity" "sha512-m4JTwx5RUBNZvky/JJ8swEJPKFd8si08pPF2PfizYjGZOKr/svUWPcoUmLow6MmPzhasphB7gSTINY67xn3JNA=="
@@ -3465,6 +3484,18 @@
     "schema-utils" "^1.0.0"
     "serialize-javascript" "^4.0.0"
     "webpack-log" "^2.0.0"
+
+"cordova-sqlite-storage-dependencies@4.0.0":
+  "integrity" "sha512-dTBxYaX/RGzH6+pp49o4sb3FuHCvhrssaKn1XMJ4LL3f9dnvz3rhFK2LdcWrdFkhOLOndnW/azUkbzZd+WWhRA=="
+  "resolved" "https://registry.npmjs.org/cordova-sqlite-storage-dependencies/-/cordova-sqlite-storage-dependencies-4.0.0.tgz"
+  "version" "4.0.0"
+
+"cordova-sqlite-storage@^6.0.0":
+  "integrity" "sha512-njRloA3AICaUFztKHXoFfVcwlL7zbvyFxtdZIkK7P+MA3umILXtSKhYAQkSe2GtHr0LBNzJI5xUUqAlZl/Js0A=="
+  "resolved" "https://registry.npmjs.org/cordova-sqlite-storage/-/cordova-sqlite-storage-6.0.0.tgz"
+  "version" "6.0.0"
+  dependencies:
+    "cordova-sqlite-storage-dependencies" "4.0.0"
 
 "core-js-compat@^3.6.5", "core-js-compat@^3.8.0":
   "integrity" "sha512-1sCb0wBXnBIL16pfFG1Gkvei6UzvKyTNYpiC41yrdjEv0UoJoq9E/abTMzyYJ6JpTkAj15dLjbqifIzEBDVvog=="
@@ -9329,7 +9360,7 @@
   dependencies:
     "symbol-observable" "1.0.1"
 
-"rxjs@^6.4.0", "rxjs@^6.6.0":
+"rxjs@^5.5.0 || ^6.5.0", "rxjs@^6.4.0", "rxjs@^6.6.0":
   "integrity" "sha512-trsQc+xYYXZ3urjOiJOuCOa5N3jAZ3eiSpQB5hIT8zGlL2QfnHLJ2r7GMkBGuIausdJN1OneaI6gQlsqNHHmZQ=="
   "resolved" "https://registry.npmjs.org/rxjs/-/rxjs-6.6.3.tgz"
   "version" "6.6.3"
