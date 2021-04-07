@@ -25,15 +25,15 @@ const promiseAuxiliar = (db, query, params) => {
     });
 }
 
-// const promiseBatch =  (db, query, params) => {
-//     return new Promise((resolve, reject) => {
-//         db.sqlBatch(query, params, (result) => {
-//             resolve(result);
-//         }, (error) => {
-//             reject(error);
-//         })
-//     });
-// }
+const promiseBatch =  (db, query) => {
+    return new Promise((resolve, reject) => {
+        db.sqlBatch(query, (result) => {
+            resolve(result);
+        }, (error) => {
+            reject(error);
+        })
+    });
+}
 
 sqlite.insertUnique = async (db, table, campos, valores) => {
     // let insert = [];
@@ -76,15 +76,29 @@ sqlite.insertUnique = async (db, table, campos, valores) => {
     }
 }
 
-sqlite.insertBatch = async (objeto, tabela) => {
+sqlite.insertBatch = async (db, objeto, tabela) => {
     try{
-        // let arrayGeral = [];
-        for (let index in objeto) {
-            console.log(index);
-            console.log(tabela);
+        if (!db) {
+            console.log('conexão não realizada');
+            return;
+        }else if (!window.sqlitePlugin){
+            console.log('Dispositivo não suportado!')
+            return;
         }
+
+        let arrayGeral = [];
+        for (let index of objeto) {
+            let keys = (Object.keys(index)).join(',');
+            let valores = (Object.values(index));
+            let interrogacoes = Array.from(valores).fill('?').join(',');
+            let prefix = `insert into ${tabela} (${keys}) values (${interrogacoes})`;
+            arrayGeral.push([prefix, valores]);
+        }
+
+        let dados = await promiseBatch(db, arrayGeral);
+        console.log('Batch',dados);
     }catch (e) {
-        console.log('Erro ao executar o batch');
+        console.log('Erro ao executar o batch', e);
     }
 }
 
