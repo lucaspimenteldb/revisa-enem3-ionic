@@ -70,7 +70,6 @@
     import {ref} from 'vue';
     import Loading from "@/components/auxiliares/Loading";
     import api from '../api/basicUrl';
-    import sqlite from "@/storage/Sqlite";
 
     export default {
         name: 'Home',
@@ -138,8 +137,6 @@
                 this.noticias = dados.data.noticias;
                 this.loading = false;
                 this.menus = dados.data.menus;
-                // await sqlite.insertUnique(this.sqlite, 'menu_mobile', ['id', 'nome', 'status', 'slug', 'disabled'], [1, 'Chico', 'Chico', 'Chico', 1]);
-                await sqlite.consulta(this.sqlite, 'select nome from menu_mobile');
             } catch (e) {
                 console.log(e);
                 this.loading = false;

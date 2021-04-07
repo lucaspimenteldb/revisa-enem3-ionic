@@ -5,13 +5,35 @@ sqlite.createTablesInit = async (db) => {
         if (!db) {
             return false;
         }
-        await db.executeSql('CREATE table if not exists menu_mobile(id integer primary key, nome TEXT, status TEXT, slug TEXT, disabled INTEGER, created_at TEXT, updated_at TEXT)');
-        console.log('certo');
+        await db.sqlBatch([['CREATE table if not exists menu_mobile(id integer primary key, nome TEXT, status TEXT, slug TEXT, disabled INTEGER)'],
+                                       ['CREATE table if not exists noticia(id integer primary key, imagem TEXT)']],
+            );
+        console.log('certo tudo');
     }catch (e) {
-        console.log(e);
+        console.log('Erro ao criar a tabela', e);
     }
     return true;
 };
+
+const promiseAuxiliar = (db, query, params) => {
+    return new Promise((resolve, reject) => {
+        db.executeSql(query, params, (result) => {
+            resolve(result);
+        }, (error) => {
+            reject(error);
+        })
+    });
+}
+
+// const promiseBatch =  (db, query, params) => {
+//     return new Promise((resolve, reject) => {
+//         db.sqlBatch(query, params, (result) => {
+//             resolve(result);
+//         }, (error) => {
+//             reject(error);
+//         })
+//     });
+// }
 
 sqlite.insertUnique = async (db, table, campos, valores) => {
     // let insert = [];
@@ -46,11 +68,7 @@ sqlite.insertUnique = async (db, table, campos, valores) => {
 
         word+= ')';
 
-        db.executeSql(word, valores, () => {
-            console.log('dados inserido na tabela' +table);
-        }, (error) => {
-            console.log('Erro ao inserir', error);
-        });
+        await promiseAuxiliar(db, word, valores);
 
 
     }catch (e) {
@@ -58,14 +76,25 @@ sqlite.insertUnique = async (db, table, campos, valores) => {
     }
 }
 
+sqlite.insertBatch = async (objeto, tabela) => {
+    try{
+        // let arrayGeral = [];
+        for (let index in objeto) {
+            console.log(index);
+            console.log(tabela);
+        }
+    }catch (e) {
+        console.log('Erro ao executar o batch');
+    }
+}
+
 sqlite.consulta = async (db, query) => {
     try{
-        let dados = await db.executeSql(query,[], (result) => {
-            console.log(result)
-        }, (error) => {
-            console.log(error);
-        });
-        console.log(dados);
+        if (!window.sqlitePlugin) {
+            return;
+        }
+        let dados = await promiseAuxiliar(db, query, []);
+        console.log('Mis', dados.rows.item(0));
     }catch (e) {
         console.log('Erro ao consultar', e);
     }
@@ -79,7 +108,7 @@ sqlite.home = async () => {
             return db;
         }
         else {
-            db = window.sqlitePlugin.openDatabase({name: 'Porco4.db', location: 'default'});
+            db = window.sqlitePlugin.openDatabase({name: 'Porco5.db', location: 'default'});
             console.log('SQLITE',db)
             sqlite.createTablesInit(db);
             return db;
