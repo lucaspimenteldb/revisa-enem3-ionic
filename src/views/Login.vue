@@ -3,32 +3,32 @@
     <ion-content>
       <Loading :isOpen="loading"></Loading>
       <div class="ion-padding flex ion-justify-content-center">
-        <ion-img src="assets/images/logo-revisa.png" class="ion-margin-end w-80"/>
-        <ion-img src="assets/images/logo-mvc.png" class="ion-margin-start w-80"/>
+        <ion-img src="assets/images/logo-brain.png" class="ion-margin-end w-80 image-logo"/>
+        <!--        <ion-img src="assets/images/logo-mvc.png" class="ion-margin-start w-80"/>-->
       </div>
 
       <div class="bg__paper h-full ion-padding rounded">
         <ion-text color="primary">
           <h3 class="ion-text-center font-bold">
-            Bem-vindo ao Revisa ENEM!
+            Bem-vindo ao BrainUp!
           </h3>
         </ion-text>
 
         <br>
         <form @submit.prevent="formMatricula">
-        <IonItem class="rounded shadow">
-          <IonLabel position="floating">
-            Matrícula
-          </IonLabel>
+          <IonItem class="rounded shadow">
+            <IonLabel position="floating">
+              Matrícula
+            </IonLabel>
 
-          <IonInput type="number" v-model="matricula" value="{{matricula}}"/>
-        </IonItem>
+            <IonInput type="number" v-model="matricula" value="{{matricula}}"/>
+          </IonItem>
 
-        <ion-button type="submit" expand="block" class="ion-margin-top shadow-btn">
-          <ion-label class="text-none font-bold">
-            Entrar
-          </ion-label>
-        </ion-button>
+          <ion-button type="submit" expand="block" class="ion-margin-top shadow-btn">
+            <ion-label class="text-none font-bold">
+              Entrar
+            </ion-label>
+          </ion-button>
         </form>
 
         <!--<ion-button
@@ -65,101 +65,106 @@
   </ion-page>
 </template>
 <script>
-import { IonImg, IonPage, IonText, IonLabel, IonButton, IonItem, IonInput } from '@ionic/vue';
-import { useRouter } from 'vue-router'
-import  Loading  from '../components/auxiliares/Loading';
-import AlertGeneric from "../components/auxiliares/AlertGeneric";
-import {ref} from 'vue';
-import api from "../api/basicUrl";
-import object from "../storage/StorageKey";
-import browser from "../plugins/browser";
+  import { IonImg, IonPage, IonLabel, IonText, IonButton, IonItem, IonInput } from '@ionic/vue';
+  import { useRouter } from 'vue-router'
+  import  Loading  from '../components/auxiliares/Loading';
+  import AlertGeneric from "../components/auxiliares/AlertGeneric";
+  import {ref} from 'vue';
+  import api from "../api/basicUrl";
+  import object from "../storage/StorageKey";
+  import browser from "../plugins/browser";
 
-export default {
-  components: { Loading, AlertGeneric, IonImg, IonPage , IonText, IonLabel, IonButton, IonItem, IonInput },
-  vueRouter: useRouter(),
-  name: 'Login',
+  export default {
+    components: { Loading, AlertGeneric, IonImg,  IonPage , IonText, IonLabel, IonButton, IonItem, IonInput },
+    vueRouter: useRouter(),
+    name: 'Login',
 
-  setup () {
-    const loading = ref(false);
-    const matricula = ref('');
-    const dialog =  ref(false);
-    const text =  ref({
-      header: 'Ops!',
-      subHeader: '',
-      message: 'Selecione uma das alternativas :)',
-    });
+    setup () {
+      const loading = ref(false);
+      const matricula = ref('');
+      const dialog =  ref(false);
+      const text =  ref({
+        header: 'Ops!',
+        subHeader: '',
+        message: 'Selecione uma das alternativas :)',
+      });
 
-    const buttons = [];
-    const router = useRouter();
-    return {
-      loading,
-      router,
-      matricula,
-      dialog,
-      text,
-      buttons
-    }
-  },
-
-  methods : {
-    async formMatricula() {
-      try{
-        this.loading= true;
-        let user = await api.post('/login', {matricula: this.matricula});
-        let xyz = this.formandoXyz(user.data.xyz, user.data.xyz_type);
-        user = user.data.user;
-        await object.set('user', JSON.stringify(user));
-        await object.set('xyz', JSON.stringify(xyz));
-        this.emitter.emit('perfil', user);
-        this.router.replace('/home');
-      }catch (e) {
-        if(e.response) {
-         if (e.response.status == 403) {
-          // window.open('https://ro.revisaenem.com.br/google');
-           await browser.open(e.response.data.message);
-
-         }
-         else if(e.response.status == 400) {
-            //ok
-           this.text.message = e.response.data.message;
-           this.buttons = [{text: 'Ok', handler: () => this.dialog = false}]
-           this.dialog = true;
-         }
-        }
-        else {
-          this.text.message = 'Sem conexão com o servidor';
-          this.buttons = [{text: 'Ok', handler: () => this.dialog = false}]
-        }
+      const buttons = [];
+      const router = useRouter();
+      return {
+        loading,
+        router,
+        matricula,
+        dialog,
+        text,
+        buttons
       }
-
-      this.loading = false;
     },
 
-    async irPraVideo() {
-      await browser.open('https://youtu.be/JycKsBIRLFc');
-    },
+    methods : {
+      async formMatricula() {
+        try{
+          this.loading= true;
+          let user = await api.post('/login', {matricula: this.matricula});
+          let xyz = this.formandoXyz(user.data.xyz, user.data.xyz_type);
+          user = user.data.user;
+          await object.set('user', JSON.stringify(user));
+          await object.set('xyz', JSON.stringify(xyz));
+          this.emitter.emit('perfil', user);
+          this.router.replace('/home');
+        }catch (e) {
+          if(e.response) {
+            if (e.response.status == 403) {
+              // window.open('https://ro.revisaenem.com.br/google');
+              await browser.open(e.response.data.message);
 
-    formandoXyz (xyz, xyz_type) {
-      let xyz_local = {
-        xyz,
-        xyz_type,
-        xyz_completo: xyz_type + ' '+xyz
+            }
+            else if(e.response.status == 400) {
+              //ok
+              this.text.message = e.response.data.message;
+              this.buttons = [{text: 'Ok', handler: () => this.dialog = false}]
+              this.dialog = true;
+            }
+          }
+          else {
+            this.text.message = 'Sem conexão com o servidor';
+            this.buttons = [{text: 'Ok', handler: () => this.dialog = false}]
+          }
+        }
+
+        this.loading = false;
+      },
+
+      async irPraVideo() {
+        await browser.open('https://youtu.be/JycKsBIRLFc');
+      },
+
+      formandoXyz (xyz, xyz_type) {
+        let xyz_local = {
+          xyz,
+          xyz_type,
+          xyz_completo: xyz_type + ' '+xyz
+        }
+
+        return xyz_local;
       }
-
-      return xyz_local;
     }
   }
-}
 </script>
 <style scoped>
-ion-content {
-  --background: var(--ion-color-primary);
-}
-.bg__paper {
-  background: url('../../public/assets/images/bg-principal.png') no-repeat center/100%;
-}
-.btn__ajuda {
-  --box-shadow: none;
-}
+  ion-content {
+    /*--background: var(--ion-color-primary);*/
+    /*--background: url('../../public/assets/images/bg-principal.png') no-repeat center/100%;*/
+  }
+  .bg__paper {
+    background: url('../../public/assets/images/bg-principal.png') no-repeat center/100%;
+  }
+  .btn__ajuda {
+    --box-shadow: none;
+  }
+
+  .image-logo::part(image) {
+    transform: scale(4.0);
+  }
 
 </style>
