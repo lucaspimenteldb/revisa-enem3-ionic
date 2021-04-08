@@ -17,8 +17,8 @@
               Avaliação do corretor
             </p>
 
-            <p style="white-space: pre-line; text-align: left">
-              {{redacao.avaliacao}}
+            <p style="white-space: pre-line; text-align: left" v-html="redacao.avaliacao">
+
             </p>
 
             <h4>
