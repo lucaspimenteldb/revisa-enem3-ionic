@@ -70,7 +70,6 @@
     import {ref} from 'vue';
     import Loading from "@/components/auxiliares/Loading";
     import api from '../api/basicUrl';
-    import sqlite from "@/storage/Sqlite";
 
     export default {
         name: 'Home',
@@ -137,7 +136,6 @@
                 let dados = await api.get('/noticias');
                 this.noticias = dados.data.noticias;
                 this.menus = dados.data.menus;
-                await sqlite.consulta(this.sqlite, 'select * from noticia');
                 this.loading = false;
             } catch (e) {
                 console.log(e);
