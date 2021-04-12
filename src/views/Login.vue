@@ -21,7 +21,7 @@
               Matrícula
             </IonLabel>
 
-            <IonInput type="number" v-model="matricula" value="{{matricula}}"/>
+            <IonInput type="text" v-model="matricula" value="{{matricula}}"/>
           </IonItem>
 
           <ion-button type="submit" expand="block" class="ion-margin-top shadow-btn">
