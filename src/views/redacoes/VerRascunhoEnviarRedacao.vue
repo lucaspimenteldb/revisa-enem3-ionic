@@ -149,8 +149,9 @@
                             this.loading = true;
 
                             let entry = await this.promiseInstrucoes(fileTransfer, uri, path);
-                            await this.promiseOpener(entry.nativeURL, 'application/pdf');
                             this.loading = false;
+                            await this.promiseOpener(entry.nativeURL, 'application/pdf');
+
                         }
                         else {
                             await browser.open(this.redacao.arquivo);
