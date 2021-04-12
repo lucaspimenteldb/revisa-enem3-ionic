@@ -140,9 +140,47 @@
             },
 
             async baixarRas () {
-                if(this.redacao.arquivo)
-                await browser.open(this.redacao.arquivo);
+                try{
+                    if(this.redacao.arquivo){
+                        if(window.cordova){
+                            let fileTransfer = new window.FileTransfer();
+                            let path = window.cordova.file.dataDirectory+''+this.redacao.id+'.pdf';
+                            let uri = encodeURI(this.redacao.arquivo);
+                            this.loading = true;
+
+                            let entry = await this.promiseInstrucoes(fileTransfer, uri, path);
+                            await this.promiseOpener(entry.nativeURL, 'application/pdf');
+                            this.loading = false;
+                        }
+                        else {
+                            await browser.open(this.redacao.arquivo);
+                        }
+                    }
+                }
+                catch (e) {
+                    console.log(e);
+                    this.loading = false;
+                }
+
+
+            },
+
+            async promiseOpener (uri, mime) {
+                return new Promise((resolve, reject) => {
+                    window.cordova.plugins.fileOpener2.open(uri, mime, (result) => {
+                        resolve(result)
+                    }, (error) => reject(error))
+                })
+            },
+
+            async promiseInstrucoes (fileTransfer, uri, path) {
+                return new Promise((resolve, reject) => {
+                    fileTransfer.download(uri, path, (entry) => {
+                        resolve(entry)
+                    }, (error) => reject(error))
+                })
             }
+
         },
 
         async created() {

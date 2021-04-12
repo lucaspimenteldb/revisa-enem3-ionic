@@ -17,14 +17,14 @@
             {{ opcao.ttl }}
 
             <article v-if="opcao.notificacao" class="absolute top-8 right-24">
-              <div class="flex ion-align-items-center ion-justify-content-center h-16 w-16 absolute top--6 right--8 rounded-full notificacao z-1">
-                <p class="ion-no-margin text-xxs">1</p>
-              </div>
-              <ion-icon
-                  :icon="notifications"
-                  class="text-lg"
-                  color="white"
-              />
+<!--              <div class="flex ion-align-items-center ion-justify-content-center h-16 w-16 absolute top&#45;&#45;6 right&#45;&#45;8 rounded-full notificacao z-1">-->
+<!--                <p class="ion-no-margin text-xxs">1</p>-->
+<!--              </div>-->
+<!--              <ion-icon-->
+<!--                  :icon="notifications"-->
+<!--                  class="text-lg"-->
+<!--                  color="white"-->
+<!--              />-->
             </article>
 
           </ion-label>
