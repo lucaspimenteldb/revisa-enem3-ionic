@@ -1,3 +1,2 @@
-export const config = {
-    api:'https://webservicero.revisaenem.com.br/api'
-};
+let objeto = {api: 'https://webservicero.revisaenem.com.br/api'};
+export default objeto;
