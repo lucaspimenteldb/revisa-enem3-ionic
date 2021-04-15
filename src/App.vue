@@ -107,7 +107,7 @@ export default defineComponent({
     },
 
     saida () {
-      this.buttons = [{text: 'Quero Estudar', handler: () => this.dialog = false}, {text: 'Sair', handler: () => {this.router.replace('/login')}}]
+      this.buttons = [{text: 'Quero Estudar', handler: () => this.dialog = false}, {text: 'Sair', handler: async() => { await storage.remove('user'); this.router.replace('/login')}}]
       this.dialog = true;
     }
   }

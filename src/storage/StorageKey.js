@@ -13,6 +13,10 @@ let getkey = (key) => {
     return Storage.get({key});
 }
 
-let object = {set: setKey, get: getkey};
+let removeKey = async (key) => {
+    await Storage.remove({key});
+}
+
+let object = {set: setKey, get: getkey, remove: removeKey};
 
 export default object;
