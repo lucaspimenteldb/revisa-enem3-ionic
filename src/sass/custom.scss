@@ -40,6 +40,10 @@
 .border-none {
   border: none;
 }
+.border-1 {
+  border-width: 1px;
+  border-style: solid;
+}
 .border-2 {
   border-width: 2px;
   border-style: solid;
@@ -104,6 +108,14 @@
 .bg-primary {
   background-color: var(--ion-color-primary);
   --background: var(--ion-color-primary);
+}
+.bg-verde {
+  background-color: var(--ion-color-verde);
+  --background: var(--ion-color-verde);
+}
+.bg-vermelho {
+  background-color: var(--ion-color-vermelho);
+  --background: var(--ion-color-vermelho);
 }
 
 .text-white {
@@ -330,8 +342,29 @@ text-xl {
 .ml-auto {
   margin-left: auto;
 }
+.mb-0 {
+  margin-bottom: 4px;
+}
 .mb-4 {
   margin-bottom: 4px;
+}
+.mb-8 {
+  margin-bottom: 8px;
+}
+.mb-32 {
+  margin-bottom: 32px;
+}
+.mb-48 {
+  margin-bottom: 48px;
+}
+.mb-64 {
+  margin-bottom: 64px;
+}
+.mb-120 {
+  margin-bottom: 120px;
+}
+.mt-0 {
+  margin-top: 0;
 }
 .mt-8 {
   margin-top: 8px;
@@ -348,6 +381,12 @@ text-xl {
 }
 .p-8 {
   padding: 8px;
+}
+.pt-8 {
+  padding-top: 8px;
+}
+.pt-10 {
+  padding-top: 10px;
 }
 
 .flex {
@@ -370,4 +409,8 @@ text-xl {
 }
 .vertical-text-bottom {
   vertical-align: text-bottom;
+}
+
+.pointer-events-none {
+  pointer-events: none;
 }

@@ -99,7 +99,19 @@ const routes = [
       {
         path: 'ranking',
         component: () => import('@/views/ranking/RankingInicio.vue')
-      }
+      },
+      {
+        path: 'simulado',
+        component: () => import('@/views/simulados/SimuladosInicio.vue')
+      },
+      {
+        path: 'ver-simulado',
+        component: () => import('@/views/simulados/SimuladosDiasRedacao.vue')
+      },
+      {
+        path: 'responder-simulado',
+        component: () => import('@/views/simulados/ResoponderSimulado.vue')
+      },
     ]
   }
 ]
