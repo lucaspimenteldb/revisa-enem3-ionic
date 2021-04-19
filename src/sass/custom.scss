@@ -146,6 +146,11 @@ p, h1, h2, h3, h4, h5 {
   }
 }
 p, h1, h2, h3, h4, h5 {
+  &.text-md {
+    font-size: 1rem;
+  }
+}
+p, h1, h2, h3, h4, h5 {
   &.text-lg {
     font-size: 1.15rem;
   }
@@ -375,9 +380,19 @@ text-xl {
 .mt-48 {
   margin-top: 48px;
 }
+.mt-64 {
+  margin-top: 64px;
+}
+.mt-80 {
+  margin-top: 80px;
+}
 .pv-8 {
   padding-top: 8px;
   padding-bottom: 8px;
+}
+.py-16 {
+  padding-top: 16px;
+  padding-bottom: 16px;
 }
 .p-8 {
   padding: 8px;

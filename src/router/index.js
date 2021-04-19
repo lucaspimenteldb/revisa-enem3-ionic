@@ -122,19 +122,19 @@ const router = createRouter({
   routes
 })
 
-router.beforeEach( async (to, from, next) => {
-  try{
-    let user = JSON.parse(window.localStorage.getItem('_cap_user'));
-    if (user && to.name == 'login') {
-      await api.get('/noticias');
-      next({name: 'home'})
-  }
-  }catch(e) {
-    console.log(e);
-    next();
-  }
-
-  next();
-});
+// router.beforeEach( async (to, from, next) => {
+//   try{
+//     let user = JSON.parse(window.localStorage.getItem('_cap_user'));
+//     if (user && to.name == 'login') {
+//       await api.get('/noticias');
+//       next({name: 'home'})
+//   }
+//   }catch(e) {
+//     console.log(e);
+//     next();
+//   }
+//
+//   next();
+// });
 
 export default router

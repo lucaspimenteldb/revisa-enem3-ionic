@@ -1,15 +1,106 @@
 <template>
   <ion-page>
-    <ion-content>
+    <!--  menuzao lateral para ver o gabarito e os detalhes  -->
+    <ion-menu
+        side="end"
+        menu-id="gabarito"
+        content-id="responder"
+    >
+      <ion-content id="menuzao">
+        <ion-fab vertical="top" horizontal="end">
+          <ion-fab-button color="dark" @click="toggleMenu">
+            <ion-icon :icon="closeCircleOutline" style="font-size: 30px;"></ion-icon>
+          </ion-fab-button>
+        </ion-fab>
+
+        <ion-list class="mt-64">
+          <ion-item lines="none" @click="setOpen(true)">
+            <ion-label>
+              Ver gabarito
+            </ion-label>
+          </ion-item>
+          <ion-item lines="none" class="mt-8">
+            <ion-label>
+              Detalhes do simulado
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+    </ion-menu>
+
+    <!--  modal com o gabarito das coisas ou os detalhes  -->
+    <ion-modal
+        :is-open="isOpenRef"
+        css-class="modalzao"
+        @onDidDismiss="setOpen(false)"
+    >
+      <ion-content id="gabarito">
+        <ion-fab vertical="top" horizontal="end">
+          <ion-fab-button color="dark" @click="setOpen(false)">
+            <ion-icon :icon="closeCircleOutline" style="font-size: 30px;"></ion-icon>
+          </ion-fab-button>
+        </ion-fab>
+
+        <ion-item class="mt-80 pv-8" lines="none">
+          <ion-icon
+              slot="start"
+              :icon="gridOutline"
+              color="linguagens"
+          />
+          <ion-label color="light" class="ion-text-wrap">
+            <p class="font-bold">
+              Gabarito
+            </p>
+            <p class="text-md font-bold">
+              Linguagens, códigos e suas tecnologias
+            </p>
+          </ion-label>
+          <ion-icon
+              slot="end"
+              :icon="chevronDownOutline"
+              color="light"
+          />
+        </ion-item>
+        <ion-item class="mt-8 pv-8" lines="none">
+          <ion-icon
+              slot="start"
+              :icon="gridOutline"
+              color="humanas"
+          />
+          <ion-label color="light" class="ion-text-wrap">
+            <p class="font-bold">
+              Gabarito
+            </p>
+            <p class="text-md font-bold">
+              Ciências Humanas e suas tecnologias
+            </p>
+          </ion-label>
+          <ion-icon
+              slot="end"
+              :icon="chevronDownOutline"
+              color="light"
+          />
+        </ion-item>
+      </ion-content>
+    </ion-modal>
+
+
+    <ion-content id="responder">
       <div class="ion-padding fundo-cima">
         <h4 class="ion-margin-vertical">
          1º Dia de Simulado
         </h4>
+
+        <ion-fab class="mt-8" vertical="top" horizontal="end">
+          <ion-fab-button color="dark" @click="toggleMenu">
+            <ion-icon :icon="menuOutline"></ion-icon>
+          </ion-fab-button>
+        </ion-fab>
       </div>
 
-      <ion-list class="ion-padding-vertical rounded-top">
+      <ion-list class="ion-padding-vertical rounded-top questao">
         <!-- cardzao da questao -->
-        <ion-item lines="none">
+        <ion-item lines="none" class="questao">
           <div class="flex flex-column text-black">
             <p class="flex ion-align-items-center ion-justify-content-between">
               <b>Questão - {{ questao.numero }}</b>
@@ -93,8 +184,8 @@
 </template>
 
 <script>
-import {IonPage,IonTitle, IonContent, IonItem, IonLabel, IonList, IonIcon, IonButton, IonProgressBar, IonText} from '@ionic/vue';
-import {notifications, arrowForwardCircleOutline, bookmarks, bookmarksOutline} from 'ionicons/icons';
+import {IonPage,IonTitle, IonHeader, IonToolbar, IonContent, IonItem, IonLabel, IonList, IonIcon, IonButton, IonProgressBar, IonText, IonMenu, IonFab, IonFabButton, menuController, modalController, IonModal} from '@ionic/vue';
+import {bookmarks, bookmarksOutline, closeCircleOutline, menuOutline, gridOutline, chevronDownOutline} from 'ionicons/icons';
 import { useRouter, useRoute } from 'vue-router'
 import Loading from "../../components/auxiliares/Loading";
 import api from '../../api/basicUrl';
@@ -103,14 +194,22 @@ import storage from '../../storage/StorageKey';
 
 export default {
   name: 'Simulados',
-  components: {IonPage, IonTitle, IonContent, IonItem, IonLabel, IonList, IonButton, IonIcon, IonProgressBar, IonText, Loading},
+  components: {IonPage, IonTitle, IonHeader, IonToolbar, IonContent, IonItem, IonLabel, IonList, IonButton, IonIcon, IonProgressBar, IonText, Loading, IonMenu, IonFab, IonFabButton, IonModal},
 
   setup () {
     const loading = ref(false);
+    const isOpenRef = ref(false);
+    const setOpen = state => isOpenRef.value = state;
 
     return {
       bookmarks,
       bookmarksOutline,
+      closeCircleOutline,
+      menuOutline,
+      gridOutline,
+      chevronDownOutline,
+      isOpenRef,
+      setOpen,
       router: useRouter(),
       route: useRoute(),
       loading,
@@ -157,9 +256,12 @@ export default {
     }
   },
 
-  methods :{
-
-  },
+  methods: {
+    toggleMenu() {
+      menuController.enable(true, 'gabarito');
+      menuController.toggle('gabarito');
+    },
+  }
 }
 </script>
 
@@ -167,12 +269,24 @@ export default {
 ion-content {
   --background: var(--ion-color-primary);
 }
-ion-item {
+ion-item.questao {
   --background: white;
 }
-ion-list {
+ion-list.questao {
   background: white;
   --background: white;
+}
+#menuzao ion-item, #menuzao ion-list {
+  background: var(--ion-color-primary);
+  --background: var(--ion-color-primary);
+}
+#gabarito {
+  background: rgba(20, 20, 20, .3);
+  --background: rgba(20, 20, 20, .3);
+}
+#gabarito ion-item, #gabarito ion-list {
+  background: #fff;
+  --background: #fff;
 }
 .alternativas {
   height: auto;
