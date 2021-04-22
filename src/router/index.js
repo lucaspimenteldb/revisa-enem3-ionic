@@ -131,6 +131,7 @@ router.beforeEach( async (to, from, next) => {
   }
   }catch(e) {
     console.log(e);
+    window.localStorage.removeItem('_cap_user');
     next();
   }
 

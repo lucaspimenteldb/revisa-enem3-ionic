@@ -37,8 +37,11 @@ const errorHandler = error => {
 };
 
 const errorHandlerResponse = error => {
-    if(error.response.status == 401){
-        window.location.href = '/login';
+    if(error.response){
+        if (error.response.status == 401){
+            window.location.href = '/login';
+        }
+
     }
     return Promise.reject(error);
 };

@@ -70,6 +70,7 @@
     import {ref} from 'vue';
     import Loading from "@/components/auxiliares/Loading";
     import api from '../api/basicUrl';
+    import sqlite from "@/storage/Sqlite";
 
     export default {
         name: 'Home',
@@ -96,53 +97,39 @@
                 slideOpts,
 
                 menus: ref([
-                    // {
-                    //     ttl: 'Atividades',
-                    //     rota: 'atividades',
-                    //     class: 'atividades__fundo',
-                    //     notificacao: true,
-                    // },
-                    // {
-                    //     ttl: 'Videoaulas',
-                    //     rota: 'videoaulas',
-                    //     class: 'videoaulas__fundo',
-                    //     notificacao: false,
-                    // },
-                    // {
-                    //     ttl: 'Redações',
-                    //     rota: 'redacoes',
-                    //     class: 'redacoes__fundo',
-                    //     notificacao: true,
-                    // },
-                    // {
-                    //     ttl: 'Ranking',
-                    //     rota: 'ranking',
-                    //     class: 'ranking__fundo',
-                    //     notificacao: false,
-                    // },
-                    // {
-                    //     ttl: 'Praticar',
-                    //     rota: 'praticar',
-                    //     class: 'praticar__fundo',
-                    //     notificacao: false,
-                    // },
+
                 ]),
             };
         },
 
-        async created() {
+        async ionViewWillEnter() {
             try {
                 this.loading = true
                 let dados = await api.get('/noticias');
                 this.noticias = dados.data.noticias;
                 this.menus = dados.data.menus;
+               await sqlite.insertBatch(this.sqlite, this.noticias, 'noticia');
+               await sqlite.insertBatch(this.sqlite, this.menus, 'menu_mobile');
                 this.loading = false;
             } catch (e) {
+                 this.loading = false;
+                 let menus = await sqlite.consulta(this.sqlite, 'select * from menu_mobile', []);
+                 let noticias = await sqlite.consulta(this.sqlite, 'select * from noticia', []);
+                 this.menus = this.inserirElementos(menus);
+                 this.noticias = this.inserirElementos(noticias);
                 console.log(e);
-                this.loading = false;
             }
+        },
 
+        methods:{
+            inserirElementos (arrayFor) {
+                let array = [];
+                for (let i = 0; i < arrayFor.length; i++) {
+                    array.push(arrayFor.item(i));
+                }
 
+                return array;
+            }
         }
     }
 </script>

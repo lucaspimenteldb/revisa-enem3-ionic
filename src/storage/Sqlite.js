@@ -76,6 +76,19 @@ sqlite.insertUnique = async (db, table, campos, valores) => {
     }
 }
 
+sqlite.consulta = async (db, query, param = []) => {
+    try{
+        if (!window.sqlitePlugin) {
+            return;
+        }
+        let dados = await promiseAuxiliar(db, query, param);
+        return dados.rows;
+    }catch (e) {
+        console.log('Erro ao consultar', e);
+        throw e;
+    }
+};
+
 sqlite.insertBatch = async (db, objeto, tabela) => {
     try{
         if (!db) {
@@ -89,7 +102,15 @@ sqlite.insertBatch = async (db, objeto, tabela) => {
         let arrayGeral = [];
         for (let index of objeto) {
             let keys = (Object.keys(index)).join(',');
+            let keysArray = keys.split(',');
+            let indiceId = keysArray.indexOf('id');
             let valores = (Object.values(index));
+
+            let data = await sqlite.consulta(db,'select id from '+tabela+' where id = ?', [valores[indiceId]]);
+            if (data.length > 0) {
+                continue;
+            }
+
             let interrogacoes = Array.from(valores).fill('?').join(',');
             let prefix = `insert into ${tabela} (${keys}) values (${interrogacoes})`;
             arrayGeral.push([prefix, valores]);
@@ -102,27 +123,15 @@ sqlite.insertBatch = async (db, objeto, tabela) => {
     }
 }
 
-sqlite.consulta = async (db, query) => {
-    try{
-        if (!window.sqlitePlugin) {
-            return;
-        }
-        let dados = await promiseAuxiliar(db, query, []);
-        console.log('Mis', dados.rows.item(0));
-    }catch (e) {
-        console.log('Erro ao consultar', e);
-    }
-};
-
 sqlite.home = async () => {
     try{
         let db;
         if (!window.sqlitePlugin) {
-            db = window.openDatabase('Porco', '1.0', 'Data', 2*1024*1024);
+            db = window.openDatabase('Porco', '1.1', 'Data', 2*1024*1024);
             return db;
         }
         else {
-            db = window.sqlitePlugin.openDatabase({name: 'Porco5.db', location: 'default'});
+            db = window.sqlitePlugin.openDatabase({name: 'Porco8.db', location: 'default'});
             console.log('SQLITE',db)
             sqlite.createTablesInit(db);
             return db;
