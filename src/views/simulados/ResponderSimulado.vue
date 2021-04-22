@@ -184,17 +184,19 @@
 </template>
 
 <script>
-import {IonPage,IonTitle, IonHeader, IonToolbar, IonContent, IonItem, IonLabel, IonList, IonIcon, IonButton, IonProgressBar, IonText, IonMenu, IonFab, IonFabButton, menuController, modalController, IonModal} from '@ionic/vue';
+// import {IonPage,IonTitle, IonHeader, IonToolbar, IonContent, IonItem, IonLabel, IonList, IonIcon, IonButton, IonProgressBar, IonText, IonMenu, IonFab, IonFabButton, menuController, modalController, IonModal} from '@ionic/vue';
+import {IonPage, IonContent, IonItem, IonLabel, IonList, IonIcon, IonButton, IonMenu, IonFab, IonFabButton, menuController, IonModal} from '@ionic/vue';
 import {bookmarks, bookmarksOutline, closeCircleOutline, menuOutline, gridOutline, chevronDownOutline} from 'ionicons/icons';
 import { useRouter, useRoute } from 'vue-router'
 import Loading from "../../components/auxiliares/Loading";
-import api from '../../api/basicUrl';
+// import api from '../../api/basicUrl';
 import { ref } from 'vue';
-import storage from '../../storage/StorageKey';
+// import storage from '../../storage/StorageKey';
 
 export default {
   name: 'Simulados',
-  components: {IonPage, IonTitle, IonHeader, IonToolbar, IonContent, IonItem, IonLabel, IonList, IonButton, IonIcon, IonProgressBar, IonText, Loading, IonMenu, IonFab, IonFabButton, IonModal},
+  // components: {IonPage, IonTitle, IonHeader, IonToolbar, IonContent, IonItem, IonLabel, IonList, IonButton, IonIcon, IonProgressBar, IonText, Loading, IonMenu, IonFab, IonFabButton, IonModal},
+  components: {IonPage, IonContent, IonItem, IonLabel, IonList, IonButton, IonIcon, Loading, IonMenu, IonFab, IonFabButton, IonModal},
 
   setup () {
     const loading = ref(false);
