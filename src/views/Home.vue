@@ -102,7 +102,7 @@
             };
         },
 
-        async ionViewWillEnter() {
+        async created() {
             try {
                 this.loading = true
                 let dados = await api.get('/noticias');
