@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import Tabs from '../views/Tabs.vue'
-import api from '../api/basicUrl';
+import Storage from '../storage/StorageKey';
 
 const routes = [
   {
@@ -124,14 +124,14 @@ const router = createRouter({
 
 router.beforeEach( async (to, from, next) => {
   try{
-    let user = JSON.parse(window.localStorage.getItem('_cap_user'));
+    let user = await Storage.get('user');
     if (user && to.name == 'login') {
-      await api.get('/noticias');
+      // await api.get('/noticias');
       next({name: 'home'})
   }
   }catch(e) {
     console.log(e);
-    window.localStorage.removeItem('_cap_user');
+    // window.localStorage.removeItem('_cap_user');
     next();
   }
 
