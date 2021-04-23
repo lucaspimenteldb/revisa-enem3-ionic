@@ -130,7 +130,7 @@ export default  {
       this.loading = true;
       let volumes = await api.get('/volumes');
       this.volumes = volumes.data.volumes;
-      await sqlite.insertBatch(this.sqlite, this.volumes, 'volume', ['rota']);
+      await sqlite.insertBatch(this.sqlite, this.volumes, 'volume');
     }catch (e) {
         console.log(e);
         await this.getChache();

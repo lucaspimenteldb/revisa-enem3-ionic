@@ -7,7 +7,8 @@ sqlite.createTablesInit = async (db) => {
         }
         await db.sqlBatch([['CREATE table if not exists menu_mobile(id integer primary key, nome TEXT, status TEXT, slug TEXT, disabled INTEGER)'],
                                        ['CREATE table if not exists noticia(id integer primary key, imagem TEXT)'],
-                                       ['CREATE table if not exists volume(rota integer primary key, ttl TEXT, liberado integer)'],
+                                       ['CREATE table if not exists volume(id integer primary key, rota integer, ttl TEXT, liberado integer)'],
+                                       ['CREATE table if not exists materia(id integer primary key, ttl TEXT, id_user integer, porcentagem integer, msg TEXT, progresso integer)'],
             ],
             );
         console.log('certo tudo');
@@ -164,7 +165,7 @@ sqlite.home = async () => {
             return db;
         }
         else {
-            db = window.sqlitePlugin.openDatabase({name: 'Porco11.db', location: 'default'});
+            db = window.sqlitePlugin.openDatabase({name: 'Porco13.db', location: 'default'});
             sqlite.createTablesInit(db);
             return db;
         }

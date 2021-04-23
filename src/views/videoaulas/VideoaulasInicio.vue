@@ -72,9 +72,13 @@ import Loading from "../../components/auxiliares/Loading";
 import api from '../../api/basicUrl';
 import { ref } from 'vue';
 import storage from '../../storage/StorageKey';
+import sqlite from "../../storage/Sqlite";
+import methodsGlobal from "../../mixins/methodsGlobal";
+import network from "../../plugins/network";
 
 export default {
   name: 'Videoaulas',
+  mixins: [methodsGlobal],
   components: {IonPage, IonTitle, IonContent, IonItem, IonLabel, IonList, IonIcon, IonSelect, IonSelectOption, IonProgressBar, IonText, Loading},
 
   setup () {
@@ -108,16 +112,28 @@ export default {
 
     async getMaterias () {
       try {
+        let status = await network.getStatus();
+        if (!status.connected){
+          await this.getChache();
+          return;
+        }
         this.loading = true;
         let volume = this.route.params.id;
         let dados = await api.get("/materias/"+volume+'/'+this.user.id);
         console.log(dados);
         this.disciplinas = dados.data.materias;
         this.disciplinasAuxiliar = dados.data.materias;
+        await sqlite.insertBatch(this.sqlite, this.disciplinasAuxiliar, 'materia');
       }catch (e) {
         console.log(e);
       }
       this.loading = false;
+    },
+
+    async getChache() {
+      let materias = await sqlite.consulta(this.sqlite, 'select * from materia', []);
+      this.disciplinas = this.inserirElementos(materias);
+      this.disciplinasAuxiliar = this.inserirElementos(materias);
     }
 
   },
