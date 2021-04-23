@@ -72,9 +72,11 @@
     import api from '../api/basicUrl';
     import sqlite from "@/storage/Sqlite";
     import network from '../plugins/network';
+    import methodsGlobal from '../mixins/methodsGlobal';
 
     export default {
         name: 'Home',
+        mixins: [methodsGlobal],
         components: {Loading, IonContent, IonList, IonItem, IonLabel, IonPage, IonImg, IonSlides, IonSlide},
 
         setup() {
@@ -107,7 +109,7 @@
             try {
                 let status = await network.getStatus();
                 if (!status.connected){
-                    await this.getCachedData();
+                    await this.getChache();
                     return;
                 }
                 this.loading = true
@@ -125,15 +127,6 @@
         },
 
         methods:{
-            inserirElementos (arrayFor) {
-                let array = [];
-                for (let i = 0; i < arrayFor.length; i++) {
-                    array.push(arrayFor.item(i));
-                }
-
-                return array;
-            },
-
             async getChache() {
                 let menus = await sqlite.consulta(this.sqlite, 'select * from menu_mobile', []);
                 let noticias = await sqlite.consulta(this.sqlite, 'select * from noticia', []);

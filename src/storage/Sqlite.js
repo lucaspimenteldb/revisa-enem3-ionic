@@ -6,7 +6,9 @@ sqlite.createTablesInit = async (db) => {
             return false;
         }
         await db.sqlBatch([['CREATE table if not exists menu_mobile(id integer primary key, nome TEXT, status TEXT, slug TEXT, disabled INTEGER)'],
-                                       ['CREATE table if not exists noticia(id integer primary key, imagem TEXT)']],
+                                       ['CREATE table if not exists noticia(id integer primary key, imagem TEXT)'],
+                                       ['CREATE table if not exists volume(rota integer primary key, ttl TEXT, liberado integer)'],
+            ],
             );
         console.log('certo tudo');
     }catch (e) {
@@ -89,7 +91,40 @@ sqlite.consulta = async (db, query, param = []) => {
     }
 };
 
-sqlite.insertBatch = async (db, objeto, tabela) => {
+const verificandoRestricoes = async (keys, valores, arraysRestricoes, tabela, db) => {
+    try{
+        let where = ' where ';
+        if (keys.length <= 0 || valores.length <= 0 || arraysRestricoes.length <= 0){
+            return;
+        }
+
+        let valoresDoWhere = [];
+        for (let i = 0; i < arraysRestricoes.length; i++) {
+            let indiceId = keys.indexOf(arraysRestricoes[i]);
+            if (i == 0) {
+                where += arraysRestricoes[i]+ ' = ?';
+            }else{
+                where += ' and '+   arraysRestricoes[i]+ ' = ?' ;
+            }
+
+            valoresDoWhere.push(valores[indiceId]);
+        }
+
+        let data = await sqlite.consulta(db,'select * from '+tabela+where, valoresDoWhere);
+        console.log('query:', 'select * from '+tabela+where);
+        console.log('valores: ', valoresDoWhere);
+        if (data.length > 0) {
+            return true;
+        }
+    }catch (e) {
+        console.log('Verificar: ',e);
+    }
+
+    return false;
+
+}
+
+sqlite.insertBatch = async (db, objeto, tabela, arrayRestricoes = ['id']) => {
     try{
         if (!db) {
             console.log('conexão não realizada');
@@ -103,11 +138,10 @@ sqlite.insertBatch = async (db, objeto, tabela) => {
         for (let index of objeto) {
             let keys = (Object.keys(index)).join(',');
             let keysArray = keys.split(',');
-            let indiceId = keysArray.indexOf('id');
             let valores = (Object.values(index));
 
-            let data = await sqlite.consulta(db,'select id from '+tabela+' where id = ?', [valores[indiceId]]);
-            if (data.length > 0) {
+            let data = await verificandoRestricoes(keysArray, valores, arrayRestricoes, tabela,db);
+            if (data) {
                 continue;
             }
 
@@ -116,8 +150,7 @@ sqlite.insertBatch = async (db, objeto, tabela) => {
             arrayGeral.push([prefix, valores]);
         }
 
-        let dados = await promiseBatch(db, arrayGeral);
-        console.log('Batch',dados);
+        await promiseBatch(db, arrayGeral);
     }catch (e) {
         console.log('Erro ao executar o batch', e);
     }
@@ -131,8 +164,7 @@ sqlite.home = async () => {
             return db;
         }
         else {
-            db = window.sqlitePlugin.openDatabase({name: 'Porco8.db', location: 'default'});
-            console.log('SQLITE',db)
+            db = window.sqlitePlugin.openDatabase({name: 'Porco11.db', location: 'default'});
             sqlite.createTablesInit(db);
             return db;
         }

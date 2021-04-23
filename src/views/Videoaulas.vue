@@ -71,13 +71,17 @@ import { IonPage, IonContent, IonList, IonItem, IonLabel, IonIcon, IonImg, } fro
 import {playCircleOutline, lockClosed} from 'ionicons/icons';
 import Loading from "../components/auxiliares/Loading";
 import api from '../api/basicUrl';
+import network from '../plugins/network';
 import {ref} from 'vue';
 
 import { useRouter } from 'vue-router'
+import sqlite from "../storage/Sqlite";
+import methodsGlobal from "../mixins/methodsGlobal";
 
 export default  {
   name: 'Videoaulas',
   components: { Loading, IonContent, IonPage, IonList, IonItem, IonLabel, IonIcon, IonImg, },
+  mixins: [methodsGlobal],
 
   setup () {
     const volumes = ref([]);
@@ -118,19 +122,30 @@ export default  {
 
   async ionViewWillEnter () {
     try {
+      let status = await network.getStatus();
+      if (!status.connected){
+        await this.getChache();
+        return;
+      }
       this.loading = true;
       let volumes = await api.get('/volumes');
       this.volumes = volumes.data.volumes;
+      await sqlite.insertBatch(this.sqlite, this.volumes, 'volume', ['rota']);
     }catch (e) {
         console.log(e);
-        alert("Não foi possível carregar as informações.Verifique a sua conexão e tente novamente");
+        await this.getChache();
     }
 
     this.loading = false;
 
+  },
+
+  methods: {
+    async getChache() {
+      let volumes = await sqlite.consulta(this.sqlite, 'select * from volume', []);
+      this.volumes = this.inserirElementos(volumes);
+    }
   }
-
-
 }
 </script>
 
