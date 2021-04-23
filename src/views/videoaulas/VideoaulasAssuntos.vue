@@ -141,6 +141,7 @@
                 this.nome = 'Volume ' + volume + ' - ' + this.route.query.disciplina;
                 let dados = await api.get("/videos/" + materia + '/' + volume+ '/'+this.user.id);
                 this.aulas = (dados.data.videos);
+                console.log('Aulas: ',this.aulas);
                 this.aulasAuxiliar = (dados.data.videos);
             } catch (e) {
                 console.log(e);

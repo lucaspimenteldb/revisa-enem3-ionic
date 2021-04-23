@@ -120,7 +120,6 @@ export default {
         this.loading = true;
         let volume = this.route.params.id;
         let dados = await api.get("/materias/"+volume+'/'+this.user.id);
-        console.log(dados);
         this.disciplinas = dados.data.materias;
         this.disciplinasAuxiliar = dados.data.materias;
         await sqlite.insertBatch(this.sqlite, this.disciplinasAuxiliar, 'materia');
