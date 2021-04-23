@@ -71,6 +71,7 @@
     import Loading from "@/components/auxiliares/Loading";
     import api from '../api/basicUrl';
     import sqlite from "@/storage/Sqlite";
+    import network from '../plugins/network';
 
     export default {
         name: 'Home',
@@ -104,6 +105,11 @@
 
         async created() {
             try {
+                let status = await network.getStatus();
+                if (!status.connected){
+                    await this.getCachedData();
+                    return;
+                }
                 this.loading = true
                 let dados = await api.get('/noticias');
                 this.noticias = dados.data.noticias;
@@ -113,10 +119,7 @@
                 this.loading = false;
             } catch (e) {
                  this.loading = false;
-                 let menus = await sqlite.consulta(this.sqlite, 'select * from menu_mobile', []);
-                 let noticias = await sqlite.consulta(this.sqlite, 'select * from noticia', []);
-                 this.menus = this.inserirElementos(menus);
-                 this.noticias = this.inserirElementos(noticias);
+                 await this.getChache();
                 console.log(e);
             }
         },
@@ -129,6 +132,13 @@
                 }
 
                 return array;
+            },
+
+            async getChache() {
+                let menus = await sqlite.consulta(this.sqlite, 'select * from menu_mobile', []);
+                let noticias = await sqlite.consulta(this.sqlite, 'select * from noticia', []);
+                this.menus = this.inserirElementos(menus);
+                this.noticias = this.inserirElementos(noticias);
             }
         }
     }

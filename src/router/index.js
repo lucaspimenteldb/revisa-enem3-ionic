@@ -125,7 +125,8 @@ const router = createRouter({
 router.beforeEach( async (to, from, next) => {
   try{
     let user = await Storage.get('user');
-    if (user && to.name == 'login') {
+    console.log('Usuário:' ,user);
+    if (user.value && to.name == 'login') {
       // await api.get('/noticias');
       next({name: 'home'})
   }
