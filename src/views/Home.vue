@@ -185,4 +185,8 @@
     .praticar__fundo {
         --background: url('../../public/assets/images/praticar-fundo.png') var(--ion-color-primary) no-repeat center/70%;
     }
+
+    .simulado__fundo {
+        --background: url('../../public/assets/images/simulado-estadual-fundo.png') var(--ion-color-primary) no-repeat center/70%;
+    }
 </style>

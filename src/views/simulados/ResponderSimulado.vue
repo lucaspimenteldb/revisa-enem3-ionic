@@ -41,49 +41,68 @@
           </ion-fab-button>
         </ion-fab>
 
-        <ion-item class="mt-80 pv-8" lines="none">
-          <ion-icon
-              slot="start"
-              :icon="gridOutline"
-              color="linguagens"
-          />
-          <ion-label color="light" class="ion-text-wrap">
-            <p class="font-bold">
-              Gabarito
-            </p>
-            <p class="text-md font-bold">
-              Linguagens, códigos e suas tecnologias
-            </p>
-          </ion-label>
-          <ion-icon
-              slot="end"
-              :icon="chevronDownOutline"
-              color="light"
-          />
-        </ion-item>
-        <ion-item class="mt-8 pv-8" lines="none">
-          <ion-icon
-              slot="start"
-              :icon="gridOutline"
-              color="humanas"
-          />
-          <ion-label color="light" class="ion-text-wrap">
-            <p class="font-bold">
-              Gabarito
-            </p>
-            <p class="text-md font-bold">
-              Ciências Humanas e suas tecnologias
-            </p>
-          </ion-label>
-          <ion-icon
-              slot="end"
-              :icon="chevronDownOutline"
-              color="light"
-          />
-        </ion-item>
+        <!--    ver o gabairto da área    -->
+        <div
+            v-for="(gabarito, i) in meuGabaritoQuestoes"
+            :key="gabarito.area"
+            :class="i === 0 ? 'mt-80' : 'mt-8'"
+            @click="gabarito.aberto = !gabarito.aberto"
+        >
+          <ion-item
+              class="pv-8"
+              lines="none"
+          >
+            <ion-icon
+                slot="start"
+                :icon="gridOutline"
+                :color="gabarito.color"
+            />
+            <ion-label color="light" class="ion-text-wrap">
+              <p class="font-bold">
+                Gabarito
+              </p>
+              <p class="text-md font-bold">
+                {{ gabarito.area }}
+              </p>
+            </ion-label>
+            <ion-icon
+                slot="end"
+                :icon="chevronDownOutline"
+                color="light"
+            />
+          </ion-item>
+
+          <!--     botao das questoes do gabarito     -->
+          <section v-if="gabarito.aberto" class="ion-padding-horizontal">
+            <ion-button
+                v-for="questao in gabarito.questoes"
+                :key="`questao-${questao}`"
+                class="mr-8 mb-8 btn-questao-gabarito rounded-sm"
+                :class="questao % 2 === 0 ? 'border-2' : 'border-2 border-ruim'"
+            >
+              <div class="flex flex-column ion-align-items-center ion-justify-content-center">
+                <p class="mt-12 mb-0 text-black">
+                  {{ questao }}
+                </p>
+
+                <p class="mt-8 text-black block font-bold">
+                  <span v-if="questao % 2 === 0">A</span>
+                  <span v-if="questao % 2 !== 0">_</span>
+                </p>
+              </div>
+
+              <ion-icon
+                  :icon="bookmarksOutline"
+                  v-if="questao % 2 === 0"
+                  color="warning"
+                  class="mt-1 absolute top-0 right--16 font-bold"
+                  style="font-size: 16px;"
+              />
+            </ion-button>
+          </section>
+        </div>
       </ion-content>
     </ion-modal>
-
 
     <ion-content id="responder">
       <div class="ion-padding fundo-cima">
@@ -254,7 +273,24 @@ export default {
         inicio: '14/11 às 9:85',
         disponivel: '124/124/124 e 1924/2/42',
         areas: 'Linguagens e Ciências Humanas'
-      }
+      },
+
+      meuGabaritoQuestoes: [
+        {
+          area: 'Linguagens, Códigos e suas Tecnologias',
+          icon: '/iconsinhos/linguagens-cor.png',
+          questoes: 44,
+          color: 'linguagens',
+          aberto: ref(false),
+        },
+        {
+          area: 'Ciências Humanas e suas Tecnologias',
+          icon: '/iconsinhos/humanas-cor.png',
+          questoes: 44,
+          color: 'humanas',
+          aberto: ref(false),
+        }
+      ],
     }
   },
 
@@ -289,6 +325,12 @@ ion-list.questao {
 #gabarito ion-item, #gabarito ion-list {
   background: #fff;
   --background: #fff;
+}
+.btn-questao-gabarito {
+  width: 54px;
+  height: 54px;
+  --background: white;
+  background: white;
 }
 .alternativas {
   height: auto;
