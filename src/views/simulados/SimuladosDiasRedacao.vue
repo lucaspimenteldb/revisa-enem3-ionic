@@ -2,7 +2,7 @@
   <ion-page>
     <ion-content>
       <div class="ion-padding fundo-cima">
-        <h4 class="ion-margin-vertical">
+        <h4 class="ion-margin-vertical text-white">
          Simulado Estadual
         </h4>
       </div>
@@ -114,6 +114,7 @@
                   color="primary"
                   class="ion-no-margin ion-margin-vertical text-none font-bold"
                   size="small"
+                  @click="() => router.push('/responder-redacao')"
               >
                 Iniciar redação
               </ion-button>

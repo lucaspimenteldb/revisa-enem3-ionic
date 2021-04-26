@@ -28,13 +28,48 @@
       </ion-content>
     </ion-menu>
 
+    <!-- modal para finalizar o simulado -->
+    <ion-modal
+        :is-open="finalizarOpen"
+        css-class="modalFinalizar"
+        @onDidDismiss="setFinalizarOpen(false)"
+    >
+      <ion-content id="finalizar-simulado-modal" class="ion-padding">
+        <ion-fab vertical="top" horizontal="end">
+          <ion-fab-button color="light" @click="setFinalizarOpen(false)">
+            <ion-icon :icon="closeCircleOutline" style="font-size: 30px;"></ion-icon>
+          </ion-fab-button>
+        </ion-fab>
+
+        <h3 class="mt-64 text-white">
+          1º dia de simulado
+        </h3>
+
+        <p class="text-white">
+          Tem certeza que deseja finalizar e enviar o seu simulado?
+        </p>
+
+        <ion-button
+            color="danger"
+            class="text-none"
+        >
+          Cancelar
+        </ion-button>
+        <ion-button
+            class="text-primary text-none font-bold bg-white rounded"
+        >
+          Finalizar simulado
+        </ion-button>
+      </ion-content>
+    </ion-modal>
+
     <!--  modal com o gabarito das coisas ou os detalhes  -->
     <ion-modal
         :is-open="isOpenRef"
         css-class="modalzao"
         @onDidDismiss="setOpen(false)"
     >
-      <ion-content id="gabarito">
+      <ion-content id="gabarito-modal">
         <ion-fab vertical="top" horizontal="end">
           <ion-fab-button color="light" @click="setOpen(false)">
             <ion-icon :icon="closeCircleOutline" style="font-size: 30px;"></ion-icon>
@@ -67,7 +102,7 @@
             </ion-label>
             <ion-icon
                 slot="end"
-                :icon="chevronDownOutline"
+                :icon="gabarito.aberto ? chevronUpOutline : chevronDownOutline"
                 color="dark"
             />
           </ion-item>
@@ -154,7 +189,7 @@
               <ion-button
                   v-for="alternativa in questao.alternativas"
                   :key="alternativa.alternativa"
-                  class="mb-8 ion-text-wrap ion-text-left border-1 shadow rounded cursor-pointer alternativas"
+                  class="mb-8 ion-text-wrap ion-text-left border-1 shadow rounded cursor-pointer alternativas text-none"
                   :class="questao.selecionada === alternativa.alternativa ? 'text-white' : 'text-black'"
                   :color="questao.selecionada === alternativa.alternativa ? 'primary' : 'white'"
                   @click="questao.selecionada = alternativa.alternativa"
@@ -191,6 +226,7 @@
               <ion-button
                   color="primary"
                   class="ion-float-right text-none font-bold"
+                  @click="setFinalizarOpen(true)"
               >
                 Finalizar simulado
               </ion-button>
@@ -206,7 +242,7 @@
 <script>
 // import {IonPage,IonTitle, IonHeader, IonToolbar, IonContent, IonItem, IonLabel, IonList, IonIcon, IonButton, IonProgressBar, IonText, IonMenu, IonFab, IonFabButton, menuController, modalController, IonModal} from '@ionic/vue';
 import {IonPage, IonContent, IonItem, IonLabel, IonList, IonIcon, IonButton, IonMenu, IonFab, IonFabButton, menuController, IonModal} from '@ionic/vue';
-import {bookmarks, bookmarksOutline, closeCircleOutline, menuOutline, gridOutline, chevronDownOutline} from 'ionicons/icons';
+import {bookmarks, bookmarksOutline, closeCircleOutline, menuOutline, gridOutline, chevronDownOutline, chevronUpOutline} from 'ionicons/icons';
 import { useRouter, useRoute } from 'vue-router'
 import Loading from "../../components/auxiliares/Loading";
 // import api from '../../api/basicUrl';
@@ -222,6 +258,8 @@ export default {
     const loading = ref(false);
     const isOpenRef = ref(false);
     const setOpen = state => isOpenRef.value = state;
+    const finalizarOpen = ref(false);
+    const setFinalizarOpen = state => finalizarOpen.value = state;
 
     return {
       bookmarks,
@@ -230,8 +268,11 @@ export default {
       menuOutline,
       gridOutline,
       chevronDownOutline,
+      chevronUpOutline,
       isOpenRef,
       setOpen,
+      finalizarOpen,
+      setFinalizarOpen,
       router: useRouter(),
       route: useRoute(),
       loading,
@@ -319,7 +360,7 @@ ion-list.questao {
   background: var(--ion-color-primary);
   --background: var(--ion-color-primary);
 }
-#gabarito {
+#gabarito-modal {
   background: rgba(20, 20, 20, .7);
   --background: rgba(20, 20, 20, .7);
 }
@@ -351,6 +392,9 @@ ion-list.questao {
 .text-white {
   color: white;
 }
+.text-primary {
+  color: #000952;
+}
 .relative {
   position: relative;
 }
@@ -369,5 +413,8 @@ h2.font-bold {
 }
 ion-button {
   --box-shadow: none;
+}
+.bg-white {
+  --background: white;
 }
 </style>
