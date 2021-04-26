@@ -2,7 +2,7 @@
   <ion-page>
     <ion-content>
       <div class="ion-padding fundo-cima">
-        <h4 class="ion-margin-vertical">
+        <h4 class="ion-margin-vertical text-white">
          Simulado Estadual
         </h4>
       </div>
@@ -49,7 +49,7 @@
                   class="ion-no-margin ion-margin-vertical text-none font-bold"
                   size="small"
                   :disabled="simulado.status !== 'liberado'"
-                  @click="() => router.push( '/simulado-responder')"
+                  @click="() => router.push( '/responder-simulado')"
               >
                 Iniciar simulado
               </ion-button>

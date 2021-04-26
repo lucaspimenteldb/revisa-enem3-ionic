@@ -8,19 +8,19 @@
     >
       <ion-content id="menuzao">
         <ion-fab vertical="top" horizontal="end">
-          <ion-fab-button color="dark" @click="toggleMenu">
+          <ion-fab-button color="light" @click="toggleMenu">
             <ion-icon :icon="closeCircleOutline" style="font-size: 30px;"></ion-icon>
           </ion-fab-button>
         </ion-fab>
 
         <ion-list class="mt-64">
           <ion-item lines="none" @click="setOpen(true)">
-            <ion-label>
+            <ion-label class="text-white">
               Ver gabarito
             </ion-label>
           </ion-item>
           <ion-item lines="none" class="mt-8">
-            <ion-label>
+            <ion-label class="text-white">
               Detalhes do simulado
             </ion-label>
           </ion-item>
@@ -36,7 +36,7 @@
     >
       <ion-content id="gabarito">
         <ion-fab vertical="top" horizontal="end">
-          <ion-fab-button color="dark" @click="setOpen(false)">
+          <ion-fab-button color="light" @click="setOpen(false)">
             <ion-icon :icon="closeCircleOutline" style="font-size: 30px;"></ion-icon>
           </ion-fab-button>
         </ion-fab>
@@ -57,18 +57,18 @@
                 :icon="gridOutline"
                 :color="gabarito.color"
             />
-            <ion-label color="light" class="ion-text-wrap">
-              <p class="font-bold">
+            <ion-label color="" class="ion-text-wrap">
+              <p class="font-bold text-black">
                 Gabarito
               </p>
-              <p class="text-md font-bold">
+              <p class="text-md font-bold text-black">
                 {{ gabarito.area }}
               </p>
             </ion-label>
             <ion-icon
                 slot="end"
                 :icon="chevronDownOutline"
-                color="light"
+                color="dark"
             />
           </ion-item>
 
@@ -104,14 +104,15 @@
       </ion-content>
     </ion-modal>
 
+    <!-- comeco do conteudo -->
     <ion-content id="responder">
       <div class="ion-padding fundo-cima">
-        <h4 class="ion-margin-vertical">
+        <h4 class="ion-margin-vertical text-white">
          1º Dia de Simulado
         </h4>
 
         <ion-fab class="mt-8" vertical="top" horizontal="end">
-          <ion-fab-button color="dark" @click="toggleMenu">
+          <ion-fab-button color="light" @click="toggleMenu">
             <ion-icon :icon="menuOutline"></ion-icon>
           </ion-fab-button>
         </ion-fab>
@@ -319,8 +320,8 @@ ion-list.questao {
   --background: var(--ion-color-primary);
 }
 #gabarito {
-  background: rgba(20, 20, 20, .3);
-  --background: rgba(20, 20, 20, .3);
+  background: rgba(20, 20, 20, .7);
+  --background: rgba(20, 20, 20, .7);
 }
 #gabarito ion-item, #gabarito ion-list {
   background: #fff;
@@ -365,5 +366,8 @@ ion-list.questao {
 }
 h2.font-bold {
   font-weight: 600;
+}
+ion-button {
+  --box-shadow: none;
 }
 </style>
