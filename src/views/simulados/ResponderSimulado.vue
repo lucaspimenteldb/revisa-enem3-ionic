@@ -157,7 +157,19 @@
         <!-- cardzao da questao -->
         <ion-item lines="none" class="questao">
           <div class="flex flex-column text-black">
-            <p class="flex ion-align-items-center ion-justify-content-between">
+            <div class="ion-padding flex ion-align-items-center ion-justify-content-center font-bold bg-primary rounded">
+              <ion-icon
+                  :icon="timeOutline"
+                  style="font-size: 30px;"
+                  class="mr-4 text-white"
+              />
+
+              <p class="ion-no-margin font-bold text-white">
+                restam 4:30
+              </p>
+            </div>
+
+            <p class="ion-no-margin flex ion-align-items-center ion-justify-content-between">
               <b>Questão - {{ questao.numero }}</b>
 
               <ion-button
@@ -242,7 +254,7 @@
 <script>
 // import {IonPage,IonTitle, IonHeader, IonToolbar, IonContent, IonItem, IonLabel, IonList, IonIcon, IonButton, IonProgressBar, IonText, IonMenu, IonFab, IonFabButton, menuController, modalController, IonModal} from '@ionic/vue';
 import {IonPage, IonContent, IonItem, IonLabel, IonList, IonIcon, IonButton, IonMenu, IonFab, IonFabButton, menuController, IonModal} from '@ionic/vue';
-import {bookmarks, bookmarksOutline, closeCircleOutline, menuOutline, gridOutline, chevronDownOutline, chevronUpOutline} from 'ionicons/icons';
+import {bookmarks, bookmarksOutline, closeCircleOutline, menuOutline, gridOutline, chevronDownOutline, chevronUpOutline, timeOutline} from 'ionicons/icons';
 import { useRouter, useRoute } from 'vue-router'
 import Loading from "../../components/auxiliares/Loading";
 // import api from '../../api/basicUrl';
@@ -269,6 +281,7 @@ export default {
       gridOutline,
       chevronDownOutline,
       chevronUpOutline,
+      timeOutline,
       isOpenRef,
       setOpen,
       finalizarOpen,
