@@ -9,7 +9,7 @@ sqlite.createTablesInit = async (db) => {
                                        ['CREATE table if not exists noticia(id integer primary key, imagem TEXT)'],
                                        ['CREATE table if not exists volume(id integer primary key, rota integer, ttl TEXT, liberado integer)'],
                                        ['CREATE table if not exists materia(id integer, ttl TEXT, id_user integer, porcentagem integer, msg TEXT, progresso integer, primary key(id, id_user))'],
-                                       // ['CREATE table if not exists aula(id integer primary key, id_assunto integer primary key, id_materia integer primary key, id_modulo integer primary key, imagem text, conteudo text, descricao text, inicio_aula integer, msg)'],
+                                       ['CREATE table if not exists aula(id integer, titulo TEXT,descricao TEXT, id_user integer, porcentagem integer, msg TEXT,msgQuest TEXT, finalizadas integer, progresso integer, totalQuestao integer, primary key(id, id_user))'],
             ],
             );
         console.log('certo tudo');
