@@ -22,13 +22,13 @@
             size="large"
             class="ion-margin-end"
             @click="curtida(1)"
-            :color="curtiu === true ? 'success' : ''"
+            :color="curtiu === 1 ? 'success' : ''"
         />
         <ion-icon
             :icon="dislike"
             size="large"
             @click="curtida(0)"
-            :color="curtiu === false ? 'danger' : ''"
+            :color="curtiu === 0 ? 'danger' : ''"
         />
       </section>
 
@@ -118,10 +118,14 @@ import {ref} from 'vue';
 import Loading from "../../components/auxiliares/Loading";
 import storage from '../../storage/StorageKey';
 import AlertGeneric from "../../components/auxiliares/AlertGeneric";
+import sqlite from "../../storage/Sqlite";
+import methodsGlobal from "../../mixins/methodsGlobal";
+import network from "../../plugins/network";
 
 export default {
   name: 'VideoaulasAssuntos',
   components: {IonPage,AlertGeneric, Loading, IonContent, IonItem, IonLabel, IonList, IonIcon},
+  mixins: [methodsGlobal],
 
   setup () {
     const questoes = ref([]);
@@ -257,6 +261,20 @@ export default {
       this.modal = modal;
       return modal.present();
     },
+
+    async getChache() {
+      let videos = await sqlite.consulta(this.sqlite, 'select * from aula where id_user = ? and id = ?', [this.user.id, this.route.params.id]);
+      this.video = this.inserirElementos(videos)[0];
+      this.finalizada = this.video.finalizada;
+      this.curtiu = this.video.curtiu;
+      if (this.curtiu === 0) {
+        this.dislike = thumbsDown;
+      }
+      else if(this.curtiu === 1) {
+        this.curtir = thumbsUp;
+      }
+    }
+
   },
 
    async ionViewWillEnter () {
@@ -264,24 +282,33 @@ export default {
       let usuario = await storage.get('user');
       usuario = JSON.parse(usuario.value);
       this.user = usuario;
+      let status = await network.getStatus();
+      if (!status.connected){
+        await this.getChache();
+        return;
+      }
       this.loading = true;
       let id_video = this.route.params.id;
       let dados = await api.get("/questao-videos/"+id_video+'/'+this.user.id);
       this.video = dados.data.video;
       this.questoes = dados.data.questoes;
+      await sqlite.consulta(this.sqlite, 'update aula set finalizada = ?, curtiu = ? where id = ? and id_user = ?', [this.video.finalizada, dados.data.curtiu, this.video.id, this.user.id]);
       this.curtiu = dados.data.curtiu;
       this.finalizada = this.video.finalizada;
-     if (this.curtiu === false) {
+     if (this.curtiu === 0) {
         this.dislike = thumbsDown;
      }
-     else if(this.curtiu === true) {
+     else if(this.curtiu === 1) {
        this.curtir = thumbsUp;
      }
+      this.loading = false;
     }catch (e) {
+      this.loading = false;
+      await this.getChache();
       this.text.header = 'Não foi possível carregar o vídeo. Por favor verifique a conexão e tente novamente.';
       this.alertMod = true;
     }
-    this.loading = false;
+
   },
 
   created() {

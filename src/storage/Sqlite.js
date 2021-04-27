@@ -9,7 +9,7 @@ sqlite.createTablesInit = async (db) => {
                                        ['CREATE table if not exists noticia(id integer primary key, imagem TEXT)'],
                                        ['CREATE table if not exists volume(id integer primary key, rota integer, ttl TEXT, liberado integer)'],
                                        ['CREATE table if not exists materia(id integer, ttl TEXT, id_user integer, porcentagem integer, msg TEXT, progresso integer, primary key(id, id_user))'],
-                                       ['CREATE table if not exists aula(id integer, titulo TEXT,descricao TEXT, id_user integer, porcentagem integer, msg TEXT,msgQuest TEXT, finalizadas integer, progresso integer, totalQuestao integer, primary key(id, id_user))'],
+                                       ['CREATE table if not exists aula(id integer, titulo TEXT,descricao TEXT, id_user integer, porcentagem integer, curtiu integer, msg TEXT,msgQuest TEXT, finalizadas integer, progresso integer, url2 text, finalizada integer default 0, totalQuestao integer, primary key(id, id_user))'],
             ],
             );
         console.log('certo tudo');
@@ -166,7 +166,7 @@ sqlite.home = async () => {
             return db;
         }
         else {
-            db = window.sqlitePlugin.openDatabase({name: 'Porco17.db', location: 'default'});
+            db = window.sqlitePlugin.openDatabase({name: 'Porco23.db', location: 'default'});
             sqlite.createTablesInit(db);
             return db;
         }

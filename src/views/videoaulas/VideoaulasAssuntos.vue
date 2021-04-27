@@ -162,6 +162,7 @@
                 await sqlite.insertBatch(this.sqlite, this.aulasAuxiliar, 'aula', ['id_user', 'id']);
             } catch (e) {
                 console.log(e);
+                await this.getChache();
             }
 
             this.loading = false;
