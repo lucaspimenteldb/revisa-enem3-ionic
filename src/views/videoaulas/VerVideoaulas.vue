@@ -78,14 +78,14 @@
             </p>
 
             <ion-icon
-                    v-if="q.acertou === true"
+                    v-if="q.acertou === 1"
                 :icon="checkmarkCircleOutline"
                 size="large"
                 color="success"
             />
 
             <ion-icon
-                    v-if="q.acertou === false"
+                    v-if="q.acertou === 0"
                     :icon="closeCircleOutline"
                     size="large"
                     color="danger"
@@ -171,12 +171,12 @@ export default {
         if (curtida === 0) {
           this.dislike = thumbsDown;
           this.curtir = thumbsUpOutline;
-          this.curtiu = false;
+          this.curtiu = 0;
         }
         else {
           this.curtir = thumbsUp;
           this.dislike = thumbsDownOutline
-          this.curtiu = true;
+          this.curtiu = 1;
         }
 
         let id_video = this.route.params.id;
@@ -264,7 +264,9 @@ export default {
 
     async getChache() {
       let videos = await sqlite.consulta(this.sqlite, 'select * from aula where id_user = ? and id = ?', [this.user.id, this.route.params.id]);
+      let questoes = await sqlite.consulta(this.sqlite, 'select * from questao_video where id_user = ? and id_video = ?', [this.user.id, this.route.params.id]);
       this.video = this.inserirElementos(videos)[0];
+      this.questoes = this.inserirElementos(questoes);
       this.finalizada = this.video.finalizada;
       this.curtiu = this.video.curtiu;
       if (this.curtiu === 0) {
@@ -293,6 +295,7 @@ export default {
       this.video = dados.data.video;
       this.questoes = dados.data.questoes;
       await sqlite.consulta(this.sqlite, 'update aula set finalizada = ?, curtiu = ? where id = ? and id_user = ?', [this.video.finalizada, dados.data.curtiu, this.video.id, this.user.id]);
+      await sqlite.insertBatch(this.sqlite, this.questoes, 'questao_video', ['id_user', 'id_video']);
       this.curtiu = dados.data.curtiu;
       this.finalizada = this.video.finalizada;
      if (this.curtiu === 0) {

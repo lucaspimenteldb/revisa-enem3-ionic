@@ -47,7 +47,7 @@
         v-for="alternativa in alternativas"
         :key="alternativa.alternativa+'alternativa'"
         class="ion-margin-vertical ion-no-padding border-2 border-primary rounded"
-        :class="[alternativaMarcada === alternativa.alternativa ? 'alternativa__marcada text-white' : '', acertou[alternativa.alternativa] === true ? 'alternativa__certa' : acertou[alternativa.alternativa] === false ? 'alternativa__errada' : '']"
+        :class="[alternativaMarcada === alternativa.alternativa ? 'alternativa__marcada text-white' : '', acertou[alternativa.alternativa] === 1 ? 'alternativa__certa' : acertou[alternativa.alternativa] === 0 ? 'alternativa__errada' : '']"
         @click="marcarAlternativa(alternativa.alternativa)"
     >
       <article
@@ -121,7 +121,7 @@ export default {
   created() {
    if (this.gabarito.marcada) {
      this.acertou[this.gabarito.marcada] = this.gabarito.acertou;
-     this.acertou[this.gabarito.gabarito] = true;
+     this.acertou[this.gabarito.gabarito] = 1;
      this.resolucao = this.gabarito.comentario;
      this.temNull = false;
    }
