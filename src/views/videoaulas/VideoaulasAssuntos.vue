@@ -135,7 +135,8 @@
         },
 
         async getChache() {
-            let videos = await sqlite.consulta(this.sqlite, 'select * from aula where id_user = ?', [this.user.id]);
+            let videos = await sqlite.consulta(this.sqlite, 'select * from aula where id_user = ? and id_materia = ?', [this.user.id, this.route.params.id]);
+            console.log(this.route.params.id);
             this.aulas = this.inserirElementos(videos);
             this.aulasAuxiliar = this.inserirElementos(videos);
         }

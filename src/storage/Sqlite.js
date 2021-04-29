@@ -9,7 +9,7 @@ sqlite.createTablesInit = async (db) => {
                                        ['CREATE table if not exists noticia(id integer primary key, imagem TEXT)'],
                                        ['CREATE table if not exists volume(id integer primary key, rota integer, ttl TEXT, liberado integer)'],
                                        ['CREATE table if not exists materia(id integer, ttl TEXT, id_user integer, porcentagem integer, msg TEXT, progresso integer, primary key(id, id_user))'],
-                                       ['CREATE table if not exists aula(id integer, titulo TEXT,descricao TEXT, id_user integer, porcentagem integer, curtiu integer, msg TEXT,msgQuest TEXT, finalizadas integer, progresso integer, url2 text, finalizada integer default 0, totalQuestao integer, primary key(id, id_user))'],
+                                       ['CREATE table if not exists aula(id integer, id_materia integer, titulo TEXT,descricao TEXT, id_user integer, porcentagem integer, curtiu integer, msg TEXT,msgQuest TEXT, finalizadas integer, progresso integer, url2 text, finalizada integer default 0, totalQuestao integer, primary key(id, id_user))'],
                                        ['CREATE table if not exists questao_video(id integer, acertou integer,comentario TEXT, id_user integer, descricao text, id_video integer, ra TEXT,rb TEXT, rc TEXT, rd TEXT, re TEXT, resposta text, rgabarito text, primary key(id_video, id_user))'],
                                        ['CREATE table if not exists resposta_video(id_user integer, resposta text, id_questao integer, primary key(id_questao, id_user))'],
                                        ['CREATE table if not exists redacao(id_user integer,descricao text, titulo text,arquivo text, status text,id integer,encerrada integer, data_inicio text, data_fim text, bloqueada integer, primary key(id, id_user))'],
@@ -171,7 +171,7 @@ sqlite.home = async () => {
             return db;
         }
         else {
-            db = window.sqlitePlugin.openDatabase({name: 'Porco30.db', location: 'default'});
+            db = window.sqlitePlugin.openDatabase({name: 'Porco31.db', location: 'default'});
             sqlite.createTablesInit(db);
             return db;
         }
