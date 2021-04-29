@@ -147,38 +147,19 @@
             async getChache() {
                 let redacoes = await sqlite.consulta(this.sqlite, 'select * from user_redacao where id_user = ?', [this.user.id]);
                 this.atividades = this.inserirElementos(redacoes);
+                let id_user_redacao = this.atividades.map((el) => el.id_user_redacao);
+                let string = this.colocarIn(id_user_redacao);
+                let competencias = await sqlite.consulta(this.sqlite, `select * from competencia where id_user_redacao in (${string})`, id_user_redacao);
+                competencias = this.inserirElementos(competencias)
+                this.colocandoCompetencia(competencias);
+                console.log(this.atividades);
             },
 
-            apenasCampo(objeto, campo) {
-                let array = [];
-                for (let i = 0; i < objeto.length; i++) {
-                    for (let j of objeto[i][campo]) {
-                        array.push(j);
-                    }
+            colocandoCompetencia (competencias) {
+                for (let i = 0; i < this.atividades.length; i++) {
+                    this.atividades[i].competencias = competencias.filter((e) => e.id_user_redacao ==  this.atividades[i].id_user_redacao);
                 }
-
-                return array;
-            },
-
-            copiaCampo(objeto) {
-                let array = [];
-
-                for (let i = 0; i < objeto.length; i++) {
-                    array.push(objeto[i]);
-                }
-                return array;
-            },
-
-            removerCampo(objeto, campo) {
-                let array = [];
-                for (let i = 0; i < objeto.length; i++) {
-                    objeto[i][campo] = undefined;
-                }
-
-                return array;
-            },
-
-
+            }
         },
 
         async ionViewWillEnter() {
@@ -200,7 +181,7 @@
                 let competencias = this.apenasCampo(copia, 'competencias');
                 copia = this.removerCampo(copia, 'competencias');
                 await sqlite.insertBatch(this.sqlite, copia, 'user_redacao', ['id_user_redacao']);
-                await sqlite.insertBatch(this.sqlite, competencias, 'competencia', ['id_user_redacao']);
+                await sqlite.insertBatch(this.sqlite, competencias, 'competencia', ['id_user_redacao', 'id']);
 
             } catch (e) {
                 console.log(e);
