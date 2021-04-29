@@ -25,7 +25,7 @@
             <div class="flex flex-column text-black">
               <ion-text color="primary">
                 <h3 class="font-bold text-lg">
-                  Simulado estadual
+                  {{simulado.titulo}}
                 </h3>
               </ion-text>
 
@@ -48,7 +48,7 @@
                   color="primary"
                   class="ion-no-margin ion-margin-vertical text-none font-bold"
                   size="small"
-                  :disabled="simulado.status !== 'liberado'"
+                  :disabled="simulado.liberado !== 1"
                   @click="() => router.push( '/responder-simulado')"
               >
                 Iniciar simulado
@@ -74,9 +74,9 @@ import {IonPage, IonContent, IonItem, IonLabel, IonList, IonButton,  IonText} fr
 import {notifications, arrowForwardCircleOutline} from 'ionicons/icons';
 import { useRouter, useRoute } from 'vue-router'
 import Loading from "../../components/auxiliares/Loading";
-// import api from '../../api/basicUrl';
+import api from '../../api/basicUrl';
 import { ref } from 'vue';
-// import storage from '../../storage/StorageKey';
+import storage from '../../storage/StorageKey';
 
 export default {
   name: 'Simulados',
@@ -98,37 +98,55 @@ export default {
   data () {
     return {
       simulados: [
-        {
-          inicio: '22/05/2020',
-          fim: '30/05/2020',
-          tempo: 120,
-          status: 'liberado',
-          classStatus: 'bg-verde',
-          id: 233,
-        },
-        {
-          inicio: '22/05/2020',
-          fim: '30/05/2020',
-          tempo: 120,
-          status: 'aguardando',
-          classStatus: 'bg-primary',
-          id: 235,
-        },
-        {
-          inicio: '22/05/2020',
-          fim: '30/05/2020',
-          tempo: 120,
-          status: 'expirado',
-          classStatus: 'bg-vermelho',
-          id: 2312,
-        },
+        // {
+        //   inicio: '22/05/2020',
+        //   fim: '30/05/2020',
+        //   tempo: 120,
+        //   status: 'liberado',
+        //   classStatus: 'bg-verde',
+        //   id: 233,
+        // },
+        // {
+        //   inicio: '22/05/2020',
+        //   fim: '30/05/2020',
+        //   tempo: 120,
+        //   status: 'aguardando',
+        //   classStatus: 'bg-primary',
+        //   id: 235,
+        // },
+        // {
+        //   inicio: '22/05/2020',
+        //   fim: '30/05/2020',
+        //   tempo: 120,
+        //   status: 'expirado',
+        //   classStatus: 'bg-vermelho',
+        //   id: 2312,
+        // },
       ],
+      user: {}
     }
   },
 
   methods :{
 
   },
+
+  async ionViewWillEnter () {
+    try {
+      this.loading = false;
+      this.loading = true;
+      let usuario = await storage.get('user');
+      usuario = JSON.parse(usuario.value);
+      this.user = usuario;
+      let dados = await api.get('/simulado-estaduais/'+this.user.id);
+      this.simulados = dados.data.simulados;
+      console.log('simulado', dados.data);
+      this.loading = false;
+    }catch (e) {
+      this.loading = false;
+      console.log(e);
+    }
+  }
 }
 </script>
 
