@@ -49,7 +49,7 @@
                   class="ion-no-margin ion-margin-vertical text-none font-bold"
                   size="small"
                   :disabled="simulado.liberado !== 1"
-                  @click="() => router.push( '/responder-simulado')"
+                  @click="() => router.push( '/responder-simulado/'+simulado.id)"
               >
                 Iniciar simulado
               </ion-button>

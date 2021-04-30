@@ -300,6 +300,14 @@ export default {
       menuController.enable(true, 'gabarito');
       menuController.toggle('gabarito');
     },
+  },
+
+  async ionViewWillEnter () {
+    try {
+      console.log(this.route.params.id);
+    }catch (e) {
+      console.log(e);
+    }
   }
 }
 </script>
