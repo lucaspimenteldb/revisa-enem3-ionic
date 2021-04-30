@@ -37,7 +37,7 @@
                     <ion-text color="vermelho" class="font-bold">{{ simulado.fim }}</ion-text>
                   </p>
 
-                  <p class="mb-0 mt-8">
+                  <p class="mb-0 mt-8" v-if="simulado.tempo">
                     Você ainda tem: <ion-text color="primary" class="font-bold">{{ simulado.tempo}} minutos restantes</ion-text>
                   </p>
                 </ion-text>
@@ -56,9 +56,9 @@
             </div>
           </ion-item>
 
-          <div class="absolute fundo-tudo rounded" :class="simulado.classStatus">
+          <div class="absolute fundo-tudo rounded" :class="simulado.liberado === 4 ? 'bg-verde': simulado.liberado === 2 ? 'bg-block' : simulado.liberado === 1 ? 'bg-primary' : 'bg-danger'">
             <p class="ion-margin-end ion-text-center text-white">
-              Simulado liberado
+              {{simulado.liberado === 4 ? 'Simulado entregue' : simulado.liberado === 2 ? 'Simulado bloqueado' : simulado.liberado === 1 ? 'Simulado liberado' : 'Simulado Expirado'}}
             </p>
           </div>
         </div>
@@ -187,6 +187,18 @@ ion-button {
   bottom: -40px;
   left: 0;
 }
+.bg-verde{
+  background: #0c9041;
+}
+
+.bg-danger {
+  background: #E04A2D;
+}
+
+.bg-block {
+  background: #FCB812;
+}
+
 h2.font-bold {
   font-weight: 600;
 }
