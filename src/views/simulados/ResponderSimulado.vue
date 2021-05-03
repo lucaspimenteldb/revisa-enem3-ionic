@@ -36,13 +36,13 @@
     >
       <ion-content id="finalizar-simulado-modal" class="ion-padding">
         <ion-fab vertical="top" horizontal="end">
-          <ion-fab-button color="light" @click="setFinalizarOpen(false)">
+          <ion-fab-button color="light" @click="setFinalizarOpen(true)">
             <ion-icon :icon="closeCircleOutline" style="font-size: 30px;"></ion-icon>
           </ion-fab-button>
         </ion-fab>
 
         <h3 class="mt-64 text-white">
-          1º dia de simulado
+         {{simulado.titulo}}
         </h3>
 
         <p class="text-white">
@@ -56,6 +56,7 @@
           Cancelar
         </ion-button>
         <ion-button
+                @click="finalizarSimulado"
             class="text-primary text-none font-bold bg-white rounded"
         >
           Finalizar simulado
@@ -242,7 +243,7 @@
               <ion-button
                   color="primary"
                   class="ion-float-right text-none font-bold"
-                  @click="setFinalizarOpen(true)"
+                  @click="verBrancos"
               >
                 Finalizar simulado
               </ion-button>
@@ -365,6 +366,33 @@ export default {
     toggleMenu() {
       menuController.enable(true, 'gabarito');
       menuController.toggle('gabarito');
+    },
+
+    async verBrancos () {
+      try{
+        this.loading = true;
+        this.setFinalizarOpen(true);
+        await api.get('/verificar-brancos/'+this.simulado.id+'/'+this.user.id);
+        this.loading = false;
+      }catch (e) {
+        this.loading = false;
+        console.log(e);
+      }
+    },
+
+    async finalizarSimulado () {
+      try{
+        this.loading = true;
+        let objeto = {
+          id_simulado: this.simulado.id,
+          id_user: this.user.id
+        };
+        await api.post('/finalizar-simulado', objeto);
+        this.loading = false;
+      }catch (e) {
+        console.log(e);
+        this.loading = false;
+      }
     },
 
     async inicio(page = 1) {
