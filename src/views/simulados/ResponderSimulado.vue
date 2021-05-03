@@ -527,13 +527,12 @@ ion-button {
   --box-shadow: none;
 }
 
-.bg-white {
-  --background: white;
-}
-
 .text-alternativa {
   font-family: arial, sans, sans-serif;
   font-size: 13px;
   text-transform: initial;
+}
+.bg-white {
+  --background: white;
 }
 </style>
