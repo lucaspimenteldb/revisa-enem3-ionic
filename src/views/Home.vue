@@ -98,7 +98,7 @@
 </template>
 
 <script>
-import {IonPage, IonContent, IonList, IonItem, IonLabel, IonImg, IonSlides, IonSlide} from '@ionic/vue';
+import {IonPage, IonContent, IonList, IonItem, IonLabel, IonImg, IonSlides, IonSlide, IonIcon} from '@ionic/vue';
 import {heart, airplaneOutline, arrowForwardCircleOutline, notifications} from 'ionicons/icons'
 import {useRouter} from 'vue-router';
 import {ref} from 'vue';
@@ -111,7 +111,7 @@ import methodsGlobal from '../mixins/methodsGlobal';
 export default {
   name: 'Home',
   mixins: [methodsGlobal],
-  components: {Loading, IonContent, IonList, IonItem, IonLabel, IonPage, IonImg, IonSlides, IonSlide},
+  components: {Loading, IonContent, IonList, IonItem, IonLabel, IonPage, IonImg, IonSlides, IonSlide, IonIcon},
 
   setup() {
     let loading = ref(false);
