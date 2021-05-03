@@ -48,7 +48,7 @@
                   color="primary"
                   class="ion-no-margin ion-margin-vertical text-none font-bold"
                   size="small"
-                  :disabled="simulado.liberado !== 1"
+                  :disabled="!simulado.botao"
                   @click="() => router.push( '/responder-simulado/'+simulado.id)"
               >
                 Iniciar simulado
@@ -56,9 +56,9 @@
             </div>
           </ion-item>
 
-          <div class="absolute fundo-tudo rounded" :class="simulado.liberado === 4 ? 'bg-verde': simulado.liberado === 2 ? 'bg-block' : simulado.liberado === 1 ? 'bg-primary' : 'bg-danger'">
+          <div class="absolute fundo-tudo rounded" :class="simulado.liberado">
             <p class="ion-margin-end ion-text-center text-white">
-              {{simulado.liberado === 4 ? 'Simulado entregue' : simulado.liberado === 2 ? 'Simulado bloqueado' : simulado.liberado === 1 ? 'Simulado liberado' : 'Simulado Expirado'}}
+              {{simulado.message}}
             </p>
           </div>
         </div>
