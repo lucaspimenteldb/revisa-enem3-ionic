@@ -2,7 +2,12 @@
   <ion-page>
     <ion-tabs>
       <ion-tab-bar slot="bottom">
-        <ion-tab-button class="tabs" tab="home" href="/home">
+        <ion-tab-button
+            class="tabs"
+            tab="home"
+            href="/home"
+            @click="() => router.push('/home')"
+        >
           <ion-icon icon="/assets/icon/tabs/home.svg" />
           <ion-label>
             Home
@@ -37,6 +42,7 @@
 <script>
 import { IonTabBar, IonTabButton, IonTabs, IonLabel, IonIcon, IonPage } from '@ionic/vue';
 import { ellipse, square, triangle } from 'ionicons/icons';
+import { useRouter } from 'vue-router'
 
 export default {
   name: 'Tabs',
@@ -46,6 +52,7 @@ export default {
       ellipse,
       square,
       triangle,
+      router: useRouter(),
     }
   }
 }

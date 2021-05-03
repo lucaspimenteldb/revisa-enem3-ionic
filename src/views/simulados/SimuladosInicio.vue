@@ -1,9 +1,9 @@
 <template>
   <ion-page>
-    <ion-content>
+    <ion-content :fullscreen="true">
       <div class="ion-padding fundo-cima">
         <h4 class="ion-margin-vertical text-white">
-         Simulado Estadual
+          Simulado Estadual
         </h4>
       </div>
 
@@ -25,7 +25,7 @@
             <div class="flex flex-column text-black">
               <ion-text color="primary">
                 <h3 class="font-bold text-lg">
-                  {{simulado.titulo}}
+                  {{ simulado.titulo }}
                 </h3>
               </ion-text>
 
@@ -33,12 +33,14 @@
                 <ion-text>
                   <p class="ion-no-margin">
                     Disponível entre:
-                    <ion-text color="verde" class="font-bold">{{simulado.inicio}}</ion-text> e
+                    <ion-text color="verde" class="font-bold">{{ simulado.inicio }}</ion-text>
+                    e
                     <ion-text color="vermelho" class="font-bold">{{ simulado.fim }}</ion-text>
                   </p>
 
                   <p class="mb-0 mt-8" v-if="simulado.tempo">
-                    Você ainda tem: <ion-text color="primary" class="font-bold">{{ simulado.tempo}} minutos restantes</ion-text>
+                    Você ainda tem:
+                    <ion-text color="primary" class="font-bold">{{ simulado.tempo }} minutos restantes</ion-text>
                   </p>
                 </ion-text>
               </article>
@@ -58,7 +60,7 @@
 
           <div class="absolute fundo-tudo rounded" :class="simulado.liberado">
             <p class="ion-margin-end ion-text-center text-white">
-              {{simulado.message}}
+              {{ simulado.message }}
             </p>
           </div>
         </div>
@@ -70,12 +72,12 @@
 
 <script>
 // import {IonPage,IonTitle, IonContent, IonItem, IonLabel, IonList, IonIcon, IonButton, IonProgressBar, IonText} from '@ionic/vue';
-import {IonPage, IonContent, IonItem, IonLabel, IonList, IonButton,  IonText, IonIcon} from '@ionic/vue';
+import {IonPage, IonContent, IonItem, IonLabel, IonList, IonButton, IonText, IonIcon} from '@ionic/vue';
 import {notifications, arrowForwardCircleOutline} from 'ionicons/icons';
-import { useRouter, useRoute } from 'vue-router'
+import {useRouter} from 'vue-router'
 import Loading from "../../components/auxiliares/Loading";
 import api from '../../api/basicUrl';
-import { ref } from 'vue';
+import {ref} from 'vue';
 import storage from '../../storage/StorageKey';
 
 export default {
@@ -83,19 +85,18 @@ export default {
   // components: {IonPage, IonTitle, IonContent, IonItem, IonLabel, IonList, IonButton, IonIcon, IonProgressBar, IonText, Loading},
   components: {IonPage, IonContent, IonItem, IonLabel, IonList, IonButton, IonText, IonIcon, Loading},
 
-  setup () {
+  setup() {
     const loading = ref(false);
 
     return {
       notifications,
       arrowForwardCircleOutline,
       router: useRouter(),
-      route: useRoute(),
       loading,
     }
   },
 
-  data () {
+  data() {
     return {
       simulados: [
         // {
@@ -127,22 +128,20 @@ export default {
     }
   },
 
-  methods :{
+  methods: {},
 
-  },
-
-  async ionViewWillEnter () {
+  async ionViewWillEnter() {
     try {
       this.loading = false;
       this.loading = true;
       let usuario = await storage.get('user');
       usuario = JSON.parse(usuario.value);
       this.user = usuario;
-      let dados = await api.get('/simulado-estaduais/'+this.user.id);
+      let dados = await api.get('/simulado-estaduais/' + this.user.id);
       this.simulados = dados.data.simulados;
       console.log('simulado', dados.data);
       this.loading = false;
-    }catch (e) {
+    } catch (e) {
       this.loading = false;
       console.log(e);
     }
@@ -154,32 +153,41 @@ export default {
 ion-content {
   --background: var(--ion-color-primary);
 }
+
 ion-item {
   --background: white;
 }
+
 .fundo-cima {
-  background: url('../../../public/assets/images/simulado-estadual-fundo.png') var(--ion-color-primary) no-repeat center/100%;
+  background: url('../../../public/assets/images/simulado-estadual-fundo.png') var(--ion-color-primary) no-repeat center right/50%;
 }
+
 .text-black {
   color: black;
 }
+
 .text-white {
   color: white;
 }
+
 ion-list {
   --background: url('../../../public/assets/images/bg-principal.png') center;
   background: url('../../../public/assets/images/bg-principal.png') center;
 }
+
 ion-button {
   width: 160px;
   font-size: 1rem;
 }
+
 .relative {
   position: relative;
 }
+
 .absolute {
   position: absolute;
 }
+
 .fundo-tudo {
   padding-top: 12px;
   height: 58px;
@@ -187,7 +195,8 @@ ion-button {
   bottom: -40px;
   left: 0;
 }
-.bg-verde{
+
+.bg-verde {
   background: #0c9041;
 }
 
