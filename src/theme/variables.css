@@ -48,6 +48,20 @@ http://ionicframework.com/docs/theming/ */
   --ion-color-success-shade: #28ba62;
   --ion-color-success-tint: #42d77d;
 
+  --ion-color-verde: #008033;
+  --ion-color-verde-rgb: 0,128,51;
+  --ion-color-verde-contrast: #000000;
+  --ion-color-verde-contrast-rgb: 0,0,0;
+  --ion-color-verde-shade: #016529;
+  --ion-color-verde-tint: #0c9041;
+
+  --ion-color-vermelho: #940000;
+  --ion-color-vermelho-rgb: 148,0,0;
+  --ion-color-vermelho-contrast: #ffffff;
+  --ion-color-vermelho-contrast-rgb: 255,255,255;
+  --ion-color-vermelho-shade: #820303;
+  --ion-color-vermelho-tint: #ad0d0d;
+
   /** warning **/
   --ion-color-warning: #ffc409;
   --ion-color-warning-rgb: 255, 196, 9;

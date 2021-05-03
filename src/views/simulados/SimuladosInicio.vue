@@ -50,6 +50,7 @@
                   size="small"
                   :disabled="!simulado.botao"
                   @click="() => router.push( '/responder-simulado/'+simulado.id)"
+
               >
                 Iniciar simulado
               </ion-button>
@@ -70,7 +71,7 @@
 
 <script>
 // import {IonPage,IonTitle, IonContent, IonItem, IonLabel, IonList, IonIcon, IonButton, IonProgressBar, IonText} from '@ionic/vue';
-import {IonPage, IonContent, IonItem, IonLabel, IonList, IonButton,  IonText} from '@ionic/vue';
+import {IonPage, IonContent, IonItem, IonLabel, IonList, IonButton,  IonText, IonIcon} from '@ionic/vue';
 import {notifications, arrowForwardCircleOutline} from 'ionicons/icons';
 import { useRouter, useRoute } from 'vue-router'
 import Loading from "../../components/auxiliares/Loading";
@@ -81,7 +82,7 @@ import storage from '../../storage/StorageKey';
 export default {
   name: 'Simulados',
   // components: {IonPage, IonTitle, IonContent, IonItem, IonLabel, IonList, IonButton, IonIcon, IonProgressBar, IonText, Loading},
-  components: {IonPage, IonContent, IonItem, IonLabel, IonList, IonButton, IonText, Loading},
+  components: {IonPage, IonContent, IonItem, IonLabel, IonList, IonButton, IonText, IonIcon, Loading},
 
   setup () {
     const loading = ref(false);
