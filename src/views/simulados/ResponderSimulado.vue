@@ -113,7 +113,7 @@
                 v-for="(questao, index) in gabarito.questoes"
                 :key="`questao-${questao.id}`"
                 class="mr-8 mb-8 btn-questao-gabarito rounded-sm"
-                :class="questao % 2 === 0 ? 'border-2' : 'border-2 border-ruim'"
+                :class="questao.resultado === 'Certo' ? 'border-2' : 'border-2 border-ruim'"
             >
               <div class="flex flex-column ion-align-items-center ion-justify-content-center">
                 <p class="mt-12 mb-0 text-black">
@@ -128,7 +128,7 @@
 
               <ion-icon
                   :icon="bookmarksOutline"
-                  v-if="questao % 2 === 0"
+                  v-if="questao.salvar"
                   color="warning"
                   class="mt-1 absolute top-0 right--16 font-bold"
                   style="font-size: 16px;"
@@ -173,7 +173,7 @@
               <b>Questão - {{ questao.numero }}</b>
 
               <ion-button
-                  @click="questao.salvo = !questao.salvo"
+                  @click="salvarResposta()"
                   size="small"
                   class="ion-no-padding w-40 h-40"
                   color="transparent"
@@ -204,7 +204,7 @@
                   class="mb-8 ion-text-wrap ion-text-left border-1 shadow rounded cursor-pointer alternativas text-none"
                   :class="questao.selecionada === alternativa.alternativa ? 'text-white' : 'text-black'"
                   :color="questao.selecionada === alternativa.alternativa ? 'primary' : 'white'"
-                  @click="questao.selecionada = alternativa.alternativa"
+                  @click="questaoSelecionada(alternativa.alternativa)"
                   expand="block"
               >
 
@@ -225,7 +225,7 @@
                   fill="outline"
                   color="primary"
                   class="mr-2 text-none"
-                      @click="questoes(previous)"
+                      @click="questoes(previous, false)"
               >
                 Anterior
               </ion-button>
@@ -234,7 +234,7 @@
                   fill="outline"
                   color="primary"
                   class="text-none"
-                      @click="questoes(nextPage)"
+                      @click="questoes(nextPage,true)"
               >
                 Próxima
               </ion-button>
@@ -332,6 +332,7 @@ export default {
       },
 
       questoesId: [],
+      questoesEmCache: [],
       nextPage: null,
       previous: null,
       simulado: {
@@ -369,6 +370,7 @@ export default {
     async inicio(page = 1) {
       try{
         this.loading = true;
+        this.questoesEmCache = [];
         let questaoId = this.route.params.id;
         let dados = await api.get(`/questoes-estaduais/${questaoId}/${this.user.id}?page=${page}`);
        this.questao = dados.data.questoes.data[0];
@@ -379,14 +381,48 @@ export default {
         this.nextPage = this.verificarNull(dados.data.questoes.next_page_url, dados.data.questoes.path);
         this.previous = this.verificarNull(dados.data.questoes.prev_page_url, dados.data.questoes.path);
         this.loading = false;
+        this.questoesEmCache.push(this.questao);
       }catch (e) {
         console.log(e);
         this.loading = false;
       }
     },
 
-    async questoes(page = 1) {
+     cache (page, prox) {
+        let quest = this.questoesId[page-1];
+
+        let q = this.questoesEmCache.filter((e) => e.id === quest);
+        if(q.length > 0) {
+          this.questao = q[0];
+          if (prox) {
+            this.nextPage = Number(this.nextPage) + 1;
+            this.previous = Number(this.previous) + 1;
+            if(this.nextPage > this.questoesId.length) {
+              this.nextPage = null;
+            }
+          }else {
+            this.previous = Number(this.previous) - 1;
+            this.nextPage = Number(this.nextPage) - 1;
+
+            if (this.previous < 0) {
+              this.previous = 0;
+            }
+
+            if (this.nextPage <= 1) {
+              this.nextPage = 2;
+            }
+          }
+          return true;
+        }
+
+        return false;
+    },
+
+    async questoes(page = 1, prox) {
       try{
+        if (this.cache(page, prox)) {
+          return;
+        }
         this.loading = true;
         let questaoId = this.route.params.id;
         let dados = await api.get(`/questoes-estaduais-parte/${questaoId}/${this.user.id}?page=${page}`);
@@ -395,9 +431,41 @@ export default {
         this.nextPage = this.verificarNull(dados.data.next_page_url, dados.data.path);
         this.previous = this.verificarNull(dados.data.prev_page_url, dados.data.path);
         this.loading = false;
+        this.questoesEmCache.push(this.questao);
       }catch (e) {
         console.log(e);
         this.loading = false;
+      }
+    },
+
+    async salvarResposta () {
+      try{
+        let objeto = {
+          id_questao: this.questao.id,
+          id_user: this.user.id,
+          id_simulado: this.simulado.id,
+          salvar: !this.questao.salvar
+        };
+
+        await api.post('/salvar-resposta', objeto);
+        this.questao.salvar = !this.questao.salvar;
+      }catch (e) {
+        console.log(e);
+      }
+    },
+
+    async questaoSelecionada (alternativa) {
+      try {
+        let objeto = {
+          id_questao: this.questao.id,
+          id_simulado: this.simulado.id,
+          alternativa,
+          id_user: this.user.id
+        };
+        await api.post('/inserir-resposta', objeto);
+        this.questao.selecionada = alternativa;
+      }catch (e) {
+        console.log(e);
       }
     },
 
