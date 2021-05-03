@@ -275,12 +275,9 @@ export default {
     const loading = ref(false);
     const isOpenRef = ref(false);
     const setOpen = state => isOpenRef.value = state;
-<<<<<<< HEAD
+    const user = ref({});
     const finalizarOpen = ref(false);
     const setFinalizarOpen = state => finalizarOpen.value = state;
-=======
-    const user = ref({});
->>>>>>> master
 
     return {
       bookmarks,
@@ -529,15 +526,14 @@ h2.font-bold {
 ion-button {
   --box-shadow: none;
 }
-<<<<<<< HEAD
+
 .bg-white {
   --background: white;
-=======
+}
 
 .text-alternativa {
   font-family: arial, sans, sans-serif;
   font-size: 13px;
-  text-transform: initial
->>>>>>> master
+  text-transform: initial;
 }
 </style>
