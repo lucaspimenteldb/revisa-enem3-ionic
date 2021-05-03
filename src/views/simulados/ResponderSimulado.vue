@@ -110,19 +110,19 @@
           <!--     botao das questoes do gabarito     -->
           <section v-if="gabarito.aberto" class="ion-padding-horizontal">
             <ion-button
-                v-for="questao in gabarito.questoes"
-                :key="`questao-${questao}`"
+                v-for="(questao, index) in gabarito.questoes"
+                :key="`questao-${questao.id}`"
                 class="mr-8 mb-8 btn-questao-gabarito rounded-sm"
                 :class="questao % 2 === 0 ? 'border-2' : 'border-2 border-ruim'"
             >
               <div class="flex flex-column ion-align-items-center ion-justify-content-center">
                 <p class="mt-12 mb-0 text-black">
-                  {{ questao }}
+                  {{ index + 1 }}
                 </p>
 
                 <p class="mt-8 text-black block font-bold">
-                  <span v-if="questao % 2 === 0">A</span>
-                  <span v-if="questao % 2 !== 0">_</span>
+                  <span v-if="questao.resposta">{{questao.resposta}}</span>
+                  <span v-if="!questao.resposta">_</span>
                 </p>
               </div>
 
@@ -143,7 +143,7 @@
     <ion-content id="responder">
       <div class="ion-padding fundo-cima">
         <h4 class="ion-margin-vertical text-white">
-         1º Dia de Simulado
+         {{simulado.titulo}}
         </h4>
 
         <ion-fab class="mt-8" vertical="top" horizontal="end">
@@ -179,8 +179,8 @@
                   color="transparent"
               >
                 <ion-icon
-                    :color="questao.salvo ? 'warning' : 'primary'"
-                    :icon="questao.salvo ? bookmarks : bookmarksOutline"
+                    :color="questao.salvar ? 'warning' : 'primary'"
+                    :icon="questao.salvar ? bookmarks : bookmarksOutline"
                     style="font-size: 34px;"
                 />
               </ion-button>
@@ -193,8 +193,8 @@
                 {{ questao.area }}
               </h5>
 
-              <p>
-                {{ questao.enunciado }}
+              <p v-html="questao.descricao">
+
               </p>
 
 
@@ -209,11 +209,11 @@
               >
 
                   <div class="ion-margin-vertical mr-8 pt-10 text-black border-2 border-primary bg-white rounded-full alternativa ion-text-center pointer-events-none">
-                    {{ alternativa.alternativa }}
+                    {{alternativa.alternativa}}
                   </div>
 
-                  <p class="text-sm pointer-events-none">
-                    {{ alternativa.texto }}
+                  <p class="text-xs pointer-events-none text-alternativa" v-html="alternativa.texto">
+
                   </p>
               </ion-button>
             </section>
@@ -221,16 +221,20 @@
             <!--      menu da questão      -->
             <section class="mt-8">
               <ion-button
+                      v-if="previous"
                   fill="outline"
                   color="primary"
                   class="mr-2 text-none"
+                      @click="questoes(previous)"
               >
                 Anterior
               </ion-button>
               <ion-button
+                      v-if="nextPage"
                   fill="outline"
                   color="primary"
                   class="text-none"
+                      @click="questoes(nextPage)"
               >
                 Próxima
               </ion-button>
@@ -257,8 +261,9 @@ import {IonPage, IonContent, IonItem, IonLabel, IonList, IonIcon, IonButton, Ion
 import {bookmarks, bookmarksOutline, closeCircleOutline, menuOutline, gridOutline, chevronDownOutline, chevronUpOutline, timeOutline} from 'ionicons/icons';
 import { useRouter, useRoute } from 'vue-router'
 import Loading from "../../components/auxiliares/Loading";
-// import api from '../../api/basicUrl';
+import api from '../../api/basicUrl';
 import { ref } from 'vue';
+import storage from "../../storage/StorageKey";
 // import storage from '../../storage/StorageKey';
 
 export default {
@@ -270,8 +275,12 @@ export default {
     const loading = ref(false);
     const isOpenRef = ref(false);
     const setOpen = state => isOpenRef.value = state;
+<<<<<<< HEAD
     const finalizarOpen = ref(false);
     const setFinalizarOpen = state => finalizarOpen.value = state;
+=======
+    const user = ref({});
+>>>>>>> master
 
     return {
       bookmarks,
@@ -289,62 +298,67 @@ export default {
       router: useRouter(),
       route: useRoute(),
       loading,
+      user,
     }
   },
 
   data () {
     return {
       questao: {
-        numero: '3/45',
-        salvo: false,
-        area: 'Linguagens, Códigos e suas Tecnologias',
-        enunciado: 'Embora particularidades na produção mediada pela tecnologia aproximem a escrita da oralidade, isso não significa que as pessoas estejam escrevendo errado. Muitos buscam, tão somente, adaptar o uso da linguagem ao suporte utilizado: "O contexto é que define o registro de língua. Se existe um limite de espaço, naturalmente, o sujeito irá usar mais abreviaturas, como faria no papel", afirma um professor do Departamento de Linguagem e Tecnologia do Cefet-MG. Da mesma forma, é preciso considerar a capacidade do destinatário de interpretar corretamente a mensagem emitida. No entendimento do pesquisador, a escola, às vezes, insiste em ensinar um registro utilizado apenas em contextos específicos, o que acaba por desestimular o aluno, que não vê sentido em empregar tal modelo em outras situações. Embora particularidades na produção mediada pela tecnologia aproximem a escrita da oralidade, isso não significa que as pessoas estejam escrevendo errado. Muitos buscam, tão somente, adaptar o uso da linguagem ao suporte utilizado: "O contexto é que define o registro de língua. Se existe um limite de espaço, naturalmente, o sujeito irá usar mais abreviaturas, como faria no papel", afirma um professor do Departamento de Linguagem e Tecnologia do Cefet-MG. Da mesma forma, é preciso considerar a capacidade do destinatário de interpretar corretamente a mensagem emitida. No entendimento do pesquisador, a escola, às vezes, insiste em ensinar um registro utilizado apenas em contextos específicos, o que acaba por desestimular o aluno, que não vê sentido em empregar tal modelo em outras situações.',
-        alternativas: [
-          {
-            alternativa: 'A',
-            texto: 'interagir por meio da linguagem formal no contexto digital.'
-          },
-          {
-            alternativa: 'B',
-            texto: 'buscar alternativas para estabelecer melhores contatos on-line.'
-          },
-          {
-            alternativa: 'C',
-            texto: 'adotar o uso de uma mesma norma nos diferentes suportes tecnológicos.'
-          },
-          {
-            alternativa: 'D',
-            texto: 'desenvolver habilidades para compreender os textos postados na web.'
-          },
-          {
-            alternativa: 'E',
-            texto: 'perceber as especificidades das linguagens em diferentes ambientes digitais.'
-          },
-        ],
-        selecionada: null,
+      //   numero: '3/45',
+      //   salvo: false,
+      //   area: 'Linguagens, Códigos e suas Tecnologias',
+      //   enunciado: 'Embora particularidades na produção mediada pela tecnologia aproximem a escrita da oralidade, isso não significa que as pessoas estejam escrevendo errado. Muitos buscam, tão somente, adaptar o uso da linguagem ao suporte utilizado: "O contexto é que define o registro de língua. Se existe um limite de espaço, naturalmente, o sujeito irá usar mais abreviaturas, como faria no papel", afirma um professor do Departamento de Linguagem e Tecnologia do Cefet-MG. Da mesma forma, é preciso considerar a capacidade do destinatário de interpretar corretamente a mensagem emitida. No entendimento do pesquisador, a escola, às vezes, insiste em ensinar um registro utilizado apenas em contextos específicos, o que acaba por desestimular o aluno, que não vê sentido em empregar tal modelo em outras situações. Embora particularidades na produção mediada pela tecnologia aproximem a escrita da oralidade, isso não significa que as pessoas estejam escrevendo errado. Muitos buscam, tão somente, adaptar o uso da linguagem ao suporte utilizado: "O contexto é que define o registro de língua. Se existe um limite de espaço, naturalmente, o sujeito irá usar mais abreviaturas, como faria no papel", afirma um professor do Departamento de Linguagem e Tecnologia do Cefet-MG. Da mesma forma, é preciso considerar a capacidade do destinatário de interpretar corretamente a mensagem emitida. No entendimento do pesquisador, a escola, às vezes, insiste em ensinar um registro utilizado apenas em contextos específicos, o que acaba por desestimular o aluno, que não vê sentido em empregar tal modelo em outras situações.',
+      //   alternativas: [
+      //     {
+      //       alternativa: 'A',
+      //       texto: 'interagir por meio da linguagem formal no contexto digital.'
+      //     },
+      //     {
+      //       alternativa: 'B',
+      //       texto: 'buscar alternativas para estabelecer melhores contatos on-line.'
+      //     },
+      //     {
+      //       alternativa: 'C',
+      //       texto: 'adotar o uso de uma mesma norma nos diferentes suportes tecnológicos.'
+      //     },
+      //     {
+      //       alternativa: 'D',
+      //       texto: 'desenvolver habilidades para compreender os textos postados na web.'
+      //     },
+      //     {
+      //       alternativa: 'E',
+      //       texto: 'perceber as especificidades das linguagens em diferentes ambientes digitais.'
+      //     },
+      //   ],
+      //   selecionada: null,
       },
+
+      questoesId: [],
+      nextPage: null,
+      previous: null,
       simulado: {
-        duracao: '180',
-        inicio: '14/11 às 9:85',
-        disponivel: '124/124/124 e 1924/2/42',
-        areas: 'Linguagens e Ciências Humanas'
+        // duracao: '180',
+        // inicio: '14/11 às 9:85',
+        // disponivel: '124/124/124 e 1924/2/42',
+        // areas: 'Linguagens e Ciências Humanas'
       },
 
       meuGabaritoQuestoes: [
-        {
-          area: 'Linguagens, Códigos e suas Tecnologias',
-          icon: '/iconsinhos/linguagens-cor.png',
-          questoes: 44,
-          color: 'linguagens',
-          aberto: ref(false),
-        },
-        {
-          area: 'Ciências Humanas e suas Tecnologias',
-          icon: '/iconsinhos/humanas-cor.png',
-          questoes: 44,
-          color: 'humanas',
-          aberto: ref(false),
-        }
+        // {
+        //   area: 'Linguagens, Códigos e suas Tecnologias',
+        //   icon: '/iconsinhos/linguagens-cor.png',
+        //   questoes: 44,
+        //   color: 'linguagens',
+        //   aberto: ref(false),
+        // },
+        // {
+        //   area: 'Ciências Humanas e suas Tecnologias',
+        //   icon: '/iconsinhos/humanas-cor.png',
+        //   questoes: 44,
+        //   color: 'humanas',
+        //   aberto: ref(false),
+        // }
       ],
     }
   },
@@ -354,6 +368,94 @@ export default {
       menuController.enable(true, 'gabarito');
       menuController.toggle('gabarito');
     },
+
+    async inicio(page = 1) {
+      try{
+        this.loading = true;
+        let questaoId = this.route.params.id;
+        let dados = await api.get(`/questoes-estaduais/${questaoId}/${this.user.id}?page=${page}`);
+       this.questao = dados.data.questoes.data[0];
+       this.questoesId = dados.data.todas_questoes;
+       this.simulado = dados.data.simulado;
+       this.colocandoAlternativas();
+       this.colocarMeusGabaritos(this.simulado.areasGabarito, dados.data.questoes_gabarito);
+        this.nextPage = this.verificarNull(dados.data.questoes.next_page_url, dados.data.questoes.path);
+        this.previous = this.verificarNull(dados.data.questoes.prev_page_url, dados.data.questoes.path);
+        this.loading = false;
+      }catch (e) {
+        console.log(e);
+        this.loading = false;
+      }
+    },
+
+    async questoes(page = 1) {
+      try{
+        this.loading = true;
+        let questaoId = this.route.params.id;
+        let dados = await api.get(`/questoes-estaduais-parte/${questaoId}/${this.user.id}?page=${page}`);
+        this.questao = dados.data.data[0];
+        this.colocandoAlternativas();
+        this.nextPage = this.verificarNull(dados.data.next_page_url, dados.data.path);
+        this.previous = this.verificarNull(dados.data.prev_page_url, dados.data.path);
+        this.loading = false;
+      }catch (e) {
+        console.log(e);
+        this.loading = false;
+      }
+    },
+
+   colocandoAlternativas () {
+      if (!this.questao) {
+        return;
+      }
+      let alternativas = [];
+      let words = ['A', 'B', 'C', 'D', 'E'];
+
+      for (let i=0; i< words.length; i++) {
+        alternativas.push({alternativa: words[i], texto: this.questao['r'+words[i].toLowerCase()]});
+      }
+
+      this.questao.alternativas = alternativas;
+      let index = this.questoesId.indexOf(this.questao.id);
+      if (index >= 0) {
+        this.questao.numero = (index+1) + '/'+this.questoesId.length;
+      }
+      else {
+        this.questao.numero = 1+'/45';
+      }
+
+   },
+
+    verificarNull(variavel, path) {
+      if (!variavel) {
+        return null;
+      }
+
+      let page = variavel.replace(path+'?page=', '');
+
+      return page;
+    },
+
+    colocarMeusGabaritos (areas,gabarito) {
+      for (let area of areas) {
+        let objeto = {
+          area: area.titulo,
+          color: area.slug,
+          aberto : false,
+          icon: `/iconsinhos/${area.slug}-cor.png`,
+          questoes: gabarito.filter((e) => e.areaId == area.areaId)
+        };
+        this.meuGabaritoQuestoes.push(objeto);
+      }
+    }
+  },
+
+  async ionViewWillEnter () {
+    this.loading = false;
+    let usuario = await storage.get('user');
+    usuario = JSON.parse(usuario.value);
+    this.user = usuario;
+    await this.inicio();
   }
 }
 </script>
@@ -427,7 +529,15 @@ h2.font-bold {
 ion-button {
   --box-shadow: none;
 }
+<<<<<<< HEAD
 .bg-white {
   --background: white;
+=======
+
+.text-alternativa {
+  font-family: arial, sans, sans-serif;
+  font-size: 13px;
+  text-transform: initial
+>>>>>>> master
 }
 </style>

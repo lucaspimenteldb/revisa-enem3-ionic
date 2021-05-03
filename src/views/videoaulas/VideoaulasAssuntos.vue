@@ -81,6 +81,9 @@
     import Loading from "../../components/auxiliares/Loading";
     import api from '../../api/basicUrl';
     import storage from '../../storage/StorageKey';
+    import sqlite from "../../storage/Sqlite";
+    import methodsGlobal from "../../mixins/methodsGlobal";
+    import network from "../../plugins/network";
 
     import {ref} from 'vue';
 
@@ -99,6 +102,8 @@
             IonProgressBar,
             IonText
         },
+
+        mixins: [methodsGlobal],
 
         setup() {
             const loading = ref(false);
@@ -127,6 +132,13 @@
           } else {
             this.aulas = this.aulasAuxiliar.filter((el) => el.id == aula);
           }
+        },
+
+        async getChache() {
+            let videos = await sqlite.consulta(this.sqlite, 'select * from aula where id_user = ? and id_materia = ?', [this.user.id, this.route.params.id]);
+            console.log(this.route.params.id);
+            this.aulas = this.inserirElementos(videos);
+            this.aulasAuxiliar = this.inserirElementos(videos);
         }
         },
 
@@ -135,6 +147,11 @@
                 let usuario = await storage.get('user');
                 usuario = JSON.parse(usuario.value);
                 this.user = usuario;
+                let status = await network.getStatus();
+                if (!status.connected){
+                    await this.getChache();
+                    return;
+                }
                 this.loading = true;
                 let materia = this.route.params.id;
                 let volume = this.route.params.volume;
@@ -143,8 +160,10 @@
                 this.aulas = (dados.data.videos);
                 console.log('Aulas: ',this.aulas);
                 this.aulasAuxiliar = (dados.data.videos);
+                await sqlite.insertBatch(this.sqlite, this.aulasAuxiliar, 'aula', ['id_user', 'id']);
             } catch (e) {
                 console.log(e);
+                await this.getChache();
             }
 
             this.loading = false;

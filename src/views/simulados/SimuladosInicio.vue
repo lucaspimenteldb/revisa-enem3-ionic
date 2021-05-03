@@ -25,7 +25,7 @@
             <div class="flex flex-column text-black">
               <ion-text color="primary">
                 <h3 class="font-bold text-lg">
-                  Simulado estadual
+                  {{simulado.titulo}}
                 </h3>
               </ion-text>
 
@@ -37,7 +37,7 @@
                     <ion-text color="vermelho" class="font-bold">{{ simulado.fim }}</ion-text>
                   </p>
 
-                  <p class="mb-0 mt-8">
+                  <p class="mb-0 mt-8" v-if="simulado.tempo">
                     Você ainda tem: <ion-text color="primary" class="font-bold">{{ simulado.tempo}} minutos restantes</ion-text>
                   </p>
                 </ion-text>
@@ -48,17 +48,17 @@
                   color="primary"
                   class="ion-no-margin ion-margin-vertical text-none font-bold"
                   size="small"
-                  :disabled="simulado.status !== 'liberado'"
-                  @click="() => router.push( '/ver-simulado')"
+                  :disabled="!simulado.botao"
+                  @click="() => router.push( '/responder-simulado/'+simulado.id)"
               >
                 Iniciar simulado
               </ion-button>
             </div>
           </ion-item>
 
-          <div class="absolute fundo-tudo rounded" :class="simulado.classStatus">
+          <div class="absolute fundo-tudo rounded" :class="simulado.liberado">
             <p class="ion-margin-end ion-text-center text-white">
-              Simulado liberado
+              {{simulado.message}}
             </p>
           </div>
         </div>
@@ -74,9 +74,9 @@ import {IonPage, IonContent, IonItem, IonLabel, IonList, IonButton,  IonText, Io
 import {notifications, arrowForwardCircleOutline} from 'ionicons/icons';
 import { useRouter, useRoute } from 'vue-router'
 import Loading from "../../components/auxiliares/Loading";
-// import api from '../../api/basicUrl';
+import api from '../../api/basicUrl';
 import { ref } from 'vue';
-// import storage from '../../storage/StorageKey';
+import storage from '../../storage/StorageKey';
 
 export default {
   name: 'Simulados',
@@ -98,37 +98,55 @@ export default {
   data () {
     return {
       simulados: [
-        {
-          inicio: '22/05/2020',
-          fim: '30/05/2020',
-          tempo: 120,
-          status: 'liberado',
-          classStatus: 'bg-verde',
-          id: 233,
-        },
-        {
-          inicio: '22/05/2020',
-          fim: '30/05/2020',
-          tempo: 120,
-          status: 'aguardando',
-          classStatus: 'bg-primary',
-          id: 235,
-        },
-        {
-          inicio: '22/05/2020',
-          fim: '30/05/2020',
-          tempo: 120,
-          status: 'expirado',
-          classStatus: 'bg-vermelho',
-          id: 2312,
-        },
+        // {
+        //   inicio: '22/05/2020',
+        //   fim: '30/05/2020',
+        //   tempo: 120,
+        //   status: 'liberado',
+        //   classStatus: 'bg-verde',
+        //   id: 233,
+        // },
+        // {
+        //   inicio: '22/05/2020',
+        //   fim: '30/05/2020',
+        //   tempo: 120,
+        //   status: 'aguardando',
+        //   classStatus: 'bg-primary',
+        //   id: 235,
+        // },
+        // {
+        //   inicio: '22/05/2020',
+        //   fim: '30/05/2020',
+        //   tempo: 120,
+        //   status: 'expirado',
+        //   classStatus: 'bg-vermelho',
+        //   id: 2312,
+        // },
       ],
+      user: {}
     }
   },
 
   methods :{
 
   },
+
+  async ionViewWillEnter () {
+    try {
+      this.loading = false;
+      this.loading = true;
+      let usuario = await storage.get('user');
+      usuario = JSON.parse(usuario.value);
+      this.user = usuario;
+      let dados = await api.get('/simulado-estaduais/'+this.user.id);
+      this.simulados = dados.data.simulados;
+      console.log('simulado', dados.data);
+      this.loading = false;
+    }catch (e) {
+      this.loading = false;
+      console.log(e);
+    }
+  }
 }
 </script>
 
@@ -169,6 +187,18 @@ ion-button {
   bottom: -40px;
   left: 0;
 }
+.bg-verde{
+  background: #0c9041;
+}
+
+.bg-danger {
+  background: #E04A2D;
+}
+
+.bg-block {
+  background: #FCB812;
+}
+
 h2.font-bold {
   font-weight: 600;
 }
