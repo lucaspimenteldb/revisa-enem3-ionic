@@ -19,7 +19,7 @@
 }
 
 .shadow {
-  box-shadow: 3px 4px 6px rgba(20, 20, 20, 0.2);
+  --box-shadow: 3px 4px 6px rgba(20, 20, 20, .2);
 }
 
 .shadow-btn {
@@ -151,12 +151,20 @@
   --background: var(--ion-color-vermelho);
 }
 
+.text-black {
+  color: black;
+}
+
 .text-white {
   color: white;
 }
 
 .text-red {
-  color: var(--ion-color-danger);
+  color: var(--ion-color-danger) !important;
+}
+
+.text-primary {
+  color: #000952;
 }
 
 .font-regular {

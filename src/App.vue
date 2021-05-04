@@ -68,7 +68,7 @@ export default defineComponent({
   },
   setup (){
     const text = ref( {
-      header: 'Tem certeza que deseja sair ?',
+      header: 'Tem certeza que deseja sair?',
               subHeader: '',
               message: '',
     });
@@ -116,7 +116,7 @@ export default defineComponent({
     },
 
     saida () {
-      this.buttons = [{text: 'Quero Estudar', handler: () => this.dialog = false}, {text: 'Sair', handler: async() => { await storage.remove('user'); this.router.replace('/login')}}]
+      this.buttons = [{cssClass: 'text-black', text: 'Quero estudar', handler: () => this.dialog = false}, {cssClass: 'text-red', text: 'Sair', handler: async() => { await storage.remove('user'); this.router.replace('/login')}}]
       this.dialog = true;
     }
   }

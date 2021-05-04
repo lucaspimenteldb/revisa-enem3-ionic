@@ -1,12 +1,12 @@
 <template>
     <ion-alert
-            :is-open="dialog"
-            :header="text.header"
-            :sub-header="text.subHeader"
-            :message="text.message"
-            css-class="my-custom-class"
-            :buttons="buttons"
-            :backdrop-dismiss="false"
+        :is-open="dialog"
+        :header="text.header"
+        :sub-header="text.subHeader"
+        :message="text.message"
+        css-class="text-black"
+        :buttons="buttons"
+        :backdrop-dismiss="false"
     >
     </ion-alert>
 
@@ -26,6 +26,7 @@
                 },
                 dialog: {
                     default: false,
+                    cssClass: 'bg-white'
                 },
 
                 text: {

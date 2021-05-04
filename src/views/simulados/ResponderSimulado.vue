@@ -33,6 +33,7 @@
         :is-open="finalizarOpen"
         css-class="modalFinalizar"
         @onDidDismiss="setFinalizarOpen(false)"
+        mode="md"
     >
       <ion-content id="finalizar-simulado-modal" class="ion-padding">
         <ion-fab vertical="top" horizontal="end">
@@ -68,6 +69,7 @@
         :is-open="isOpenRef"
         css-class="modalzao"
         @onDidDismiss="setOpen(false)"
+        mode="md"
     >
       <ion-content id="gabarito-modal">
         <ion-fab vertical="top" horizontal="end">

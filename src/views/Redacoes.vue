@@ -2,7 +2,7 @@
   <ion-page>
     <ion-content >
       <ion-list class="ion-padding h-full">
-        <ion-label class="font-bold text-xl">
+        <ion-label class="font-bold text-lg" color="dark">
           Redações
         </ion-label>
 
@@ -93,5 +93,9 @@ ion-item {
 ion-list {
   --background: url('../../public/assets/images/bg-principal.png') no-repeat center/100%;
   background: url('../../public/assets/images/bg-principal.png') no-repeat center/100%;
+}
+
+.text-lg {
+  font-size: 1.15rem;
 }
 </style>

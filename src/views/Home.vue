@@ -43,9 +43,8 @@
           <ion-icon
               slot="end"
               :icon="arrowForwardCircleOutline"
-              color="light"
               size="large"
-              class=""
+              class="text-white"
           />
           <!--<IonIcon :icon="airplaneOutline" slot="start"></IonIcon>
           <ion-icon :icon="heart"></ion-icon>-->
@@ -77,9 +76,8 @@
           <ion-icon
               slot="end"
               :icon="arrowForwardCircleOutline"
-              color="light"
               size="large"
-              class=""
+              class="text-white"
           />
           <!--<IonIcon :icon="airplaneOutline" slot="start"></IonIcon>
           <ion-icon :icon="heart"></ion-icon>-->

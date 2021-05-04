@@ -16,12 +16,16 @@
 
         <br>
         <form @submit.prevent="formMatricula">
-        <IonItem class="rounded shadow build-login-ios" lines="none">
+        <IonItem 
+          class="rounded shadow build-login-ios" 
+          mode="md" 
+          lines="none"
+        >
           <IonLabel position="floating">
             Matrícula
           </IonLabel>
 
-          <IonInput type="number" v-model="matricula" value="{{matricula}}"/>
+          <IonInput type="number" v-model="matricula" value="{{matricula}}" />
         </IonItem>
 
         <ion-button 

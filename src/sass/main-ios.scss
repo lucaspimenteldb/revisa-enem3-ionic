@@ -7,7 +7,18 @@ ion-header.ios.build-header-ios, ion-toolbar.ios.build-header-ios {
 // tela de login
 ion-item.build-login-ios.ios {
     --background: white;
+    background: white;;
 }
 ion-button.build-login-ios.ios {
     --box-shadow: none;
+}
+
+// tela do home
+ion-icon.build-home-ios.ios {
+    color: white;
+}
+
+//alerts 
+.alert-wrapper.ion-overlay-wrapper.sc-ion-alert-ios {
+    background: white;
 }

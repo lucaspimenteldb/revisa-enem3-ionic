@@ -18,14 +18,14 @@
               :class="{ 'w-26': i === 0 || i === 2, 'w-32': i === 1 || i === 3}"
           />
 
-          <h5 class="ion-no-margin mt-8 ion-color-primary text-sm font-bold" :class="{'relative top-2': i === 1}">
+          <h5 class="ion-no-margin mt-8 text-primary text-sm font-bold" :class="{'relative top-2': i === 1}">
             {{ playlist.nome }}
           </h5>
         </div>
       </div>
 
       <ion-list class="ion-margin-top ion-padding h-full rounded-top">
-        <ion-label class="font-bold text-lg">
+        <ion-label class="font-bold text-lg" color="dark">
           Videoaulas
         </ion-label>
 
