@@ -36,7 +36,7 @@
     >
       <ion-content id="finalizar-simulado-modal" class="ion-padding">
         <ion-fab vertical="top" horizontal="end">
-          <ion-fab-button color="light" @click="setFinalizarOpen(true)">
+          <ion-fab-button color="light" @click="fechar">
             <ion-icon :icon="closeCircleOutline" style="font-size: 30px;"></ion-icon>
           </ion-fab-button>
         </ion-fab>
@@ -49,7 +49,37 @@
           Tem certeza que deseja finalizar e enviar o seu simulado?
         </p>
 
+        <section class="ion-padding-horizontal">
+          <p class="text-white">Você deixou algumas questões em branco</p>
+          <ion-button
+                  v-for="(branco, index) in brancos"
+                  :key="`questao-${branco.id}`"
+                  class="mr-8 mb-8 btn-questao-gabarito rounded-sm"
+                  :class="branco.resultado === 'Certo' ? 'border-2' : 'border-2 border-ruim'"
+          >
+            <div class="flex flex-column ion-align-items-center ion-justify-content-center">
+              <p class="mt-12 mb-0 text-black">
+                {{ (Number(index) + 1) }}
+              </p>
+
+              <p class="mt-8 text-black block font-bold">
+                <span v-if="branco.resposta">{{branco.resposta}}</span>
+                <span v-if="!questao.resposta">_</span>
+              </p>
+            </div>
+
+            <ion-icon
+                    :icon="bookmarksOutline"
+                    v-if="branco.salvar"
+                    color="warning"
+                    class="mt-1 absolute top-0 right--16 font-bold"
+                    style="font-size: 16px;"
+            />
+          </ion-button>
+        </section>
+
         <ion-button
+                @click="fechar"
             color="danger"
             class="text-none"
         >
@@ -115,6 +145,7 @@
                 :key="`questao-${questao.id}`"
                 class="mr-8 mb-8 btn-questao-gabarito rounded-sm"
                 :class="questao.resultado === 'Certo' ? 'border-2' : 'border-2 border-ruim'"
+                @click="questoes(questoesId.indexOf(questao.id), false, true)"
             >
               <div class="flex flex-column ion-align-items-center ion-justify-content-center">
                 <p class="mt-12 mb-0 text-black">
@@ -252,6 +283,7 @@
         </ion-item>
       </ion-list>
       <Loading :isOpen="loading"></Loading>
+      <AlertGeneric :text="text" :dialog="dialog" :buttons="buttons"></AlertGeneric>
     </ion-content>
   </ion-page>
 </template>
@@ -265,12 +297,13 @@ import Loading from "../../components/auxiliares/Loading";
 import api from '../../api/basicUrl';
 import { ref } from 'vue';
 import storage from "../../storage/StorageKey";
+import AlertGeneric from "../../components/auxiliares/AlertGeneric";
 // import storage from '../../storage/StorageKey';
 
 export default {
   name: 'Simulados',
   // components: {IonPage, IonTitle, IonHeader, IonToolbar, IonContent, IonItem, IonLabel, IonList, IonButton, IonIcon, IonProgressBar, IonText, Loading, IonMenu, IonFab, IonFabButton, IonModal},
-  components: {IonPage, IonContent, IonItem, IonLabel, IonList, IonButton, IonIcon, Loading, IonMenu, IonFab, IonFabButton, IonModal},
+  components: {IonPage, AlertGeneric, IonContent, IonItem, IonLabel, IonList, IonButton, IonIcon, Loading, IonMenu, IonFab, IonFabButton, IonModal},
 
   setup () {
     const loading = ref(false);
@@ -332,6 +365,18 @@ export default {
       //   selecionada: null,
       },
 
+      text: {
+        default: {
+          header: 'Simulado finalizado com sucesso!',
+          subHeader: 'Mensagem',
+          message: 'Mensagem',
+        }
+      },
+
+      buttons: [{text: 'ok', handler: () => this.dialog = false}],
+      dialog: false,
+      brancos: [],
+
       questoesId: [],
       questoesEmCache: [],
       nextPage: null,
@@ -376,8 +421,16 @@ export default {
         this.loading = false;
       }catch (e) {
         this.loading = false;
+        if (e.response) {
+          this.brancos = e.response.data.brancos;
+          console.log(e.response.data.brancos);
+        }
         console.log(e);
       }
+    },
+
+    fechar () {
+      this.setFinalizarOpen(false);
     },
 
     async finalizarSimulado () {
@@ -389,9 +442,13 @@ export default {
         };
         await api.post('/finalizar-simulado', objeto);
         this.loading = false;
+        this.text.header = 'Simulado entregue com sucesso!';
+        this.dialog = true;
       }catch (e) {
         console.log(e);
+        this.text.header = 'Não foi possível a entrega do simulado, por favor tente novamente mais tarde.';
         this.loading = false;
+        this.dialog = true;
       }
     },
 
@@ -446,8 +503,33 @@ export default {
         return false;
     },
 
-    async questoes(page = 1, prox) {
+    cacheGab (page) {
+      let quest = this.questoesId[page-1];
+
+      let q = this.questoesEmCache.filter((e) => e.id === quest);
+      if(q.length > 0) {
+        this.nextPage = page + 1;
+        this.previous = page - 1;
+
+        if (this.nextPage > this.questoesId.length) {
+          this.nextPage = null;
+        }
+
+        if (this.previous < 0) {
+          this.previous = 0;
+        }
+
+        return true;
+      }
+
+      return false;
+    },
+
+    async questoes(page = 1, prox, gab = false) {
       try{
+        if (gab && this.cacheGab(page)) {
+          return;
+        }
         if (this.cache(page, prox)) {
           return;
         }
@@ -479,6 +561,8 @@ export default {
         this.questao.salvar = !this.questao.salvar;
       }catch (e) {
         console.log(e);
+        this.text.header = 'Não foi possível realizar o procedimento! Verifique a sua conexão e tente novamente.';
+        this.dialog = true;
       }
     },
 
@@ -494,6 +578,8 @@ export default {
         this.questao.selecionada = alternativa;
       }catch (e) {
         console.log(e);
+        this.text.header = 'Sua resposta não foi enviada! Verifique a sua conexão e tente novamente.';
+        this.dialog = true;
       }
     },
 
