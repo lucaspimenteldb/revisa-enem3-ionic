@@ -12,6 +12,7 @@
   "dependencies": {
     "@capacitor/android": "^2.4.6",
     "@capacitor/core": "2.4.6",
+    "@capacitor/ios": "^2.4.6",
     "@ionic-native/file": "^5.32.0",
     "@ionic-native/file-opener": "^5.32.0",
     "@ionic-native/file-transfer": "^5.32.0",

@@ -1,7 +1,7 @@
 <template>
   <ion-page>
-    <ion-header>
-      <ion-toolbar>
+    <ion-header class="build">
+      <ion-toolbar class="build">
         <ion-title slot="start" class="ion-no-padding flex">
           <ion-buttons class="inline-block">
             <ion-back-button default-href="/home">voltar</ion-back-button>
@@ -40,3 +40,4 @@ export default {
   }
 }
 </script>
+ 

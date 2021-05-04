@@ -1,12 +1,15 @@
 <template>
   <ion-app>
-    <ion-header>
-      <ion-toolbar v-if="!(route.name == 'login')" :class="[(route.name == 'home') ? 'ml-2' : '']">
-        <ion-title slot="start" class="ion-no-padding flex">
-          <ion-buttons v-if="!(route.name == 'home')"  class="inline-block">
-            <ion-back-button default-href="/home">voltar</ion-back-button>
-          </ion-buttons>
+    <ion-header clas="build-header-ios">
+      <ion-toolbar 
+        v-if="!(route.name == 'login')" 
+        class="build-header-ios"
+      >
+        <ion-buttons v-if="!(route.name == 'home')" slot="start" class="inline-block">
+          <ion-back-button default-href="/home" text="voltar"/>
+        </ion-buttons>
 
+        <ion-title class="ion-no-padding flex" slot="start">
           <section class="inline-flex ion-align-items-center vertical-text-bottom">
             <ion-img src="assets/icon/xp-estrela.png" class="mr-4 w-30 inline-block"/>
 
@@ -23,18 +26,23 @@
           </section>
         </ion-title>
 
-        <ion-avatar @click="saida" class="ion-margin-end w-40 h-40" slot="secondary">
-          <img src="assets/icon/sair.svg" >
-        </ion-avatar>
 
-        <ion-avatar class="ion-margin-end w-40 h-40 border-2 border-primary" slot="secondary">
+        <ion-avatar class="w-40 h-40 border-2 border-primary" slot="end">
           <img :src="user.photo" >
         </ion-avatar>
 
+        <ion-button 
+          @click="saida" 
+          class="ion-margin-start ion-no-padding w-40 h-40 no-shadow" 
+          slot="end"
+          color="white"
+        >
+          <img src="assets/icon/sair.svg" width="30">
+        </ion-button>
       </ion-toolbar>
     </ion-header>
 
-    <ion-content >
+    <ion-content>
       <ion-router-outlet />
       <AlertGeneric :dialog="dialog" :text="text" :buttons="buttons" />
     </ion-content>
@@ -104,6 +112,7 @@ export default defineComponent({
   methods: {
     sair () {
       api.get('/home-saiu/'+this.user.id);
+      this.router.push('/login')
     },
 
     saida () {
@@ -117,5 +126,9 @@ export default defineComponent({
 <style scoped>
   .ml-2 {
     margin-left: 10px;
+  }
+
+  .no-shadow {
+    --box-shadow: none;
   }
 </style>
