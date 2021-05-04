@@ -54,6 +54,7 @@
           <ion-button
                   v-for="(branco, index) in brancos"
                   :key="`questao-${branco.id}`"
+                  @click="questoes(questoesId.indexOf(branco.id) + 1, false, true)"
                   class="mr-8 mb-8 btn-questao-gabarito rounded-sm"
                   :class="branco.resultado === 'Certo' ? 'border-2' : 'border-2 border-ruim'"
           >
@@ -145,7 +146,7 @@
                 :key="`questao-${questao.id}`"
                 class="mr-8 mb-8 btn-questao-gabarito rounded-sm"
                 :class="questao.resultado === 'Certo' ? 'border-2' : 'border-2 border-ruim'"
-                @click="questoes(questoesId.indexOf(questao.id), false, true)"
+                @click="questoes(questoesId.indexOf(questao.id) + 1, false, true)"
             >
               <div class="flex flex-column ion-align-items-center ion-justify-content-center">
                 <p class="mt-12 mb-0 text-black">
@@ -505,11 +506,11 @@ export default {
 
     cacheGab (page) {
       let quest = this.questoesId[page-1];
-
       let q = this.questoesEmCache.filter((e) => e.id === quest);
       if(q.length > 0) {
+        this.questao = q[0];
         this.nextPage = page + 1;
-        this.previous = page - 1;
+        this.previous = page-1;
 
         if (this.nextPage > this.questoesId.length) {
           this.nextPage = null;
@@ -527,6 +528,9 @@ export default {
 
     async questoes(page = 1, prox, gab = false) {
       try{
+        this.isOpenRef = false;
+        menuController.enable(false, 'gabarito');
+        this.setFinalizarOpen(false);
         if (gab && this.cacheGab(page)) {
           return;
         }
