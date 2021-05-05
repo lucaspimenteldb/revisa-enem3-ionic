@@ -8,7 +8,7 @@
       </div>
 
       <ion-list class="ion-padding rounded-top">
-        <ion-label class="font-bold text-lg">
+        <ion-label class="font-bold text-lg" color="light">
           Simulados disponíveis
         </ion-label>
 
@@ -140,7 +140,7 @@ ion-item {
   --background: white;
 }
 .fundo-cima {
-  background: url('../../../public/assets/images/simulado-estadual-fundo.png') var(--ion-color-primary) no-repeat center/100%;
+  background: url('../../../public/assets/images/simulado-estadual-fundo.png') var(--ion-color-primary) no-repeat right center/50%;
 }
 .text-black {
   color: black;
@@ -169,7 +169,16 @@ ion-button {
   bottom: -40px;
   left: 0;
 }
-h2.font-bold {
+
+
+.text-sm {
+  font-size: .8rem;
+}
+.text-lg {
+  font-size: 1.15rem;
+}
+.font-bold {
   font-weight: 600;
 }
+
 </style>
