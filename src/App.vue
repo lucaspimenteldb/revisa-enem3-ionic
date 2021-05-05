@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import { IonApp, IonRouterOutlet, IonTitle, IonHeader, IonToolbar, IonImg, IonButtons, IonText, IonBackButton, IonAvatar, IonContent } from '@ionic/vue';
+import { IonApp, IonRouterOutlet, IonTitle, IonHeader, IonToolbar, IonImg, IonButtons, IonButton, IonText, IonBackButton, IonAvatar, IonContent } from '@ionic/vue';
 import { defineComponent, ref } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import storage from "./storage/StorageKey";
@@ -64,7 +64,7 @@ const { App } = Plugins;
 export default defineComponent({
   name: 'App',
   components: {
-    IonApp, AlertGeneric, IonRouterOutlet,IonTitle,  IonHeader, IonToolbar, IonImg, IonButtons, IonText, IonBackButton, IonAvatar, IonContent
+    IonApp, AlertGeneric, IonRouterOutlet,IonTitle,  IonHeader, IonToolbar, IonImg, IonButtons, IonButton, IonText, IonBackButton, IonAvatar, IonContent
   },
   setup (){
     const text = ref( {

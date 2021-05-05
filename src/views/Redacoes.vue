@@ -32,9 +32,8 @@
           <ion-icon
               slot="end"
               :icon="arrowForwardCircleOutline"
-              color="light"
               size="large"
-              class=""
+              class="text-white"
           />
         </ion-item>
       </ion-list>

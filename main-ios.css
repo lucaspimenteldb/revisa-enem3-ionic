@@ -3,19 +3,6 @@ ion-header.ios.build-header-ios, ion-toolbar.ios.build-header-ios {
   background: white;
 }
 
-ion-item.build-login-ios {
-  background: white;
-  --background: white;
-}
-ion-item.build-login-ios ion-input {
-  background: white;
-  --background: white;
-}
-
-ion-button.build-login-ios.ios {
-  --box-shadow: none;
-}
-
 ion-icon.build-home-ios.ios {
   color: white;
 }

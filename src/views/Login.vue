@@ -16,20 +16,20 @@
 
         <br>
         <form @submit.prevent="formMatricula">
-          <ion-item
+          <ionItem
             class="rounded shadow build-login-ios"
-            mode="md"
             lines="none"
-            color="light"
+            mode="md"
+            color="dark"
           >
-            <ion-label position="floating">
-              <p class="ion-no-margin text-black">
+            <ionLabel position="floating">
+              <p class="">
                 Matrícula
               </p>
-            </ion-label>
+            </ionLabel>
 
-            <ion-input type="number" v-model="matricula" value="{{matricula}}" />
-          </ion-item>
+            <ionInput type="number" v-model="matricula" value="{{matricula}}" />
+          </ionItem>
 
         <ion-button 
           type="submit" 
@@ -76,7 +76,7 @@
   </ion-page>
 </template>
 <script>
-import { IonImg, IonPage, IonText, IonLabel, IonButton, IonItem, IonInput } from '@ionic/vue';
+import { IonImg, IonPage, IonText, IonLabel, IonButton, IonItem, IonInput, IonContent } from '@ionic/vue';
 import { useRouter } from 'vue-router'
 import  Loading  from '../components/auxiliares/Loading';
 import AlertGeneric from "../components/auxiliares/AlertGeneric";
@@ -86,7 +86,7 @@ import object from "../storage/StorageKey";
 import browser from "../plugins/browser";
 
 export default {
-  components: { Loading, AlertGeneric, IonImg, IonPage , IonText, IonLabel, IonButton, IonItem, IonInput },
+  components: { Loading, AlertGeneric, IonImg, IonPage , IonText, IonLabel, IonButton, IonItem, IonInput, IonContent },
   vueRouter: useRouter(),
   name: 'Login',
 
