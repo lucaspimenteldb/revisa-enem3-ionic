@@ -2,7 +2,7 @@
   <ion-page>
     <ion-content >
       <ion-list class="ion-padding h-full">
-        <ion-label class="font-bold text-lg" color="dark">
+        <ion-label class="font-bold text-lg" color="light">
           Redações
         </ion-label>
 

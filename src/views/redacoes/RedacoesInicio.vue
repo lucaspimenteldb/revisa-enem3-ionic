@@ -2,7 +2,7 @@
     <ion-page>
         <ion-content :fullscreen="true" class="ion-padding-vertical">
             <ion-list class="ion-padding">
-                <ion-label class="font-bold text-xl">
+                <ion-label class="font-bold text-xl" color="light">
                     Redações
                 </ion-label>
 
@@ -39,15 +39,19 @@
                     </ion-label>
 
                     <ion-icon
-                            slot="end"
-                            :icon="opcao.icon"
-                            :color="opcao.encerrada ? 'danger' : 'light'"
-                            class="mr-8"
-                            style="font-size: 40px;"
+                        slot="end"
+                        :icon="opcao.encerrada ? closeCircleOutline : arrowForwardCircleOutline"
+                        class="mr-8"
+                        :class="opcao.encerrada ? 'text-red' : 'text-white'"
+                        style="font-size: 40px;"
                     />
-                    <ion-text class="absolute right-14 bottom-20 text-sm"
-                              :class="opcao.encerrada ? 'text-red' : 'text-white'">
-                        {{ opcao.status }}
+                    <ion-text 
+                        class="ion-padding-top absolute right-14 bottom-20"
+                        :class="opcao.encerrada ? 'text-red' : 'text-white'"
+                    >
+                        <p class="ion-no-margin ion-padding-top text-sm">
+                            {{ opcao.status }}
+                        </p>
                     </ion-text>
                 </ion-item>
             </ion-list>
