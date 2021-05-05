@@ -2,8 +2,12 @@
   <ion-page>
     <ion-content class="fundo">
       <div>
-        <IonSlides :pager="true" :options="slideOpts" class="slide__principal"
-                   v-if="noticias.length > 0">
+        <IonSlides 
+          :pager="true" 
+          :options="slideOpts" 
+          class="slide__principal"
+          v-if="noticias.length > 0"
+        >
           <IonSlide v-for="noticia in noticias" :key="noticia.id">
             <IonImg class="classe2" :src="noticia.imagem"/>
           </IonSlide>
@@ -59,7 +63,7 @@
 
         <IonItem
             class="ion-margin-top rounded simulado__fundo"
-            @click="() => router.push('/simulado')"
+            href="/simulado"
         >
           <IonLabel class="ion-padding-vertical ion-margin-vertical">
             <h2 class="text-white font-bold text-lg">
@@ -96,7 +100,7 @@
 </template>
 
 <script>
-import {IonPage, IonContent, IonList, IonItem, IonLabel, IonImg, IonSlides, IonSlide} from '@ionic/vue';
+import {IonPage, IonContent, IonList, IonItem, IonLabel, IonImg, IonSlides, IonSlide, IonIcon} from '@ionic/vue';
 import {heart, airplaneOutline, arrowForwardCircleOutline, notifications} from 'ionicons/icons'
 import {useRouter} from 'vue-router';
 import {ref} from 'vue';
@@ -109,7 +113,7 @@ import methodsGlobal from '../mixins/methodsGlobal';
 export default {
   name: 'Home',
   mixins: [methodsGlobal],
-  components: {Loading, IonContent, IonList, IonItem, IonLabel, IonPage, IonImg, IonSlides, IonSlide},
+  components: {Loading, IonContent, IonList, IonItem, IonLabel, IonPage, IonImg, IonSlides, IonSlide, IonIcon},
 
   setup() {
     let loading = ref(false);

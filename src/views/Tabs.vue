@@ -5,16 +5,16 @@
         <ion-tab-button class="tabs" tab="home" href="/home">
           <ion-icon icon="/assets/icon/tabs/home.svg" />
           <ion-label>
-            Home
+            Início
           </ion-label>
         </ion-tab-button>
 
-<!--        <ion-tab-button tab="atividades" href="/atividades">-->
-<!--          <ion-icon :icon="ellipse" />-->
-<!--          <ion-label>-->
-<!--            Atividades-->
-<!--          </ion-label>-->
-<!--        </ion-tab-button>-->
+       <ion-tab-button class="tabs" tab="simulado" href="/simulado">
+         <ion-icon :icon="ellipse" />
+         <ion-label>
+           Simul. Estaduais
+         </ion-label>
+       </ion-tab-button>
 
         <ion-tab-button class="tabs" tab="videoaulas" href="/videoaulas">
           <ion-icon icon="/assets/icon/tabs/videoaula.svg" />

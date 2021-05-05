@@ -1,55 +1,57 @@
 <template>
   <!-- modal para enviar a redacao -->
-  <ion-modal
+  <ion-page>
+    <ion-modal
       :is-open="isOpenRef"
       css-class="modalzao"
       @onDidDismiss="setOpen(false)"
-  >
-    <ion-content id="modal-redacao" class="ion-padding">
-      <ion-fab vertical="top" horizontal="end">
-        <ion-fab-button color="light" @click="setOpen(false)">
-          <ion-icon :icon="closeCircleOutline" style="font-size: 30px;"></ion-icon>
-        </ion-fab-button>
-      </ion-fab>
+    >
+      <ion-content id="modal-redacao" class="ion-padding">
+        <ion-fab vertical="top" horizontal="end">
+          <ion-fab-button color="light" @click="setOpen(false)">
+            <ion-icon :icon="closeCircleOutline" style="font-size: 30px;"></ion-icon>
+          </ion-fab-button>
+        </ion-fab>
 
-      <ion-text color="primary">
-        <h3 class="mt-64">
+        <ion-text color="primary">
+          <h3 class="mt-64">
+            Enviar redação
+          </h3>
+        </ion-text>
+
+        <ion-text color="danger">
+          <p class="text-sm">
+            Lembre-se: para que a sua redação seja avaliada, ela deve ser escrita com tinta preta, na folha própria e ter até 30 linhas.
+          </p>
+        </ion-text>
+
+        <ion-item class="shadow rounded">
+          <ion-label position="floating" color="light">
+            Anexar redação
+          </ion-label>
+          <ion-input></ion-input>
+          <ion-icon
+              slot="end"
+              :icon="documentTextOutline"
+              class="mt-16 text-black"
+          />
+        </ion-item>
+
+        <ion-button
+            fill="clear"
+            color="danger"
+            class="mt-16 text-none"
+            @click="setOpen(false)"
+        >
+          Cancelar
+        </ion-button>
+
+        <ion-button class="mt-16 text-none">
           Enviar redação
-        </h3>
-      </ion-text>
+        </ion-button>
+      </ion-content>
+    </ion-modal>
 
-      <ion-text color="danger">
-        <p class="text-sm">
-          Lembre-se: para que a sua redação seja avaliada, ela deve ser escrita com tinta preta, na folha própria e ter até 30 linhas.
-        </p>
-      </ion-text>
-
-      <ion-item class="shadow rounded">
-        <ion-label position="floating">
-          Anexar redação
-        </ion-label>
-        <ion-input></ion-input>
-        <ion-icon
-            slot="end"
-            :icon="documentTextOutline"
-            class="mt-16"
-        />
-      </ion-item>
-
-      <ion-button
-          fill="clear"
-          color="danger"
-          class="mt-16 text-none"
-      >
-        Cancelar
-      </ion-button>
-
-      <ion-button class="mt-16 text-none">
-        Enviar redação
-      </ion-button>
-    </ion-content>
-  </ion-modal>
-  <ion-page>
     <ion-content>
       <div class="ion-padding fundo-cima">
         <h4 class="ion-margin-vertical text-white">
@@ -73,7 +75,7 @@
             class="ion-margin-top rounded"
             lines="none"
         >
-          <ion-label>
+          <ion-label color="light">
             <b>
               Tema:
             </b>
@@ -126,18 +128,17 @@
 </template>
 
 <script>
-import {IonPage,IonContent, IonItem, IonList,  IonButton, IonLabel, IonText, IonFab, IonIcon, IonInput, IonFabButton, menuController, modalController, IonModal} from '@ionic/vue';
+import {IonPage,IonContent, IonItem, IonList, IonButton, IonLabel, IonText, IonFab, IonIcon, IonInput, IonFabButton, modalController, IonModal} from '@ionic/vue';
 import {notifications, arrowForwardCircleOutline, closeCircleOutline, documentTextOutline} from 'ionicons/icons';
-import { useRouter, useRoute } from 'vue-router'
-import Loading from "../../components/auxiliares/Loading";
-// import api from '../../api/basicUrl';
+import { useRouter } from "vue-router"
+import Loading from "@/components/auxiliares/Loading"
 import { ref } from 'vue';
-// import storage from '../../storage/StorageKey';
+
 
 export default {
   name: 'ResponderRedacao',
   // components: {IonPage, IonTitle, IonContent, IonItem, IonLabel, IonList, IonButton, IonIcon, IonProgressBar, IonText, Loading},
-  components: {IonPage, IonContent, IonItem, IonList, IonButton, IonLabel, IonText, IonIcon, IonInput, IonFab, IonFabButton, menuController, modalController, IonModal, Loading},
+  components: {IonPage, IonContent, IonItem, IonList, IonButton, IonLabel, IonText, IonIcon, IonInput, IonFab, IonFabButton, modalController, IonModal, Loading},
 
   setup () {
     const loading = ref(false);
@@ -150,7 +151,6 @@ export default {
       closeCircleOutline,
       documentTextOutline,
       router: useRouter(),
-      route: useRoute(),
       isOpenRef,
       setOpen,
       loading,
@@ -201,7 +201,7 @@ ion-item {
   --background: white;
 }
 .fundo-cima {
-  background: url('../../../public/assets/images/simulado-estadual-fundo.png') var(--ion-color-primary) no-repeat center/100%;
+  background: url('../../../public/assets/images/simulado-estadual-fundo.png') var(--ion-color-primary) no-repeat right center/50%;
 }
 .text-black {
   color: black;

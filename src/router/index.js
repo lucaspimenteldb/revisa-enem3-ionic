@@ -110,12 +110,12 @@ const routes = [
         component: () => import('@/views/simulados/SimuladosDiasRedacao.vue')
       },
       {
-        path: 'responder-simulado',
-        component: () => import('@/views/simulados/ResponderSimulado.vue')
-      },
-      {
         path: 'responder-redacao',
         component: () => import('@/views/simulados/ResponderRedacao.vue')
+      },
+      {
+        path: 'responder-simulado',
+        component: () => import('@/views/simulados/ResponderSimulado.vue')
       },
     ]
   }
