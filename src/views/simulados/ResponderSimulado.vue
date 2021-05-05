@@ -198,7 +198,7 @@
               />
 
               <p class="ion-no-margin font-bold text-white">
-                restam 4:30
+                restam {{simulado.horas}}:{{simulado.minutos}}:{{simulado.segundos}}
               </p>
             </div>
 
@@ -389,6 +389,8 @@ export default {
         // areas: 'Linguagens e Ciências Humanas'
       },
 
+      timer: null,
+
       meuGabaritoQuestoes: [
         // {
         //   area: 'Linguagens, Códigos e suas Tecnologias',
@@ -468,6 +470,7 @@ export default {
         this.previous = this.verificarNull(dados.data.questoes.prev_page_url, dados.data.questoes.path);
         this.loading = false;
         this.questoesEmCache.push(this.questao);
+        this.acionandoCronometro();
       }catch (e) {
         console.log(e);
         this.loading = false;
@@ -608,6 +611,35 @@ export default {
       }
 
    },
+
+
+    tempo () {
+      if (this.simulado.segundos !== undefined) {
+        this.simulado.segundos -= 1;
+
+        if (this.simulado.segundos < 0) {
+          this.simulado.segundos = 59;
+          this.simulado.minutos -= 1;
+
+          if (this.simulado.minutos < 0) {
+            this.simulado.minutos = 59;
+            this.simulado.horas -= 1;
+
+            if(this.simulado.horas < 0) {
+              this.simulado.horas = 0;
+            }
+          }
+        }
+
+        if (this.simulado.horas == 0 && this.simulado.minutos == 0 && this.simulado.segundos == 0 ){
+          clearInterval(this.timer);
+        }
+      }
+    },
+
+    acionandoCronometro() {
+      this.timer = setInterval(this.tempo, 1000);
+    },
 
     verificarNull(variavel, path) {
       if (!variavel) {
