@@ -142,7 +142,7 @@
           <!--     botao das questoes do gabarito     -->
           <section v-if="gabarito.aberto" class="ion-padding-horizontal">
             <ion-button
-                v-for="(questao, index) in gabarito.questoes"
+                v-for="(questao) in gabarito.questoes"
                 :key="`questao-${questao.id}`"
                 class="mr-8 mb-8 btn-questao-gabarito rounded-sm"
                 :class="questao.resultado === 'Certo' ? 'border-2' : 'border-2 border-ruim'"
@@ -150,7 +150,7 @@
             >
               <div class="flex flex-column ion-align-items-center ion-justify-content-center">
                 <p class="mt-12 mb-0 text-black">
-                  {{ index + 1 }}
+                  {{questoesId.indexOf(questao.id) + 1 }}
                 </p>
 
                 <p class="mt-8 text-black block font-bold">
@@ -566,10 +566,21 @@ export default {
 
         await api.post('/salvar-resposta', objeto);
         this.questao.salvar = !this.questao.salvar;
+        this.atualizandoOGabarito();
       }catch (e) {
         console.log(e);
         this.text.header = 'Não foi possível realizar o procedimento! Verifique a sua conexão e tente novamente.';
         this.dialog = true;
+      }
+    },
+
+    atualizandoOGabarito() {
+      let id = this.questao.id;
+      for(let i = 0; i < this.meuGabaritoQuestoes.length; i++){
+        let x = this.meuGabaritoQuestoes[i].questoes.filter((e) => e.id == id);
+        if (x[0]) {
+          x[0].salvar = this.questao.salvar;
+        }
       }
     },
 
