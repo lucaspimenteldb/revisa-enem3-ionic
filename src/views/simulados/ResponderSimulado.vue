@@ -8,8 +8,8 @@
     >
       <ion-content id="menuzao">
         <ion-fab vertical="top" horizontal="end">
-          <ion-fab-button color="light" @click="toggleMenu">
-            <ion-icon :icon="closeCircleOutline" style="font-size: 30px;"></ion-icon>
+          <ion-fab-button color="dark" @click="toggleMenu">
+            <ion-icon :icon="closeCircleOutline" style="font-size: 30px;" />
           </ion-fab-button>
         </ion-fab>
 
@@ -37,8 +37,8 @@
     >
       <ion-content id="finalizar-simulado-modal" class="ion-padding">
         <ion-fab vertical="top" horizontal="end">
-          <ion-fab-button color="light" @click="setFinalizarOpen(false)">
-            <ion-icon :icon="closeCircleOutline" style="font-size: 30px;"></ion-icon>
+          <ion-fab-button color="dark" @click="setFinalizarOpen(false)">
+            <ion-icon :icon="closeCircleOutline" style="font-size: 30px;" />
           </ion-fab-button>
         </ion-fab>
 
@@ -73,8 +73,8 @@
     >
       <ion-content id="gabarito-modal">
         <ion-fab vertical="top" horizontal="end">
-          <ion-fab-button color="light" @click="setOpen(false)">
-            <ion-icon :icon="closeCircleOutline" style="font-size: 30px;"></ion-icon>
+          <ion-fab-button color="dark" @click="setOpen(false)">
+            <ion-icon :icon="closeCircleOutline" style="font-size: 30px;" />
           </ion-fab-button>
         </ion-fab>
 
@@ -94,8 +94,8 @@
                 :icon="gridOutline"
                 :color="gabarito.color"
             />
-            <ion-label color="" class="ion-text-wrap">
-              <p class="font-bold text-black">
+            <ion-label color="dark" class="ion-text-wrap">
+              <p class="font-bold">
                 Gabarito
               </p>
               <p class="text-md font-bold text-black">
@@ -129,7 +129,7 @@
               </div>
 
               <ion-icon
-                  :icon="bookmarksOutline"
+                  :icon="bookmarks"
                   v-if="questao % 2 === 0"
                   color="warning"
                   class="mt-1 absolute top-0 right--16 font-bold"
@@ -149,8 +149,8 @@
         </h4>
 
         <ion-fab class="mt-8" vertical="top" horizontal="end">
-          <ion-fab-button color="light" @click="toggleMenu">
-            <ion-icon :icon="menuOutline"></ion-icon>
+          <ion-fab-button color="dark" @click="toggleMenu">
+            <ion-icon :icon="menuOutline" />
           </ion-fab-button>
         </ion-fab>
       </div>
@@ -171,23 +171,30 @@
               </p>
             </div>
 
-            <p class="ion-no-margin flex ion-align-items-center ion-justify-content-between">
-              <b>Questão - {{ questao.numero }}</b>
+            <div class="ion-no-margin flex ion-align-items-center ion-justify-content-between">
+              <p class="ion-no-margin font-bold">
+                Questão - {{ questao.numero }}
+              </p>
 
-              <ion-button
-                  @click="questao.salvo = !questao.salvo"
-                  size="small"
-                  class="ion-no-padding w-40 h-40"
-                  color="transparent"
-              >
-                <ion-icon
-                    :color="questao.salvo ? 'warning' : 'primary'"
-                    :icon="questao.salvo ? bookmarks : bookmarksOutline"
-                    style="font-size: 34px;"
-                />
-              </ion-button>
+              <div class="flex ion-align-items-center">
+                <p class="ion-no-margin text-sm">
+                  salvar
+                </p>
 
-            </p>
+                <ion-button
+                    @click="questao.salvo = !questao.salvo"
+                    size="small"
+                    class="ion-no-padding w-40 h-40"
+                    color="transparent"
+                >
+                  <ion-icon
+                      :color="questao.salvo ? 'warning' : 'primary'"
+                      :icon="questao.salvo ? bookmarks : bookmarksOutline"
+                      style="font-size: 34px;"
+                  />
+                </ion-button>
+              </div>
+            </div>
 
             <!--      questaozona      -->
             <section>
@@ -399,7 +406,7 @@ ion-list.questao {
   height: 40px;
 }
 .fundo-cima {
-  background: url('../../../public/assets/images/simulado-estadual-fundo.png') var(--ion-color-primary) no-repeat center/100%;
+  background: url('../../../public/assets/images/simulado-estadual-fundo.png') var(--ion-color-primary) no-repeat right center/50%;
 }
 .text-black {
   color: black;
@@ -423,13 +430,20 @@ ion-list.questao {
   bottom: -40px;
   left: 0;
 }
-h2.font-bold {
-  font-weight: 600;
-}
 ion-button {
   --box-shadow: none;
 }
 .bg-white {
   --background: white;
 }
+.text-sm {
+  font-size: .8rem;
+}
+.text-lg {
+  font-size: 1.15rem;
+}
+.font-bold {
+  font-weight: 600;
+}
+
 </style>
