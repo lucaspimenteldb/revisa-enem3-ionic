@@ -68,9 +68,10 @@ export default defineComponent({
   },
   setup (){
     const text = ref( {
-      header: 'Tem certeza que deseja sair?',
-              subHeader: '',
-              message: '',
+      header: '',
+      subHeader: 'Tem certeza que deseja sair?',
+      message: '',
+      cssClass: 'text-black',
     });
     const dialog = ref(false);
     const user = ref({});

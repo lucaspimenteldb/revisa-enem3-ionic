@@ -26,7 +26,7 @@
                 },
                 dialog: {
                     default: false,
-                    cssClass: 'bg-white'
+                    cssClass: 'bg-white text-black'
                 },
 
                 text: {

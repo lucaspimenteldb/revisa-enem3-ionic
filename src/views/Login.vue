@@ -10,23 +10,26 @@
       <div class="bg__paper h-full ion-padding rounded">
         <ion-text color="primary">
           <h3 class="ion-text-center font-bold">
-            Bem-vindo ao Revisa ENEM!
+            Bem-vindo ao Revisa ENEM
           </h3>
         </ion-text>
 
         <br>
         <form @submit.prevent="formMatricula">
-        <IonItem 
-          class="rounded shadow build-login-ios" 
-          mode="md" 
-          lines="none"
-        >
-          <IonLabel position="floating">
-            Matrícula
-          </IonLabel>
+          <ion-item
+            class="rounded shadow build-login-ios"
+            mode="md"
+            lines="none"
+            color="light"
+          >
+            <ion-label position="floating">
+              <p class="ion-no-margin text-black">
+                Matrícula
+              </p>
+            </ion-label>
 
-          <IonInput type="number" v-model="matricula" value="{{matricula}}" />
-        </IonItem>
+            <ion-input type="number" v-model="matricula" value="{{matricula}}" />
+          </ion-item>
 
         <ion-button 
           type="submit" 
