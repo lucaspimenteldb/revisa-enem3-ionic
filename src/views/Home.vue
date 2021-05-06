@@ -60,39 +60,6 @@
              Pei
            </IonBadge>-->
         </IonItem>
-
-        <IonItem
-            class="ion-margin-top rounded simulado__fundo"
-            href="/simulado"
-        >
-          <IonLabel class="ion-padding-vertical ion-margin-vertical">
-            <h2 class="text-white font-bold text-lg">
-              Simulados Estaduais
-
-              <ion-icon
-                  :icon="notifications"
-                  class="vertical-middle"
-                  color="white"
-              />
-            </h2>
-          </IonLabel>
-
-          <ion-icon
-              slot="end"
-              :icon="arrowForwardCircleOutline"
-              size="large"
-              class="text-white"
-          />
-          <!--<IonIcon :icon="airplaneOutline" slot="start"></IonIcon>
-          <ion-icon :icon="heart"></ion-icon>-->
-
-          <!-- <IonBadge
-               color="primary"
-               slot="end"
-           >
-             Pei
-           </IonBadge>-->
-        </IonItem>
       </IonList>
       <Loading :is-open="loading"/>
     </ion-content>

@@ -10,7 +10,7 @@
         </ion-tab-button>
 
        <ion-tab-button class="tabs" tab="simulado" href="/simulado">
-         <ion-icon :icon="ellipse" />
+         <ion-icon :icon="appsOutline" />
          <ion-label>
            Simul. Estaduais
          </ion-label>
@@ -36,7 +36,7 @@
 
 <script>
 import { IonTabBar, IonTabButton, IonTabs, IonLabel, IonIcon, IonPage } from '@ionic/vue';
-import { ellipse, square, triangle } from 'ionicons/icons';
+import { ellipse, square, triangle, appsOutline } from 'ionicons/icons';
 
 export default {
   name: 'Tabs',
@@ -46,7 +46,7 @@ export default {
       ellipse,
       square,
       triangle,
-    }
+      appsOutline
   }
 }
 </script>

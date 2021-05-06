@@ -2,11 +2,11 @@
     <ion-page>
         <ion-content>
             <ion-list class="h-full">
-                <ion-label class="ion-padding font-bold text-lg">
+                <ion-label class="ion-padding font-bold text-lg" color="light">
                    {{redacao.titulo || ""}}
                 </ion-label>
 
-                <ion-label class="ion-padding text-xs" style="display: block">
+                <ion-label class="ion-padding text-xs" style="display: block" color="light">
                     {{redacao.descricao || ""}}
                 </ion-label>
 
@@ -20,7 +20,7 @@
                 </section>
 
                 <div class="ion-margin-vertical ion-padding-vertical">
-                    <ion-label class="ion-padding font-bold text-lg">
+                    <ion-label class="ion-padding font-bold text-lg" color="light">
                         Como enviar minha redação?
                     </ion-label>
 
