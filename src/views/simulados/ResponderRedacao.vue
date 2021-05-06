@@ -1,5 +1,6 @@
 <template>
   <!-- modal para enviar a redacao -->
+  <ion-page>
   <ion-modal
       :is-open="isOpenRef"
       css-class="modalzao"
@@ -28,12 +29,19 @@
         <ion-label position="floating">
           Anexar redação
         </ion-label>
-        <ion-input></ion-input>
+        <ion-input @click="importarArquivos"></ion-input>
         <ion-icon
             slot="end"
             :icon="documentTextOutline"
             class="mt-16"
         />
+      </ion-item>
+
+      <ion-item v-if="arquivoEscolhido"  class="ion-margin-vertical ion-no-padding ion-padding-top">
+
+        <ion-img class="img-selected" :src="arquivoEscolhido">
+
+        </ion-img>
       </ion-item>
 
       <ion-button
@@ -44,12 +52,12 @@
         Cancelar
       </ion-button>
 
-      <ion-button class="mt-16 text-none">
+      <ion-button @click="previa" class="mt-16 text-none">
         Enviar redação
       </ion-button>
     </ion-content>
   </ion-modal>
-  <ion-page>
+
     <ion-content>
       <div class="ion-padding fundo-cima">
         <h4 class="ion-margin-vertical text-white">
@@ -61,7 +69,7 @@
         <!-- negocio da redacao -->
         <ion-text color="primary">
           <h3 class="mb-4 font-bold text-lg">
-            Redação Estadual
+           {{ redacao.titulo}}
           </h3>
         </ion-text>
 
@@ -79,7 +87,7 @@
             </b>
 
             <p>
-              Os impactos de alguma coisa na sua vida
+             {{ redacao.descricao}}
             </p>
           </ion-label>
         </ion-item>
@@ -90,7 +98,7 @@
           </h3>
         </ion-text>
 
-        <ion-button fill="outline" class="text-none">
+        <ion-button fill="outline" class="text-none" @click="baixarRas">
           Baixar redação
         </ion-button>
         <ion-button class="text-none" @click="setOpen(true)">
@@ -98,7 +106,8 @@
         </ion-button>
 
         <iframe
-            src="https://mundonativodigital.files.wordpress.com/2016/03/cibercultura-pierre-levy.pdf"
+                v-if="redacao.arquivo"
+            :src="redacao.arquivo"
             style="width:100%; height:500px;"
             frameborder="0"
             class="mt-8"
@@ -111,9 +120,10 @@
           </h3>
         </ion-text>
         <iframe
+                v-if="video"
             width="100%"
             height="250"
-            src="https://www.youtube.com/embed/awYnac3pBms"
+            :src="video"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowfullscreen
@@ -121,27 +131,57 @@
         />
       </div>
       <Loading :isOpen="loading"></Loading>
+      <AlertGeneric :dialog="dialog" :text="text" :buttons="buttons" />
+      <AlertGeneric :dialog="dialog2" :text="text2" :buttons="buttons2" />
     </ion-content>
   </ion-page>
 </template>
 
 <script>
-import {IonPage,IonContent, IonItem, IonList,  IonButton, IonLabel, IonText, IonFab, IonIcon, IonInput, IonFabButton, menuController, modalController, IonModal} from '@ionic/vue';
-import {notifications, arrowForwardCircleOutline, closeCircleOutline, documentTextOutline} from 'ionicons/icons';
+  import {
+    IonPage,
+    IonContent,
+    IonItem,
+    IonList,
+    IonButton,
+    IonLabel,
+    IonText,
+    IonFab,
+    IonIcon,
+    IonInput,
+    IonFabButton,
+    menuController,
+    modalController,
+    IonModal,
+    actionSheetController,
+  } from '@ionic/vue';
+  import {
+    notifications,
+    arrowForwardCircleOutline,
+    closeCircleOutline,
+    documentTextOutline,
+    cameraOutline, imageOutline
+  } from 'ionicons/icons';
 import { useRouter, useRoute } from 'vue-router'
 import Loading from "../../components/auxiliares/Loading";
-// import api from '../../api/basicUrl';
+import api from '../../api/basicUrl';
 import { ref } from 'vue';
+import browser from "../../plugins/browser";
+  import camera from "../../plugins/camera";
+  import AlertGeneric from "../../components/auxiliares/AlertGeneric";
+  import storage from "../../storage/StorageKey";
 // import storage from '../../storage/StorageKey';
 
 export default {
   name: 'ResponderRedacao',
   // components: {IonPage, IonTitle, IonContent, IonItem, IonLabel, IonList, IonButton, IonIcon, IonProgressBar, IonText, Loading},
-  components: {IonPage, IonContent, IonItem, IonList, IonButton, IonLabel, IonText, IonIcon, IonInput, IonFab, IonFabButton, menuController, modalController, IonModal, Loading},
+  components: {AlertGeneric, IonPage, actionSheetController, IonContent, IonItem, IonList, IonButton, IonLabel, IonText, IonIcon, IonInput, IonFab, IonFabButton, menuController, modalController, IonModal, Loading},
 
   setup () {
     const loading = ref(false);
     const isOpenRef = ref(false);
+    const video = ref('');
+    const arquivoEscolhido = ref('');
     const setOpen = state => isOpenRef.value = state;
 
     return {
@@ -151,9 +191,12 @@ export default {
       documentTextOutline,
       router: useRouter(),
       route: useRoute(),
+
       isOpenRef,
       setOpen,
       loading,
+      video,
+      arquivoEscolhido
     }
   },
 
@@ -177,16 +220,167 @@ export default {
           id: 235,
         },
       ],
+      dialog: false,
       redacao: {
-        tempo: '4 dias',
-        tema: 'O desafio de reduzir as desigualdades entre as regiões do Brasil',
-      }
+        // tempo: '4 dias',
+        // tema: 'O desafio de reduzir as desigualdades entre as regiões do Brasil',
+      },
+
+      text2: {
+        header: 'Falha ao enviar!',
+        subHeader: '',
+        message: '',
+      },
+      buttons2: [{text:'Ok', handler: () => {  this.dialog2 = false  }}],
+      dialog2: false,
+
+      text: {
+        header: 'Tem certeza que deseja enviar a redação?',
+        subHeader: '',
+        message: '',
+      },
+      buttons: [{text: 'Sim', handler: () => this.enviarAtividade()}, {text:'Não', handler: () => {  this.dialog = false  }}],
     }
   },
 
   methods :{
+    async baixarRas () {
+      try{
+        if(this.redacao.arquivo){
+          if(window.cordova){
+            let fileTransfer = new window.FileTransfer();
+            let path = window.cordova.file.dataDirectory+''+this.redacao.id+'.pdf';
+            let uri = encodeURI(this.redacao.arquivo);
+            this.loading = true;
+
+            let entry = await this.promiseInstrucoes(fileTransfer, uri, path);
+            this.loading = false;
+            await this.promiseOpener(entry.nativeURL, 'application/pdf');
+
+          }
+          else {
+            await browser.open(this.redacao.arquivo);
+          }
+        }
+      }
+      catch (e) {
+        console.log(e);
+        this.loading = false;
+      }
+
+
+    },
+
+    async enviarAtividade () {
+      try {
+        this.loading = true;
+        this.dialog = false;
+        this.mensagemEnvio = null;
+        this.mensagemErro = null;
+        let id_redacao = this.redacao.id;
+        let id_user = this.user.id;
+        let objeto = { arquivo: this.arquivoEscolhido, id_redacao, id_user }
+        let dados = await api.post('/enviar-redacao', objeto);
+        this.emitter.emit('pontos', dados.data.pontos);
+        this.text2.header = dados.data.message;
+        this.dialog2 = true;
+
+      }catch (e) {
+        console.log(e);
+        if (e.response) {
+          this.text2.header = e.response.data.message;
+        }
+        else {
+          this.text2.header = 'Erro Interno';
+        }
+
+        this.dialog2 = true;
+      }
+      this.loading = false;
+    },
+
+    previa () {
+      this.dialog = true;
+    },
+
+    async promiseOpener (uri, mime) {
+      return new Promise((resolve, reject) => {
+        window.cordova.plugins.fileOpener2.open(uri, mime, (result) => {
+          resolve(result)
+        }, (error) => reject(error))
+      })
+    },
+
+    async promiseInstrucoes (fileTransfer, uri, path) {
+      return new Promise((resolve, reject) => {
+        fileTransfer.download(uri, path, (entry) => {
+          resolve(entry)
+        }, (error) => reject(error))
+      })
+    },
+
+    async sourceCamera (source) {
+      let image = await camera.takePicture({
+        quality: 90,
+        width: 1920,
+        preserveAspectRatio: true,
+        allowEditing: false,
+        uri: true,
+        source
+      })
+
+      this.arquivoEscolhido = image.dataUrl;
+    },
+
+    async importarArquivos () {
+      const actionSheet = await actionSheetController.create({
+        header: 'Escolher arquivo da redação',
+        cssClass: '',
+        buttons: [
+          {
+            text: 'Tirar foto',
+            icon: cameraOutline,
+            handler: () => {
+              this.sourceCamera(0);
+            },
+          },
+          {
+            text: 'Galeria de fotos',
+            icon: imageOutline,
+            handler: () => {
+              this.sourceCamera(1);
+            },
+          },
+          {
+            text: 'cancelar',
+            role: 'cancel',
+            icon: closeCircleOutline,
+            handler: () => console.log('fechar'),
+          }
+        ],
+      });
+
+      return actionSheet.present();
+    },
 
   },
+
+  async ionViewWillEnter() {
+    try{
+      let usuario = await storage.get('user');
+      usuario = JSON.parse(usuario.value);
+      this.user = usuario;
+      this.redacao = JSON.parse(this.route.query.redacao);
+      this.loading = true;
+      let dados = await api.get('/redacao-informacao/'+this.redacao.id)
+      console.log(dados);
+      this.video = dados.data.video_tutorial;
+      this.loading = false;
+    }catch (e) {
+      console.log(e)
+      this.loading = false;
+    }
+  }
 }
 </script>
 
@@ -229,6 +423,10 @@ ion-button {
   width: 100%;
   bottom: -40px;
   left: 0;
+}
+
+.img-selected::part(image) {
+  max-height: 246px;
 }
 h2.font-bold {
   font-weight: 600;

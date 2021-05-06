@@ -121,7 +121,7 @@
                   class="ion-no-margin ion-margin-vertical text-none font-bold"
                   size="small"
                   :disabled="!redacao.botao"
-                  @click="() => router.push('/responder-redacao')"
+                  @click="() => router.push({path: '/responder-redacao', query:{redacao: JSON.stringify(redacao)}})"
               >
                 Iniciar redação
               </ion-button>
