@@ -448,7 +448,7 @@ text-xl {
 }
 
 .mb-0 {
-  margin-bottom: 4px;
+  margin-bottom: 0 !important;
 }
 
 .mb-4 {
