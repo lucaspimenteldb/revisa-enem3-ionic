@@ -16,3 +16,9 @@ ion-icon.build-home-ios.ios {
 .alert-wrapper.ion-overlay-wrapper.sc-ion-alert-ios {
     background: white;
 }
+
+ion-label.label-termo {
+    & h6 {
+        color: white !important;
+    }
+}

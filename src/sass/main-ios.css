@@ -11,4 +11,8 @@ ion-icon.build-home-ios.ios {
   background: white;
 }
 
+ion-label.label-termo h6 {
+  color: white !important;
+}
+
 /*# sourceMappingURL=main-ios.css.map */

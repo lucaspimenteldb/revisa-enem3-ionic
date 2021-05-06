@@ -2,8 +2,17 @@
   <ion-content class="ion-padding relative">
     <!-- dicas da atividade -->
     <div v-if="!termosAceitos">
-      <ion-item class="ion-no-padding " lines="none">
-        <ion-label class="label-termo" v-html="imagem">
+      <!-- botao de fechar o modal -->
+      <ion-icon
+          :icon="closeCircleOutline"
+          class="absolute top-4 right-4"
+          size="large"
+          color="danger"
+          @click="fechar"
+      />
+      
+      <ion-item class="" lines="none">
+        <ion-label class="label-termo" v-html="imagem" color="dark">
         </ion-label>
       </ion-item>
 
