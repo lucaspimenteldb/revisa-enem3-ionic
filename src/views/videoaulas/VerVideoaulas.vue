@@ -22,19 +22,19 @@
             size="large"
             class="ion-margin-end"
             @click="curtida(1)"
-            :color="curtiu === true ? 'success' : ''"
+            :color="curtiu === true ? 'success' : 'primary'"
         />
         <ion-icon
             :icon="dislike"
             size="large"
             @click="curtida(0)"
-            :color="curtiu === false ? 'danger' : ''"
+            :color="curtiu === false ? 'danger' : 'primary'"
         />
       </section>
 
       <section class="secao-finalizar inline-block rounded-right ion-margin-end">
         <ion-button
-                v-if="!finalizada"
+            v-if="!finalizada"
             @click="finalizarAula"
             class="classes"
         >
@@ -96,9 +96,8 @@
           <ion-icon
               slot="end"
               :icon="arrowForwardCircleOutline"
-              color="light"
               size="large"
-              class=""
+              class="text-white"
           />
         </ion-item>
       </ion-list>
@@ -214,7 +213,7 @@ export default {
     async abrirQuestao (quest, titulo, user) {
       const modal = await modalController.create({
         component: ModalVideoaulas,
-        cssClass: '',
+        cssClass: 'bg-white',
         componentProps: {
           title: titulo,
           conteudo: quest.descricao,
@@ -311,6 +310,10 @@ ion-item {
 ion-item.select {
   --background: white;
 }
+ion-list {
+  --background: white;
+  background: white;
+}
 .text-white {
   color: white;
 }
@@ -337,5 +340,11 @@ ion-item.select {
 
 h2.font-bold {
   font-weight: 600;
+}
+
+
+#background-content {
+  background: white;
+  --background: white;
 }
 </style>

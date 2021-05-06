@@ -4,7 +4,7 @@
         <ion-content >
             <!-- selecionar videoaula -->
             <ion-item class="ion-margin ion-margin-bottom white rounded select">
-                <ion-label>
+                <ion-label color="light">
                     Selecionar videoaula...
                 </ion-label>
 
@@ -52,9 +52,8 @@
                     <ion-icon
                             slot="end"
                             :icon="arrowForwardCircleOutline"
-                            color="light"
                             size="large"
-                            class=""
+                            class="text-white"
                     />
                 </ion-item>
             </ion-list>

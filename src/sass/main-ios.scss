@@ -17,8 +17,15 @@ ion-icon.build-home-ios.ios {
     background: white;
 }
 
+// redacao
 ion-label.label-termo {
     & h6 {
         color: white !important;
     }
+}
+
+// videoaulas
+.modal-videoaulas-questoes #background-content {
+    background: white;
+    --background: white;
 }

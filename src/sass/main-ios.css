@@ -15,4 +15,9 @@ ion-label.label-termo h6 {
   color: white !important;
 }
 
+.modal-videoaulas-questoes #background-content {
+  background: white;
+  --background: white;
+}
+
 /*# sourceMappingURL=main-ios.css.map */

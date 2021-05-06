@@ -1,13 +1,13 @@
 <template>
   <ion-page>
     <ion-content>
-      <ion-title>
+      <ion-title class="ion-margin-top">
         Videoaulas - {{`Volume ${route.params.id}`}}
       </ion-title>
 
       <!-- selecionar disciplina -->
-      <ion-item class="ion-margin ion-margin-bottom white rounded select">
-        <ion-label>
+      <ion-item class="ion-margin ion-margin-bottom white rounded select" >
+        <ion-label color="light">
           Selecionar disciplina...
         </ion-label>
 
@@ -18,7 +18,7 @@
       </ion-item>
 
       <ion-list class="ion-padding rounded-top">
-        <ion-label class="font-bold text-lg">
+        <ion-label class="font-bold text-lg" color="light">
           {{`Volume ${route.params.id}`}}
         </ion-label>
 
@@ -53,9 +53,8 @@
           <ion-icon
               slot="end"
               :icon="arrowForwardCircleOutline"
-              color="light"
               size="large"
-              class=""
+              class="text-white"
           />
         </ion-item>
       </ion-list>

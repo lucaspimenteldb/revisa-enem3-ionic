@@ -25,7 +25,7 @@
       </div>
 
       <ion-list class="ion-margin-top ion-padding h-full rounded-top">
-        <ion-label class="font-bold text-lg" color="dark">
+        <ion-label class="font-bold text-lg" color="light">
           Videoaulas
         </ion-label>
 
@@ -47,17 +47,15 @@
               v-if="volume.liberado"
               slot="end"
               :icon="playCircleOutline"
-              color="light"
               size="large"
-              class="mr-8"
+              class="mr-8 text-white"
           />
           <ion-icon
               v-if="!volume.liberado"
               slot="end"
               :icon="lockClosed"
-              color="light"
               size="large"
-              class="mr-8"
+              class="mr-8 text-white"
           />
         </ion-item>
       </ion-list>

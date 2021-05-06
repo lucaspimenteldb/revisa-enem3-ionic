@@ -1,5 +1,5 @@
 <template>
-  <ion-content class="ion-padding relative">
+  <ion-content class="ion-padding relative bg-white modal-videoaulas-questoes">
     <!-- dicas da atividade -->
     <ion-button
         fill="outline"
@@ -16,18 +16,18 @@
     </ion-button>
 
     <ion-item class=" ion-no-padding" v-if="verResolucao">
-      <p class="text-sm" v-html="resolucao">
+      <p class="text-sm text-black" v-html="resolucao">
 
       </p>
     </ion-item>
 
     <div class="mt-32">
-      <ion-label class="ion-text-wrap">
-        <ion-text class="font-bold">
+      <ion-label class="ion-text-wrap" color="light">
+        <ion-text class="font-bold" color="light">
           {{ title }}
         </ion-text>
 
-        <p v-html="conteudo">
+        <p v-html="conteudo" class="text-black">
 
         </p>
       </ion-label>
@@ -47,18 +47,18 @@
         v-for="alternativa in alternativas"
         :key="alternativa.alternativa+'alternativa'"
         class="ion-margin-vertical ion-no-padding border-2 border-primary rounded"
-        :class="[alternativaMarcada === alternativa.alternativa ? 'alternativa__marcada text-white' : '', acertou[alternativa.alternativa] === true ? 'alternativa__certa' : acertou[alternativa.alternativa] === false ? 'alternativa__errada' : '']"
+        :class="[alternativaMarcada === alternativa.alternativa ? 'alternativa__marcada' : '', acertou[alternativa.alternativa] === true ? 'alternativa__certa' : acertou[alternativa.alternativa] === false ? 'alternativa__errada' : '']"
         @click="marcarAlternativa(alternativa.alternativa)"
     >
       <article
-          class="ml-8 mr-8 flex ion-align-items-center ion-justify-content-center h-30 w-30 border-2 rounded-full"
-          :class="alternativaMarcada === alternativa.alternativa ? 'border-white' : 'border-primary'"
+          class="ml-8 mr-8 flex ion-align-items-center ion-justify-content-center h-30 w-30 text-black border-2 rounded-full"
+          :class="alternativaMarcada === alternativa.alternativa ? 'border-white text-white' : 'border-primary text-black'"
       >
         {{ alternativa.alternativa }}
       </article>
 
-      <ion-text>
-        <p v-html="alternativa.texto">
+      <ion-text color="light">
+        <p v-html="alternativa.texto" :class="alternativaMarcada === alternativa.alternativa ? 'text-white' : 'text-black'">
 
         </p>
       </ion-text>
@@ -230,13 +230,20 @@ export default {
 </script>
 
 <style scoped>
+ion-item {
+  --background: white;
+}
+
+ion-content {
+  --background: white;
+}
+
 ion-item.alternativa__errada {
   --background: var(--ion-color-danger);
   --ion-text-color: var(--ion-color-light);
   --ion-border-color:var(--ion-color-light);
 
 }
-
 
 ion-item.alternativa__certa {
   --background: var(--ion-color-success);
