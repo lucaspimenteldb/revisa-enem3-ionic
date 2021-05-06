@@ -19,7 +19,11 @@
               Ver gabarito
             </ion-label>
           </ion-item>
-          <ion-item lines="none" class="mt-8">
+          <ion-item
+              lines="none"
+              class="mt-8"
+              @click="setDetalhesSimulado(true)"
+          >
             <ion-label class="text-white">
               Detalhes do simulado
             </ion-label>
@@ -91,6 +95,58 @@
             class="text-primary text-none font-bold bg-white rounded"
         >
           Finalizar simulado
+        </ion-button>
+      </ion-content>
+    </ion-modal>
+
+    <!-- modal para ver as informações do simulado -->
+    <ion-modal
+        :is-open="detalhesSimulado"
+        css-class="modalFinalizar"
+        @onDidDismiss="setDetalhesSimulado(false)"
+    >
+      <ion-content id="detalhes-simulado" class="ion-padding">
+        <ion-fab vertical="top" horizontal="end">
+          <ion-fab-button color="light" @click="fecharDetalhes">
+            <ion-icon :icon="closeCircleOutline" style="font-size: 30px;"></ion-icon>
+          </ion-fab-button>
+        </ion-fab>
+
+        <h3 class="mt-64 text-white">
+         {{simulado.titulo}}
+        </h3>
+
+        <p class="mt-0 mb-32 text-white">
+          Todos os detalhes do seu simulado
+        </p>
+
+        <section>
+          <article class="mt-8">
+            <ion-text color="light">
+              <p class="ion-no-margin">
+                Disponível entre:
+                <ion-text color="verde" class="font-bold"> 01/04 às 14:00 </ion-text> e
+                <ion-text color="vermelho" class="font-bold">02/04 às 14:00</ion-text>
+              </p>
+
+              <p class="mb-0 mt-8">
+                Você ainda tem: <ion-text class="font-bold">300 minutos restantes</ion-text>
+              </p>
+
+              <p class="mb-0 mt-8">
+                Áreas do simulado:
+                <ion-text>Humanas, Linguagens</ion-text>
+              </p>
+            </ion-text>
+          </article>
+        </section>
+
+        <ion-button
+            @click="fecharDetalhes"
+            color="danger"
+            class="mt-16 text-none"
+        >
+          Fechar
         </ion-button>
       </ion-content>
     </ion-modal>
@@ -310,6 +366,8 @@ export default {
     const loading = ref(false);
     const isOpenRef = ref(false);
     const setOpen = state => isOpenRef.value = state;
+    const detalhesSimulado = ref(false);
+    const setDetalhesSimulado = state => detalhesSimulado.value = state;
     const user = ref({});
     const finalizarOpen = ref(false);
     const setFinalizarOpen = state => finalizarOpen.value = state;
@@ -325,6 +383,8 @@ export default {
       timeOutline,
       isOpenRef,
       setOpen,
+      detalhesSimulado,
+      setDetalhesSimulado,
       finalizarOpen,
       setFinalizarOpen,
       router: useRouter(),
@@ -434,6 +494,10 @@ export default {
 
     fechar () {
       this.setFinalizarOpen(false);
+    },
+
+    fecharDetalhes() {
+      this.setDetalhesSimulado(false);
     },
 
     async finalizarSimulado () {
