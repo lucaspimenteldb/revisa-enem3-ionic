@@ -106,7 +106,7 @@ const routes = [
         component: () => import('@/views/simulados/SimuladosInicio.vue')
       },
       {
-        path: 'ver-simulado',
+        path: 'ver-simulado/:id',
         component: () => import('@/views/simulados/SimuladosDiasRedacao.vue')
       },
       {

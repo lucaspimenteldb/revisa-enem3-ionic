@@ -16,12 +16,12 @@
         >
           <ion-text color="primary">
             <h3 class="mb-4 font-bold text-lg">
-              {{simulado.dia}}º Dia de Simulado
+             {{simulado.titulo}}
             </h3>
           </ion-text>
 
           <p class="mt-0 text-black">
-            No card abaixo você poderá acessar o Simulado do <b>{{ simulado.dia }}º dia</b>. Você terá 4 horas para terminá-lo após o inicio do simulado.
+            No card abaixo você poderá acessar o Simulado do <b>{{simulado.titulo}}</b>. Você terá {{simulado.horaEx}} para terminá-lo após o inicio do simulado.
           </p>
 
           <ion-item
@@ -31,7 +31,7 @@
             <div class="flex flex-column text-black">
               <ion-text color="primary">
                 <h3 class="mb-4 font-bold text-lg">
-                  Simulado estadual
+                 {{simulado.titulo}}
                 </h3>
               </ion-text>
 
@@ -43,7 +43,7 @@
                     <ion-text color="vermelho" class="font-bold">{{ simulado.fim }}</ion-text>
                   </p>
 
-                  <p class="mb-0 mt-8">
+                  <p class="mb-0 mt-8" v-if="simulado.tempo">
                     Você ainda tem: <ion-text color="primary" class="font-bold">{{ simulado.tempo }} minutos restantes</ion-text>
                   </p>
 
@@ -59,16 +59,22 @@
                   color="primary"
                   class="ion-no-margin ion-margin-vertical text-none font-bold"
                   size="small"
-                  @click="() => router.push( '/responder-simulado')"
+                  :disabled="!simulado.botao"
+                  @click="() => router.push( '/responder-simulado/'+simulado.id)"
               >
                 Iniciar simulado
               </ion-button>
             </div>
           </ion-item>
+          <div class="absolute fundo-tudo rounded" :class="simulado.liberado">
+            <p class="ion-margin-end ion-text-center text-white">
+              {{simulado.message}}
+            </p>
+          </div>
         </div>
 
         <!--    card da redaçãozona    -->
-        <div class="mb-48 relative">
+        <div class="mb-48 relative" v-for="(redacao) in redacoes" :key="redacao.id">
           <ion-text color="primary">
             <h3 class="mb-4 font-bold text-lg">
               Redação
@@ -86,7 +92,7 @@
             <div class="flex flex-column text-black">
               <ion-text color="primary">
                 <h3 class="mb-4 font-bold text-lg">
-                  Redação estadual
+                  {{redacao.titulo}}
                 </h3>
               </ion-text>
 
@@ -94,17 +100,17 @@
                 <ion-text>
                   <p class="ion-no-margin">
                     Disponível entre:
-                    <ion-text color="verde" class="font-bold">{{ simulados[0].inicio }}</ion-text> e
-                    <ion-text color="vermelho" class="font-bold">{{ simulados[1].fim }}</ion-text>
+                    <ion-text color="verde" class="font-bold">{{ redacao.inicio }}</ion-text> e
+                    <ion-text color="vermelho" class="font-bold">{{ redacao.fim }}</ion-text>
                   </p>
 
-                  <p class="mb-0 mt-8">
+                  <p class="mb-0 mt-8" v-if="redacao.tempo">
                     Você ainda tem: <ion-text color="primary" class="font-bold">{{ redacao.tempo }}</ion-text>
                   </p>
 
                   <p class="mb-0 mt-8">
                     Tema da redação:
-                    <ion-text color="primary">{{ redacao.tema}}</ion-text>
+                    <ion-text color="primary">{{ redacao.descricao}}</ion-text>
                   </p>
                 </ion-text>
               </article>
@@ -114,12 +120,18 @@
                   color="primary"
                   class="ion-no-margin ion-margin-vertical text-none font-bold"
                   size="small"
+                  :disabled="!redacao.botao"
                   @click="() => router.push('/responder-redacao')"
               >
                 Iniciar redação
               </ion-button>
             </div>
           </ion-item>
+          <div class="absolute fundo-tudo rounded" :class="redacao.liberado">
+            <p class="ion-margin-end ion-text-center text-white">
+              {{redacao.message}}
+            </p>
+          </div>
         </div>
       </ion-list>
       <Loading :isOpen="loading"></Loading>
@@ -135,7 +147,9 @@ import { useRouter, useRoute } from 'vue-router'
 import Loading from "../../components/auxiliares/Loading";
 // import api from '../../api/basicUrl';
 import { ref } from 'vue';
-// import storage from '../../storage/StorageKey';
+// import storage from "../../storage/StorageKey";
+import api from "../../api/basicUrl";
+import storage from '../../storage/StorageKey';
 
 export default {
   name: 'Simulados',
@@ -157,33 +171,54 @@ export default {
   data () {
     return {
       simulados: [
-        {
-          dia: 1,
-          inicio: '22/05/2020',
-          fim: '30/05/2020',
-          tempo: 120,
-          areas: 'Linguagens e Humanas',
-          id: 235,
-        },
-        {
-          dia: 2,
-          inicio: '22/05/2020',
-          fim: '30/05/2020',
-          tempo: 120,
-          areas: 'Exatas e Natureza',
-          id: 235,
-        },
+        // {
+        //   dia: 1,
+        //   inicio: '22/05/2020',
+        //   fim: '30/05/2020',
+        //   tempo: 120,
+        //   areas: 'Linguagens e Humanas',
+        //   id: 235,
+        // },
+        // {
+        //   dia: 2,
+        //   inicio: '22/05/2020',
+        //   fim: '30/05/2020',
+        //   tempo: 120,
+        //   areas: 'Exatas e Natureza',
+        //   id: 235,
+        // },
       ],
-      redacao: {
-        tempo: '4 dias',
-        tema: 'O desafio de reduzir as desigualdades entre as regiões do Brasil',
-      }
+      redacoes:[
+      //         {
+      //   tempo: '4 dias',
+      //   tema: 'O desafio de reduzir as desigualdades entre as regiões do Brasil',
+      // }
+      ]
     }
   },
 
   methods :{
 
   },
+
+  async ionViewWillEnter () {
+    try {
+      this.loading = false;
+      this.loading = true;
+      let usuario = await storage.get('user');
+      usuario = JSON.parse(usuario.value);
+      this.user = usuario;
+      let id_simulado = this.route.params.id;
+      let dados = await api.get('/simulado-estaduais/'+ this.user.id + '/'+id_simulado);
+      this.simulados = dados.data.simulados;
+      this.redacoes = dados.data.redacoes;
+      console.log('simulado', dados.data);
+      this.loading = false;
+    }catch (e) {
+      this.loading = false;
+      console.log(e);
+    }
+  }
 }
 </script>
 
@@ -226,5 +261,17 @@ ion-button {
 }
 h2.font-bold {
   font-weight: 600;
+}
+
+.bg-verde{
+  background: #0c9041;
+}
+
+.bg-danger {
+  background: #E04A2D;
+}
+
+.bg-block {
+  background: #FCB812;
 }
 </style>

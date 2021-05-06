@@ -49,7 +49,7 @@
                   class="ion-no-margin ion-margin-vertical text-none font-bold"
                   size="small"
                   :disabled="!simulado.botao"
-                  @click="() => router.push( '/responder-simulado/'+simulado.id)"
+                  @click="() => router.push( '/ver-simulado/'+simulado.id)"
 
               >
                 Iniciar simulado
@@ -139,7 +139,7 @@ export default {
       let usuario = await storage.get('user');
       usuario = JSON.parse(usuario.value);
       this.user = usuario;
-      let dados = await api.get('/simulado-estaduais/'+this.user.id);
+      let dados = await api.get('/simulado-estaduais-master');
       this.simulados = dados.data.simulados;
       console.log('simulado', dados.data);
       this.loading = false;
