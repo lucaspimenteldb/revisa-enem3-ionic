@@ -245,8 +245,8 @@
       <ion-list class="ion-padding-vertical rounded-top questao">
         <!-- cardzao da questao -->
         <ion-item lines="none" class="questao">
-          <div class="flex flex-column text-black">
-            <div class="ion-padding flex ion-align-items-center ion-justify-content-center font-bold bg-primary rounded">
+          <div class="max-w-100 flex flex-column text-black">
+            <div class="ion-margin-bottom ion-padding flex ion-align-items-center ion-justify-content-center font-bold bg-primary rounded">
               <ion-icon
                   :icon="timeOutline"
                   style="font-size: 30px;"
@@ -258,23 +258,29 @@
               </p>
             </div>
 
-            <p class="ion-no-margin flex ion-align-items-center ion-justify-content-between">
-              <b>Questão - {{ questao.numero }}</b>
+            <div class="ion-no-margin flex ion-align-items-center ion-justify-content-between">
+              <p class="font-bold">Questão - {{ questao.numero }}</p>
 
               <ion-button
                   @click="salvarResposta()"
                   size="small"
-                  class="ion-no-padding w-40 h-40"
-                  color="transparent"
+                  class="h-40"
+                  fill="outline"
               >
+                <ion-label
+                    slot="start"
+                    class="text-none font-bold text-primary"
+                    v-text="questao.salvar ? 'salva' : 'salvar'"
+                >
+                </ion-label>
                 <ion-icon
                     :color="questao.salvar ? 'warning' : 'primary'"
                     :icon="questao.salvar ? bookmarks : bookmarksOutline"
-                    style="font-size: 34px;"
+                    style="font-size: 24px;"
+                    slot="end"
                 />
               </ion-button>
-
-            </p>
+            </div>
 
             <!--      questaozona      -->
             <section>
@@ -282,10 +288,7 @@
                 {{ questao.area }}
               </h5>
 
-              <p v-html="questao.descricao">
-
-              </p>
-
+              <div v-html="questao.descricao" class="enunciado-questoes"></div>
 
               <ion-button
                   v-for="alternativa in questao.alternativas"
@@ -301,7 +304,7 @@
                     {{alternativa.alternativa}}
                   </div>
 
-                  <p class="text-xs pointer-events-none text-alternativa" v-html="alternativa.texto">
+                  <p class="mr-auto text-xs pointer-events-none text-alternativa" v-html="alternativa.texto">
 
                   </p>
               </ion-button>
@@ -816,6 +819,7 @@ ion-list.questao {
 h2.font-bold {
   font-weight: 600;
 }
+
 ion-button {
   --box-shadow: none;
 }

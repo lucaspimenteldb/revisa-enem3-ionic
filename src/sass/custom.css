@@ -259,6 +259,10 @@ text-xl {
   min-height: 130px;
 }
 
+.max-w-100 {
+  max-width: 100%;
+}
+
 .w-full {
   width: 100%;
   min-width: 100%;
@@ -416,6 +420,10 @@ text-xl {
 
 .left-4 {
   left: 1rem;
+}
+
+.mr-auto {
+  margin-right: auto;
 }
 
 .mr-4 {
