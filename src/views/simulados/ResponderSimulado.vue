@@ -158,8 +158,8 @@
       <ion-list class="ion-padding-vertical rounded-top questao">
         <!-- cardzao da questao -->
         <ion-item lines="none" class="questao">
-          <div class="flex flex-column text-black">
-            <div class="ion-padding flex ion-align-items-center ion-justify-content-center font-bold bg-primary rounded">
+          <div class="max-w-100 flex flex-column text-black">
+            <div class="ion-margin-bottom ion-padding flex ion-align-items-center ion-justify-content-center font-bold bg-primary rounded">
               <ion-icon
                   :icon="timeOutline"
                   style="font-size: 30px;"
@@ -172,28 +172,27 @@
             </div>
 
             <div class="ion-no-margin flex ion-align-items-center ion-justify-content-between">
-              <p class="ion-no-margin font-bold">
-                Questão - {{ questao.numero }}
-              </p>
+              <p class="font-bold">Questão - {{ questao.numero }}</p>
 
-              <div class="flex ion-align-items-center">
-                <p class="ion-no-margin text-sm">
-                  salvar
-                </p>
-
-                <ion-button
-                    @click="questao.salvo = !questao.salvo"
-                    size="small"
-                    class="ion-no-padding w-40 h-40"
-                    color="transparent"
+              <ion-button
+                  @click="questao.salvo = !questao.salvo"
+                  size="small"
+                  class="h-40"
+                  fill="outline"
+              >
+                <ion-label
+                    slot="start"
+                    class="text-none font-bold text-primary"
+                    v-text="questao.salvo ? 'salva' : 'salvar'"
                 >
-                  <ion-icon
-                      :color="questao.salvo ? 'warning' : 'primary'"
-                      :icon="questao.salvo ? bookmarks : bookmarksOutline"
-                      style="font-size: 34px;"
-                  />
-                </ion-button>
-              </div>
+                </ion-label>
+                <ion-icon
+                    :color="questao.salvo ? 'warning' : 'primary'"
+                    :icon="questao.salvo ? bookmarks : bookmarksOutline"
+                    style="font-size: 24px;"
+                    slot="end"
+                />
+              </ion-button>
             </div>
 
             <!--      questaozona      -->
