@@ -47,6 +47,7 @@ export default {
       square,
       triangle,
       appsOutline
+    }
   }
 }
 </script>
