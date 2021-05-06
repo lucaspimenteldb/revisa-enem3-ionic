@@ -11,7 +11,7 @@
           @click="fechar"
       />
       
-      <ion-item class="" lines="none">
+      <ion-item class="mt-48" lines="none">
         <ion-label class="label-termo" v-html="imagem" color="dark">
         </ion-label>
       </ion-item>
@@ -25,7 +25,7 @@
       </ion-button>
     </div>
 
-    <div v-else>
+    <div v-else class="mt-48">
       <ion-title class="ion-margin-vertical ion-no-padding ion-padding-top">
         {{ title }}
       </ion-title>
