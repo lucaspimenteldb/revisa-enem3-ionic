@@ -641,12 +641,24 @@ export default {
       }
     },
 
-    atualizandoOGabarito() {
+    atualizandoOGabarito(salvar = true) {
       let id = this.questao.id;
       for(let i = 0; i < this.meuGabaritoQuestoes.length; i++){
-        let x = this.meuGabaritoQuestoes[i].questoes.filter((e) => e.id == id);
-        if (x[0]) {
-          x[0].salvar = this.questao.salvar;
+        let x = this.meuGabaritoQuestoes[i];
+        if (x) {
+          let q = x.questoes.filter((e) => e.id == id);
+          if (q[0]) {
+            let index = x.questoes.indexOf(q[0]);
+            if(salvar){
+              q[0].salvar = this.questao.salvar;
+            }
+            else{
+              q[0].resposta = this.questao.selecionada;
+            }
+             x.questoes.splice(index, 1, q[0]);
+             this.meuGabaritoQuestoes[i] = x;
+          }
+
         }
       }
     },
@@ -661,6 +673,7 @@ export default {
         };
         await api.post('/inserir-resposta', objeto);
         this.questao.selecionada = alternativa;
+        this.atualizandoOGabarito(false);
       }catch (e) {
         console.log(e);
         this.text.header = 'Sua resposta não foi enviada! Verifique a sua conexão e tente novamente.';
