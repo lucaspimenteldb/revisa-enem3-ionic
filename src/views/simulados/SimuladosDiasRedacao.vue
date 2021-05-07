@@ -60,7 +60,7 @@
                   class="ion-no-margin ion-margin-vertical text-none font-bold"
                   size="small"
                   :disabled="!simulado.botao"
-                  @click="() => router.push( '/responder-simulado/'+simulado.id)"
+                  @click="irResolver(simulado)"
               >
                 Iniciar simulado
               </ion-button>
@@ -135,6 +135,7 @@
         </div>
       </ion-list>
       <Loading :isOpen="loading"></Loading>
+      <ModalLinguaEstrangeira></ModalLinguaEstrangeira>
     </ion-content>
   </ion-page>
 </template>
@@ -145,6 +146,7 @@ import {IonPage,IonContent, IonItem, IonList,  IonButton, IonText} from '@ionic/
 import {notifications, arrowForwardCircleOutline} from 'ionicons/icons';
 import { useRouter, useRoute } from 'vue-router'
 import Loading from "../../components/auxiliares/Loading";
+import ModalLinguaEstrangeira from "../../components/modal/ModalLinguaEstrangeira";
 // import api from '../../api/basicUrl';
 import { ref } from 'vue';
 // import storage from "../../storage/StorageKey";
@@ -154,10 +156,11 @@ import storage from '../../storage/StorageKey';
 export default {
   name: 'Simulados',
   // components: {IonPage, IonTitle, IonContent, IonItem, IonLabel, IonList, IonButton, IonIcon, IonProgressBar, IonText, Loading},
-  components: {IonPage, IonContent, IonItem, IonList, IonButton, IonText, Loading},
+  components: {ModalLinguaEstrangeira, IonPage, IonContent, IonItem, IonList, IonButton, IonText, Loading},
 
   setup () {
     const loading = ref(false);
+    const dialog = ref(true);
 
     return {
       notifications,
@@ -165,6 +168,7 @@ export default {
       router: useRouter(),
       route: useRoute(),
       loading,
+      dialog,
     }
   },
 
@@ -198,7 +202,9 @@ export default {
   },
 
   methods :{
-
+    irResolver (simulado) {
+      this.emitter.emit('opcoes', {state: true, termo: simulado.termo, user:this.user, simulado});
+    }
   },
 
   async ionViewWillEnter () {
