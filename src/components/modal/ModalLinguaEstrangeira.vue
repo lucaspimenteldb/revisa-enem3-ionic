@@ -130,13 +130,18 @@
         data () {
             return {
                 lingua: false,
-                id_idioma: 0,
+                id_idioma: null,
             }
         },
 
         methods: {
           mudarLingua (state) {
-              this.lingua = state;
+              if (this.simulado.isIdioma !== false) {
+                  this.lingua = state;
+              }else{
+                  this.selecionandoLingua();
+              }
+
           },
 
             async selecionandoLingua () {
@@ -149,6 +154,7 @@
                   }
                   await api.post('/selecionar-idioma', objeto);
                   this.loading = false;
+                  this.setFinalizarOpen(false);
                   this.router.push('/responder-simulado/'+this.simulado.id);
               }catch (e) {
                   this.loading = false;

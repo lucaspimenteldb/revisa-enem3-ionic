@@ -203,7 +203,13 @@ export default {
 
   methods :{
     irResolver (simulado) {
-      this.emitter.emit('opcoes', {state: true, termo: simulado.termo, user:this.user, simulado});
+      if (simulado.resposta) {
+        this.router.push('/responder-simulado/'+simulado.id);
+      }
+      else{
+        this.emitter.emit('opcoes', {state: true, termo: simulado.termo, user:this.user, simulado});
+      }
+
     }
   },
 
