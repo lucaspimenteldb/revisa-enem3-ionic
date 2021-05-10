@@ -124,6 +124,8 @@
                 this.termo = objeto.termo;
                 this.user = objeto.user,
                 this.simulado = objeto.simulado;
+                this.id_idioma = null;
+                this.lingua = false;
             });
         },
 

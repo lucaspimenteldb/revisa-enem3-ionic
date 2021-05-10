@@ -125,17 +125,17 @@
             <ion-text color="light">
               <p class="ion-no-margin">
                 Disponível entre:
-                <ion-text color="verde" class="font-bold"> 01/04 às 14:00 </ion-text> e
-                <ion-text color="vermelho" class="font-bold">02/04 às 14:00</ion-text>
+                <ion-text color="verde" class="font-bold"> {{simulado.inicio}} </ion-text> e
+                <ion-text color="vermelho" class="font-bold">{{simulado.fim}}</ion-text>
               </p>
 
-              <p class="mb-0 mt-8">
-                Você ainda tem: <ion-text class="font-bold">300 minutos restantes</ion-text>
-              </p>
+<!--              <p class="mb-0 mt-8">-->
+<!--                Você ainda tem: <ion-text class="font-bold">{{simulado.duracao}}</ion-text>-->
+<!--              </p>-->
 
               <p class="mb-0 mt-8">
                 Áreas do simulado:
-                <ion-text>Humanas, Linguagens</ion-text>
+                <ion-text>{{simulado.areas}}</ion-text>
               </p>
             </ion-text>
           </article>
