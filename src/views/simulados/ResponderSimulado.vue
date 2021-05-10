@@ -503,6 +503,11 @@ export default {
       this.setDetalhesSimulado(false);
     },
 
+    irListagem() {
+      this.fechar();
+      this.router.push('/ver-simulado/'+this.simulado.master);
+    },
+
     async finalizarSimulado () {
       try{
         this.loading = true;
@@ -513,11 +518,14 @@ export default {
         await api.post('/finalizar-simulado', objeto);
         this.loading = false;
         this.text.header = 'Simulado entregue com sucesso!';
+        this.buttons = [{text: 'ok', handler: this.irListagem}];
         this.dialog = true;
+        // this.router.push('/ver-simulado/'+this.simulado.master);
       }catch (e) {
         console.log(e);
         this.text.header = 'Não foi possível a entrega do simulado, por favor tente novamente mais tarde.';
         this.loading = false;
+        this.buttons = [{text: 'ok', handler: () => this.dialog = false}];
         this.dialog = true;
       }
     },
@@ -724,6 +732,7 @@ export default {
 
         if (this.simulado.horas == 0 && this.simulado.minutos == 0 && this.simulado.segundos == 0 ){
           clearInterval(this.timer);
+          this.finalizarSimulado();
         }
       }
     },
