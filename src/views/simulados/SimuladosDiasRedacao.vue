@@ -57,12 +57,24 @@
               <ion-button
                   fill="outline"
                   color="primary"
+                  v-if="!simulado.baixarGabarito"
                   class="ion-no-margin ion-margin-vertical text-none font-bold"
                   size="small"
                   :disabled="!simulado.botao"
                   @click="irResolver(simulado)"
               >
                 Iniciar simulado
+              </ion-button>
+
+              <ion-button
+                      fill="outline"
+                      color="primary"
+                      v-if="simulado.baixarGabarito"
+                      class="ion-no-margin ion-margin-vertical text-none font-bold"
+                      size="small"
+                      @click="baixarGabarito(simulado)"
+              >
+                Baixar gabarito
               </ion-button>
             </div>
           </ion-item>
@@ -152,6 +164,8 @@ import { ref } from 'vue';
 // import storage from "../../storage/StorageKey";
 import api from "../../api/basicUrl";
 import storage from '../../storage/StorageKey';
+import browser from "../../plugins/browser";
+import env from '../../env';
 
 export default {
   name: 'Simulados',
@@ -210,7 +224,46 @@ export default {
         this.emitter.emit('opcoes', {state: true, termo: simulado.termo, user:this.user, simulado});
       }
 
-    }
+    },
+
+    async baixarGabarito (simulado) {
+      try{
+          if(window.cordova){
+            let fileTransfer = new window.FileTransfer();
+            let path = window.cordova.file.dataDirectory+'simulado'+simulado.id+'.pdf';
+            let uri = encodeURI(env.api+'/baixar-gabarito/'+simulado.id+'/'+this.user.id);
+            this.loading = true;
+
+            let entry = await this.promiseGabarito(fileTransfer, uri, path);
+            this.loading = false;
+            await this.promiseOpener(entry.nativeURL, 'application/pdf');
+
+          }
+          else {
+            await browser.open(env.api+'/baixar-gabarito/'+simulado.id+'/'+this.user.id);
+          }
+      }catch (e) {
+        console.log(e);
+      }
+    },
+
+    //promise de baixar gabarito para poder utilizar p await
+    async promiseGabarito (fileTransfer, uri, path) {
+      return new Promise((resolve, reject) => {
+        fileTransfer.download(uri, path, (entry) => {
+          resolve(entry)
+        }, (error) => reject(error))
+      })
+    },
+
+    //abrindo o opener para utilizar o seu adobe reader
+    async promiseOpener (uri, mime) {
+      return new Promise((resolve, reject) => {
+        window.cordova.plugins.fileOpener2.open(uri, mime, (result) => {
+          resolve(result)
+        }, (error) => reject(error))
+      })
+    },
   },
 
   async ionViewWillEnter () {
