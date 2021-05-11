@@ -249,10 +249,18 @@ export default {
 
     //promise de baixar gabarito para poder utilizar p await
     async promiseGabarito (fileTransfer, uri, path) {
+      let token = await storage.get('xyz');
+      token = token.value ? JSON.parse(token.value) : '';
+      console.log(token);
+      token = token ? token.xyz_completo : '';
       return new Promise((resolve, reject) => {
         fileTransfer.download(uri, path, (entry) => {
           resolve(entry)
-        }, (error) => reject(error))
+        }, (error) => reject(error), false, {
+          headers:{
+            "Authorization": token
+          }
+        })
       })
     },
 
