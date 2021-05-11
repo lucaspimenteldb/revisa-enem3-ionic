@@ -53,7 +53,7 @@
           Tem certeza que deseja finalizar e enviar o seu simulado?
         </p>
 
-        <section class="ion-padding-horizontal" v-if="brancos.length > 0">
+        <section class="ion-padding-horizontal" v-if="brancos.length">
           <p class="text-white">Você deixou algumas questões em branco</p>
           <ion-button
                   v-for="(branco, index) in brancos"
@@ -515,9 +515,9 @@ export default {
           id_simulado: this.simulado.id,
           id_user: this.user.id
         };
-        await api.post('/finalizar-simulado', objeto);
+        let dados =  await api.post('/finalizar-simulado', objeto);
         this.loading = false;
-        this.text.header = 'Simulado entregue com sucesso!';
+        this.text.header = dados.data.message;
         this.buttons = [{text: 'ok', handler: this.irListagem}];
         this.dialog = true;
         // this.router.push('/ver-simulado/'+this.simulado.master);
