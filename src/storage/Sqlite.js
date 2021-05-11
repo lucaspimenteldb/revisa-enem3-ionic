@@ -171,7 +171,7 @@ sqlite.home = async () => {
             return db;
         }
         else {
-            db = window.sqlitePlugin.openDatabase({name: 'Porco31.db', location: 'default'});
+            db = window.sqlitePlugin.openDatabase({name: 'revisaenemv1.db', location: 'default'});
             sqlite.createTablesInit(db);
             return db;
         }
