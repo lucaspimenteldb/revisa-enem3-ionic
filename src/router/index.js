@@ -106,8 +106,12 @@ const routes = [
         component: () => import('@/views/simulados/SimuladosInicio.vue')
       },
       {
-        path: 'ver-simulado',
+        path: 'ver-simulado/:id',
         component: () => import('@/views/simulados/SimuladosDiasRedacao.vue')
+      },
+      {
+        path: 'responder-simulado/:id',
+        component: () => import('@/views/simulados/ResponderSimulado.vue')
       },
       {
         path: 'responder-redacao',

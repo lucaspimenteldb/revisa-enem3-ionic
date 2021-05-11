@@ -68,10 +68,14 @@
     import {ref} from "vue";
     import api from "../../api/basicUrl";
     import storage from "../../storage/StorageKey";
+    import sqlite from "../../storage/Sqlite";
+    import methodsGlobal from "../../mixins/methodsGlobal";
+    import network from "../../plugins/network";
 
     export default {
         name: 'RedacoesInicio',
         components: {IonPage, Loading, IonContent, IonItem, IonLabel, IonList, IonIcon, IonText},
+        mixins: [methodsGlobal],
 
         setup() {
             const loading = ref(false);
@@ -95,6 +99,11 @@
                 if (!encerrada && !bloqueada) {
                     this.router.push('/ver-rascunho-enviar-redacao/' + id);
                 }
+            },
+
+            async getChache() {
+                let redacoes = await sqlite.consulta(this.sqlite, 'select * from redacao where id_user = ?', [this.user.id]);
+                this.opcoes = this.inserirElementos(redacoes);
             }
         },
 
@@ -104,11 +113,18 @@
                 let usuario = await storage.get('user');
                 usuario = JSON.parse(usuario.value);
                 this.user = usuario;
+                let status = await network.getStatus();
+                if (!status.connected){
+                    await this.getChache();
+                    return;
+                }
                 this.loading = true;
                 let dados = await api.get("/redacoes/"+this.user.id);
                 this.opcoes = dados.data.redacoes;
+                await sqlite.insertBatch(this.sqlite, this.opcoes, 'redacao', ['id_user', 'id']);
             } catch (e) {
-                alert("Não foi possível carregar o vídeo. Por favor verifique a conexão e tente novamente.");
+                alert("Não foi possível carregar as redações. Por favor verifique a conexão e tente novamente.");
+                await this.getChache();
             }
             this.loading = false;
         }

@@ -121,7 +121,7 @@ export default {
         let dados = await api.get("/materias/"+volume+'/'+this.user.id);
         this.disciplinas = dados.data.materias;
         this.disciplinasAuxiliar = dados.data.materias;
-        await sqlite.insertBatch(this.sqlite, this.disciplinasAuxiliar, 'materia');
+        await sqlite.insertBatch(this.sqlite, this.disciplinasAuxiliar, 'materia', ['id_user', 'id']);
       }catch (e) {
         console.log(e);
       }
@@ -129,7 +129,7 @@ export default {
     },
 
     async getChache() {
-      let materias = await sqlite.consulta(this.sqlite, 'select * from materia', []);
+      let materias = await sqlite.consulta(this.sqlite, 'select * from materia where id_user = ?', [this.user.id]);
       this.disciplinas = this.inserirElementos(materias);
       this.disciplinasAuxiliar = this.inserirElementos(materias);
     }

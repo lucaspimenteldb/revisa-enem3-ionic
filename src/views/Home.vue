@@ -60,6 +60,40 @@
              Pei
            </IonBadge>-->
         </IonItem>
+
+<!--        <IonItem-->
+<!--            class="ion-margin-top rounded simulado__fundo"-->
+<!--            @click="() => router.push('/simulado')"-->
+<!--        >-->
+<!--          <IonLabel class="ion-padding-vertical ion-margin-vertical">-->
+<!--            <h2 class="text-white font-bold text-lg">-->
+<!--              Simulados Estaduais-->
+
+<!--              <ion-icon-->
+<!--                  :icon="notifications"-->
+<!--                  class="vertical-middle"-->
+<!--                  color="white"-->
+<!--              />-->
+<!--            </h2>-->
+<!--          </IonLabel>-->
+
+<!--          <ion-icon-->
+<!--              slot="end"-->
+<!--              :icon="arrowForwardCircleOutline"-->
+<!--              color="light"-->
+<!--              size="large"-->
+<!--              class=""-->
+<!--          />-->
+<!--          &lt;!&ndash;<IonIcon :icon="airplaneOutline" slot="start"></IonIcon>-->
+<!--          <ion-icon :icon="heart"></ion-icon>&ndash;&gt;-->
+
+<!--          &lt;!&ndash; <IonBadge-->
+<!--               color="primary"-->
+<!--               slot="end"-->
+<!--           >-->
+<!--             Pei-->
+<!--           </IonBadge>&ndash;&gt;-->
+<!--        </IonItem>-->
       </IonList>
       <Loading :is-open="loading"/>
     </ion-content>

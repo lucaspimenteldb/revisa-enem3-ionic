@@ -51,10 +51,14 @@
     import api from '../../api/basicUrl';
     import storage from "../../storage/StorageKey";
     import browser from "../../plugins/browser";
+    import sqlite from "../../storage/Sqlite";
+    import methodsGlobal from "../../mixins/methodsGlobal";
+    import network from "../../plugins/network";
 
     export default {
         name: 'VerRascunhoEnviarRedacao',
         components: {IonPage, IonContent, IonLabel, IonList, Loading},
+        mixins: [methodsGlobal],
 
         setup() {
             const loading = ref(false);
@@ -180,6 +184,20 @@
                         resolve(entry)
                     }, (error) => reject(error))
                 })
+            },
+
+            async getChache() {
+                let redacoes = await sqlite.consulta(this.sqlite, 'select * from redacao where id_user = ? and id = ?', [this.user.id, this.route.params.id]);
+                this.redacao = this.inserirElementos(redacoes)[0];
+                let objeto = await storage.get('redacao');
+                objeto = JSON.parse(objeto.value);
+                if (objeto) {
+                    this.conteudo = objeto.conteudo;
+                    this.title = objeto.title;
+                    this.video = objeto.video;
+                    this.imagem = objeto.imagem;
+                }
+
             }
 
         },
@@ -189,12 +207,25 @@
                 let usuario = await storage.get('user');
                 usuario = JSON.parse(usuario.value);
                 this.user = usuario;
+                let status = await network.getStatus();
+                if (!status.connected) {
+                    await this.getChache();
+                    return;
+                }
                 this.loading = true;
                 let dados = await api.get('/redacoes-informacoes/'+this.route.params.id);
                 this.video = dados.data.video_tutorial;
                 this.imagem = dados.data.termo;
                 this.title = dados.data.title;
                 this.conteudo = dados.data.conteudo;
+                let objeto = {
+                    video: this.video,
+                    imagem: this.imagem,
+                    title: this.title,
+                    conteudo: this.conteudo,
+                };
+
+                await storage.set('redacao', JSON.stringify(objeto));
                 this.redacao = dados.data.redacao;
             } catch (e) {
                 console.log(e);

@@ -47,7 +47,7 @@
         v-for="alternativa in alternativas"
         :key="alternativa.alternativa+'alternativa'"
         class="ion-margin-vertical ion-no-padding border-2 border-primary rounded"
-        :class="[alternativaMarcada === alternativa.alternativa ? 'alternativa__marcada' : '', acertou[alternativa.alternativa] === true ? 'alternativa__certa' : acertou[alternativa.alternativa] === false ? 'alternativa__errada' : '']"
+        :class="[alternativaMarcada === alternativa.alternativa ? 'alternativa__marcada' : '', acertou[alternativa.alternativa] === 1 ? 'alternativa__certa' : acertou[alternativa.alternativa] === 0 ? 'alternativa__errada' : '']"
         @click="marcarAlternativa(alternativa.alternativa)"
     >
       <article
@@ -102,10 +102,15 @@ import { closeCircleOutline, imageOutline, refreshCircleOutline, sendOutline, ch
 import AlertGeneric from "./auxiliares/AlertGeneric";
 import api from '../api/basicUrl';
 import Loading from "./auxiliares/Loading";
+import sqlite from "../storage/Sqlite";
+import methodsGlobal from "../mixins/methodsGlobal";
+import network from "../plugins/network";
+
 
 export default {
   name: 'ModalVideoaulas',
   props: [ 'title', 'conteudo', 'fechar', 'alternativas', 'gabarito', 'id', 'user'],
+  mixins: [methodsGlobal],
   components: { Loading, AlertGeneric, IonContent, IonText, IonButton, IonItem, IonLabel, IonIcon },
   setup () {
     return {
@@ -121,7 +126,7 @@ export default {
   created() {
    if (this.gabarito.marcada) {
      this.acertou[this.gabarito.marcada] = this.gabarito.acertou;
-     this.acertou[this.gabarito.gabarito] = true;
+     this.acertou[this.gabarito.gabarito] = 1;
      this.resolucao = this.gabarito.comentario;
      this.temNull = false;
    }
@@ -183,10 +188,29 @@ export default {
       this.dialog = true;
     },
 
+    async getChache(objeto) {
+      this.setAlert('Você se encontra sem internet, porém a sua resposta foi armazenada para envio futuro.', '',  [{text: 'Ok', handler: () => this.dialog = false}]);
+      let dados = await sqlite.consulta(this.sqlite, 'select * from resposta_video where id_user = ? and id_questao = ?', [objeto.id_user, objeto.id_questao] );
+      let vetor = this.inserirElementos(dados);
+      console.log('Vetor', vetor);
+      if (vetor.length <= 0) {
+        await sqlite.insertBatch(this.sqlite, [objeto], 'resposta_video', ['id_user', 'id_questao'])
+      }
+      else{
+        await sqlite.consulta(this.sqlite, 'update resposta_video set resposta = ? where id_user = ? and id_questao = ?', [objeto.resposta, objeto.id_user, objeto.id_questao] );
+        console.log('update');
+      }
+    },
+
     async confirmEnvio () {
       try {
-        this.loading = true;
         let objeto = {id_questao: this.id, resposta: this.alternativaMarcada, id_user: this.user};
+        let status = await network.getStatus();
+        if (!status.connected){
+         this.getChache(objeto);
+          return;
+        }
+        this.loading = true;
         let dados = await api.post('/enviar-resposta-video', objeto);
         let gabarito = {id_questao: this.id, alternativa: this.alternativaMarcada, gabarito: dados.data.gabarito, comentario: dados.data.comentario, acertou: dados.data.acertou};
         this.acertou[this.alternativaMarcada] = dados.data.acertou;

@@ -18,3 +18,9 @@ ion-button {
 .notificacao {
   background: var(--ion-color-danger);
 }
+
+// responder simulado
+.enunciado-questoes p span, .enunciado-questoes p, .enunciado-questoes span {
+  color: black !important;
+}
+
