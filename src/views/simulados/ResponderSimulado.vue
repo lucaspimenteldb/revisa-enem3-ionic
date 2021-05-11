@@ -53,7 +53,7 @@
           Tem certeza que deseja finalizar e enviar o seu simulado?
         </p>
 
-        <section class="ion-padding-horizontal">
+        <section class="ion-padding-horizontal" v-if="brancos.length > 0">
           <p class="text-white">Você deixou algumas questões em branco</p>
           <ion-button
                   v-for="(branco, index) in brancos"
@@ -672,6 +672,7 @@ export default {
     },
 
     async questaoSelecionada (alternativa) {
+      let aux = this.questao.selecionada;
       try {
         let objeto = {
           id_questao: this.questao.id,
@@ -679,13 +680,14 @@ export default {
           alternativa,
           id_user: this.user.id
         };
-        await api.post('/inserir-resposta', objeto);
         this.questao.selecionada = alternativa;
+        await api.post('/inserir-resposta', objeto);
         this.atualizandoOGabarito(false);
       }catch (e) {
         console.log(e);
         this.text.header = 'Sua resposta não foi enviada! Verifique a sua conexão e tente novamente.';
         this.dialog = true;
+        this.questao.selecionada = aux;
       }
     },
 
