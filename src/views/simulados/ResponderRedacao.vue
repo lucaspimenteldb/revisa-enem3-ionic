@@ -189,6 +189,7 @@ import browser from "../../plugins/browser";
   import AlertGeneric from "../../components/auxiliares/AlertGeneric";
   import storage from "../../storage/StorageKey";
 // import storage from '../../storage/StorageKey';
+  import imageCompression from 'browser-image-compression';
 
 export default {
   name: 'ResponderRedacao',
@@ -354,6 +355,18 @@ export default {
       })
 
       this.arquivoEscolhido = image.dataUrl;
+      let imag = await imageCompression.getFilefromDataUrl(this.arquivoEscolhido, 'arquivo');
+      const options = {
+        maxSizeMB: 1,
+        maxWidthOrHeight: 1920,
+        useWebWorker: true
+      };
+
+      const compressedFile = await imageCompression(imag, options);
+
+      this.arquivoEscolhido = await imageCompression.getDataUrlFromFile(compressedFile);
+      
+
     },
 
     async importarArquivos () {
