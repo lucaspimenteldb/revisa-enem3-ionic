@@ -14,7 +14,7 @@
 
             <ion-grid v-if="!lingua">
             <h3 class="mt-64 text-black">
-                Termo de compromisso
+                Termos de compromisso
             </h3>
 
             <p v-html="termo" class="text-black">

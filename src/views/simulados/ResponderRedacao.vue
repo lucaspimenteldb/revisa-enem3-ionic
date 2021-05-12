@@ -7,6 +7,7 @@
       @onDidDismiss="setOpen(false)"
   >
     <ion-content id="modal-redacao" class="ion-padding">
+      <ion-list v-if="!termo">
       <ion-fab vertical="top" horizontal="end">
         <ion-fab-button color="light" @click="setOpen(false)">
           <ion-icon :icon="closeCircleOutline" style="font-size: 30px;"></ion-icon>
@@ -48,6 +49,7 @@
           fill="clear"
           color="danger"
           class="mt-16 text-none"
+          @click="setOpen(false)"
       >
         Cancelar
       </ion-button>
@@ -55,6 +57,22 @@
       <ion-button @click="previa" class="mt-16 text-none">
         Enviar redação
       </ion-button>
+      </ion-list>
+
+      <ion-grid v-if="termo">
+        <div v-html="termoDesc">
+
+        </div>
+
+        <ion-button
+                @click="mudarTermo(false)"
+                expand="full"
+                class="text-primary text-none font-bold bg-white rounded"
+        >
+          Aceitar
+        </ion-button>
+      </ion-grid>
+
     </ion-content>
   </ion-modal>
 
@@ -220,6 +238,8 @@ export default {
           id: 235,
         },
       ],
+      termo: true,
+      termoDesc: '',
       dialog: false,
       redacao: {
         // tempo: '4 dias',
@@ -244,6 +264,10 @@ export default {
   },
 
   methods :{
+
+    mudarTermo(bol) {
+      this.termo = bol;
+    },
     async baixarRas () {
       try{
         if(this.redacao.arquivo){
@@ -373,7 +397,7 @@ export default {
       this.redacao = JSON.parse(this.route.query.redacao);
       this.loading = true;
       let dados = await api.get('/redacao-informacao/'+this.redacao.id)
-      console.log(dados);
+      this.termoDesc = dados.data.termo;
       this.video = dados.data.video_tutorial;
       this.loading = false;
     }catch (e) {
