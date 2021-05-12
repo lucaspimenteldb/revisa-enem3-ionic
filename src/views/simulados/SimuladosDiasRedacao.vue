@@ -74,7 +74,7 @@
                       size="small"
                       @click="baixarGabarito(simulado)"
               >
-                Baixar gabarito
+                Visualizar respostas
               </ion-button>
             </div>
           </ion-item>
@@ -316,7 +316,7 @@ ion-list {
   background: url('../../../public/assets/images/bg-principal.png') center;
 }
 ion-button {
-  width: 160px;
+  width: 191px;
   font-size: 1rem;
 }
 .relative {
