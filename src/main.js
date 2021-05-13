@@ -4,6 +4,7 @@ import router from './router';
 import sqlite from "./storage/Sqlite";
 import mitt from 'mitt';
 const emitter = mitt();
+import { VueReCaptcha, useReCaptcha } from 'vue-recaptcha-v3'
 
 import { IonicVue } from '@ionic/vue';
 
@@ -30,6 +31,7 @@ import './sass/main.css'
 
 const app = createApp(App)
   .use(IonicVue)
+  .use(VueReCaptcha, { siteKey: '6LdUj9MaAAAAAIbogIFgaddn27P8LBMSUdspSRP4' })
   .use(router);
 
 app.config.globalProperties.emitter = emitter;

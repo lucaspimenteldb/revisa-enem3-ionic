@@ -73,6 +73,7 @@ import {ref} from 'vue';
 import api from "../api/basicUrl";
 import object from "../storage/StorageKey";
 import browser from "../plugins/browser";
+import { useReCaptcha } from 'vue-recaptcha-v3'
 
 export default {
   components: { Loading, AlertGeneric, IonImg, IonPage , IonText, IonLabel, IonButton, IonItem, IonInput },
@@ -83,6 +84,18 @@ export default {
     const loading = ref(false);
     const matricula = ref('');
     const dialog =  ref(false);
+    const { executeRecaptcha, recaptchaLoaded } = useReCaptcha()
+
+    const recaptcha = async () => {
+      // (optional) Wait until recaptcha has been loaded.
+      await recaptchaLoaded()
+
+      // Execute reCAPTCHA with action "login".
+      const token = await executeRecaptcha('login')
+
+      return token
+      // Do stuff with the received token.
+    }
     const text =  ref({
       header: 'Ops!',
       subHeader: '',
@@ -97,15 +110,17 @@ export default {
       matricula,
       dialog,
       text,
-      buttons
+      buttons,
+      recaptcha,
     }
   },
 
   methods : {
     async formMatricula() {
       try{
+        let token = await this.recaptcha();
         this.loading= true;
-        let user = await api.post('/login', {matricula: this.matricula});
+        let user = await api.post('/login', {matricula: this.matricula, token});
         let xyz = this.formandoXyz(user.data.xyz, user.data.xyz_type);
         user = user.data.user;
         await object.set('user', JSON.stringify(user));
@@ -113,6 +128,7 @@ export default {
         this.emitter.emit('perfil', user);
         this.router.replace('/home');
       }catch (e) {
+        console.log(e.response.data);
         if(e.response) {
          if (e.response.status == 403) {
           // window.open('https://ro.revisaenem.com.br/google');
