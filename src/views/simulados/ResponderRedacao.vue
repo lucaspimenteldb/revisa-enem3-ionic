@@ -317,7 +317,6 @@ export default {
         let id_user = this.user.id;
         let imgCompress = await this.compactarImage();
         let objeto = { arquivo: imgCompress, id_redacao, id_user };
-        objeto = this.objetoInForm(objeto);
         let dados = await api.post('/enviar-redacao-estadual', objeto);
         this.emitter.emit('pontos', dados.data.pontos);
         this.text2.header = dados.data.message;
@@ -384,7 +383,7 @@ export default {
       };
 
       let compressedFile = await imageCompression(this.imageBob, options);
-      compressedFile =  new File([compressedFile], 'arquivo');
+      compressedFile =  await imageCompression.getDataUrlFromFile(compressedFile);
       return compressedFile;
     },
 
