@@ -32,7 +32,7 @@ import './sass/main.css'
 
 const app = createApp(App)
   .use(IonicVue)
-  .use(VueReCaptcha, { siteKey: env.captcha })
+  .use(VueReCaptcha, { siteKey: env.captcha, loaderOptions: { autoHideBadge: true} })
   .use(router);
 
 app.config.globalProperties.emitter = emitter;
