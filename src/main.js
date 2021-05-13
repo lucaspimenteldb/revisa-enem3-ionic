@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router';
 import sqlite from "./storage/Sqlite";
 import mitt from 'mitt';
+import env from './env';
 const emitter = mitt();
 import { VueReCaptcha, useReCaptcha } from 'vue-recaptcha-v3'
 
@@ -31,7 +32,7 @@ import './sass/main.css'
 
 const app = createApp(App)
   .use(IonicVue)
-  .use(VueReCaptcha, { siteKey: '6LdUj9MaAAAAAIbogIFgaddn27P8LBMSUdspSRP4' })
+  .use(VueReCaptcha, { siteKey: env.captcha })
   .use(router);
 
 app.config.globalProperties.emitter = emitter;
