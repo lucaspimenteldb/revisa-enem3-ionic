@@ -247,6 +247,8 @@ export default {
         // tema: 'O desafio de reduzir as desigualdades entre as regiões do Brasil',
       },
 
+      imageBob: null,
+
       text2: {
         header: 'Falha ao enviar!',
         subHeader: '',
@@ -296,6 +298,15 @@ export default {
 
     },
 
+    objetoInForm (objeto) {
+      let form = new FormData ();
+      for (let index in objeto) {
+        form.append(index, objeto[index]);
+      }
+
+      return form;
+    },
+
     async enviarAtividade () {
       try {
         this.loading = true;
@@ -304,8 +315,10 @@ export default {
         this.mensagemErro = null;
         let id_redacao = this.redacao.id;
         let id_user = this.user.id;
-        let objeto = { arquivo: this.arquivoEscolhido, id_redacao, id_user }
-        let dados = await api.post('/enviar-redacao', objeto);
+        let imgCompress = await this.compactarImage();
+        let objeto = { arquivo: imgCompress, id_redacao, id_user };
+        objeto = this.objetoInForm(objeto);
+        let dados = await api.post('/enviar-redacao-estadual', objeto);
         this.emitter.emit('pontos', dados.data.pontos);
         this.text2.header = dados.data.message;
         this.dialog2 = true;
@@ -345,28 +358,34 @@ export default {
     },
 
     async sourceCamera (source) {
-      let image = await camera.takePicture({
-        quality: 90,
-        width: 1920,
-        preserveAspectRatio: true,
-        allowEditing: false,
-        uri: true,
-        source
-      })
+      try{
+        let image = await camera.takePicture({
+          quality: 90,
+          width: 1920,
+          preserveAspectRatio: true,
+          allowEditing: false,
+          uri: true,
+          source
+        })
 
-      this.arquivoEscolhido = image.dataUrl;
-      let imag = await imageCompression.getFilefromDataUrl(this.arquivoEscolhido, 'arquivo');
+        this.arquivoEscolhido = image.dataUrl;
+        this.imageBob = await imageCompression.getFilefromDataUrl(this.arquivoEscolhido, 'arquivo');
+      }catch (e) {
+        console.log(e);
+    }
+
+    },
+
+    async compactarImage() {
       const options = {
         maxSizeMB: 1,
         maxWidthOrHeight: 1920,
-        useWebWorker: true
+        useWebWorker: false
       };
 
-      const compressedFile = await imageCompression(imag, options);
-
-      this.arquivoEscolhido = await imageCompression.getDataUrlFromFile(compressedFile);
-      
-
+      let compressedFile = await imageCompression(this.imageBob, options);
+      compressedFile =  new File([compressedFile], 'arquivo');
+      return compressedFile;
     },
 
     async importarArquivos () {
