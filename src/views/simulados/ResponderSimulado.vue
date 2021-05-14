@@ -358,12 +358,14 @@ import api from '../../api/basicUrl';
 import { ref } from 'vue';
 import storage from "../../storage/StorageKey";
 import AlertGeneric from "../../components/auxiliares/AlertGeneric";
+import objeto from "../../mixins/Captcha";
 // import storage from '../../storage/StorageKey';
 
 export default {
   name: 'Simulados',
   // components: {IonPage, IonTitle, IonHeader, IonToolbar, IonContent, IonItem, IonLabel, IonList, IonButton, IonIcon, IonProgressBar, IonText, Loading, IonMenu, IonFab, IonFabButton, IonModal},
   components: {IonPage, AlertGeneric, IonContent, IonItem, IonLabel, IonList, IonButton, IonIcon, Loading, IonMenu, IonFab, IonFabButton, IonModal},
+  mixins: [objeto],
 
   setup () {
     const loading = ref(false);
@@ -674,11 +676,13 @@ export default {
     async questaoSelecionada (alternativa) {
       let aux = this.questao.selecionada;
       try {
+        let token = await this.recaptcha();
         let objeto = {
           id_questao: this.questao.id,
           id_simulado: this.simulado.id,
           alternativa,
-          id_user: this.user.id
+          id_user: this.user.id,
+          token,
         };
         this.questao.selecionada = alternativa;
         await api.post('/inserir-resposta', objeto);

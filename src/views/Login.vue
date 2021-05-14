@@ -73,29 +73,19 @@ import {ref} from 'vue';
 import api from "../api/basicUrl";
 import object from "../storage/StorageKey";
 import browser from "../plugins/browser";
-import { useReCaptcha } from 'vue-recaptcha-v3'
+import objeto from  '../mixins/Captcha';
 
 export default {
   components: { Loading, AlertGeneric, IonImg, IonPage , IonText, IonLabel, IonButton, IonItem, IonInput },
   vueRouter: useRouter(),
   name: 'Login',
+  mixins: [objeto],
 
   setup () {
     const loading = ref(false);
     const matricula = ref('');
     const dialog =  ref(false);
-    const { executeRecaptcha, recaptchaLoaded } = useReCaptcha()
 
-    const recaptcha = async () => {
-      // (optional) Wait until recaptcha has been loaded.
-      await recaptchaLoaded()
-
-      // Execute reCAPTCHA with action "login".
-      const token = await executeRecaptcha('login')
-
-      return token
-      // Do stuff with the received token.
-    }
     const text =  ref({
       header: 'Ops!',
       subHeader: '',
@@ -111,7 +101,6 @@ export default {
       dialog,
       text,
       buttons,
-      recaptcha,
     }
   },
 
