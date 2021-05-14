@@ -634,19 +634,22 @@ export default {
 
     async salvarResposta () {
       try{
+        this.questao.salvar = !this.questao.salvar;
+        let token = await this.recaptcha();
         let objeto = {
           id_questao: this.questao.id,
           id_user: this.user.id,
           id_simulado: this.simulado.id,
-          salvar: !this.questao.salvar
+          salvar: this.questao.salvar,
+          token
         };
 
         await api.post('/salvar-resposta', objeto);
-        this.questao.salvar = !this.questao.salvar;
         this.atualizandoOGabarito();
       }catch (e) {
         console.log(e);
         this.text.header = 'Não foi possível realizar o procedimento! Verifique a sua conexão e tente novamente.';
+        this.questao.salvar = !this.questao.salvar;
         this.dialog = true;
       }
     },
@@ -676,6 +679,7 @@ export default {
     async questaoSelecionada (alternativa) {
       let aux = this.questao.selecionada;
       try {
+        this.questao.selecionada = alternativa;
         let token = await this.recaptcha();
         let objeto = {
           id_questao: this.questao.id,
@@ -684,7 +688,6 @@ export default {
           id_user: this.user.id,
           token,
         };
-        this.questao.selecionada = alternativa;
         await api.post('/inserir-resposta', objeto);
         this.atualizandoOGabarito(false);
       }catch (e) {
