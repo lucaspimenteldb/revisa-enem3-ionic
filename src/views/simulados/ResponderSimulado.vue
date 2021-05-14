@@ -686,6 +686,7 @@
                     this.atualizandoOGabarito();
                 } catch (e) {
                     console.log(e);
+                    this.irFora(e);
                     this.text.header = 'Não foi possível realizar o procedimento! Verifique a sua conexão e tente novamente.';
                     this.questao.salvar = !this.questao.salvar;
                     this.dialog = true;
@@ -732,6 +733,7 @@
                     this.atualizandoOGabarito(false);
                 } catch (e) {
                     console.log(e);
+                    this.irFora(e);
                     this.text.header = 'Sua resposta não foi enviada! Verifique a sua conexão e tente novamente.';
                     this.dialog = true;
                     this.questao.selecionada = aux;

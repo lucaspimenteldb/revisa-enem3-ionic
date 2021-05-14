@@ -118,6 +118,7 @@ export default {
         this.router.replace('/home');
       }catch (e) {
         console.log(e.response.data);
+        this.irFora(e);
         if(e.response) {
          if (e.response.status == 403) {
           // window.open('https://ro.revisaenem.com.br/google');
