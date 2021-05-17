@@ -148,6 +148,10 @@
 
             async selecionandoLingua () {
               try{
+                  if (!this.id_idioma) {
+                      alert('selecione o idioma');
+                      return;
+                  }
                   this.loading = true;
                   let objeto = {
                       id_user: this.user.id,
