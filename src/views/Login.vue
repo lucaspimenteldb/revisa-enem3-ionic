@@ -1,7 +1,7 @@
 <template>
   <ion-page>
     <ion-content>
-      <Loading :isOpen="loading && !dialog"></Loading>
+      <Loading :isOpen="loading"></Loading>
       <div class="ion-padding flex ion-justify-content-center">
         <ion-img src="assets/images/logo-revisa.png" class="ion-margin-end w-80"/>
         <ion-img src="assets/images/logo-mvc.png" class="ion-margin-start w-80"/>
@@ -106,11 +106,13 @@ export default {
         this.emitter.emit('perfil', user);
         this.router.replace('/home');
       }catch (e) {
+        this.loading = false;
         this.irFora(e);
         if(e.response) {
          if (e.response.status == 403) {
           // window.open('https://ro.revisaenem.com.br/google');
            await browser.open(e.response.data.message);
+           return;
 
          }
          else if(e.response.status == 400) {
@@ -118,14 +120,12 @@ export default {
            this.text.message = e.response.data.message;
            this.buttons = [{text: 'Ok', handler: () => this.dialog = false}]
            this.dialog = true;
+           return;
          }
         }
-        else {
-         await this.alertErro(e);
-        }
-      }
 
-      this.loading = false;
+        await this.alertErro(e);
+      }
     },
 
     async irPraVideo() {
