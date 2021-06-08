@@ -148,6 +148,7 @@
       </ion-list>
       <Loading :isOpen="loading"></Loading>
       <ModalLinguaEstrangeira></ModalLinguaEstrangeira>
+      <AlertGeneric :dialog="dialog" :text="text" :buttons="buttons" />
     </ion-content>
   </ion-page>
 </template>
@@ -162,6 +163,8 @@ import ModalLinguaEstrangeira from "../../components/modal/ModalLinguaEstrangeir
 // import api from '../../api/basicUrl';
 import { ref } from 'vue';
 // import storage from "../../storage/StorageKey";
+import alerts from '../../mixins/Alerts';
+import AlertGeneric from "../../components/auxiliares/AlertGeneric";
 import api from "../../api/basicUrl";
 import storage from '../../storage/StorageKey';
 import browser from "../../plugins/browser";
@@ -169,12 +172,13 @@ import env from '../../env';
 
 export default {
   name: 'Simulados',
+  mixins: [alerts],
   // components: {IonPage, IonTitle, IonContent, IonItem, IonLabel, IonList, IonButton, IonIcon, IonProgressBar, IonText, Loading},
-  components: {ModalLinguaEstrangeira, IonPage, IonContent, IonItem, IonList, IonButton, IonText, Loading},
+  components: {ModalLinguaEstrangeira, IonPage, IonContent, IonItem, IonList, IonButton, IonText, Loading, AlertGeneric},
 
   setup () {
     const loading = ref(false);
-    const dialog = ref(true);
+    const dialogModal = ref(true);
 
     return {
       notifications,
@@ -182,7 +186,7 @@ export default {
       router: useRouter(),
       route: useRoute(),
       loading,
-      dialog,
+      dialogModal,
     }
   },
 
@@ -243,7 +247,7 @@ export default {
             await browser.open(env.api+'/baixar-gabarito/'+simulado.id+'/'+this.user.id);
           }
       }catch (e) {
-        console.log(e);
+        this.alertErro(e);
       }
     },
 
@@ -288,8 +292,7 @@ export default {
       console.log('simulado', dados.data);
       this.loading = false;
     }catch (e) {
-      this.loading = false;
-      console.log(e);
+      this.alertErro(e);
     }
   }
 }

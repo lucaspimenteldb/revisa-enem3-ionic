@@ -351,6 +351,7 @@
 </template>
 
 <script>
+    import alerts from '../../mixins/Alerts';
     // import {IonPage,IonTitle, IonHeader, IonToolbar, IonContent, IonItem, IonLabel, IonList, IonIcon, IonButton, IonProgressBar, IonText, IonMenu, IonFab, IonFabButton, menuController, modalController, IonModal} from '@ionic/vue';
     import {
         IonPage,
@@ -403,7 +404,7 @@
             IonFabButton,
             IonModal
         },
-        mixins: [objeto],
+        mixins: [objeto, alerts],
 
         setup() {
             const loading = ref(false);
@@ -440,45 +441,8 @@
         data() {
             return {
                 questao: {
-                    //   numero: '3/45',
-                    //   salvo: false,
-                    //   area: 'Linguagens, Códigos e suas Tecnologias',
-                    //   enunciado: 'Embora particularidades na produção mediada pela tecnologia aproximem a escrita da oralidade, isso não significa que as pessoas estejam escrevendo errado. Muitos buscam, tão somente, adaptar o uso da linguagem ao suporte utilizado: "O contexto é que define o registro de língua. Se existe um limite de espaço, naturalmente, o sujeito irá usar mais abreviaturas, como faria no papel", afirma um professor do Departamento de Linguagem e Tecnologia do Cefet-MG. Da mesma forma, é preciso considerar a capacidade do destinatário de interpretar corretamente a mensagem emitida. No entendimento do pesquisador, a escola, às vezes, insiste em ensinar um registro utilizado apenas em contextos específicos, o que acaba por desestimular o aluno, que não vê sentido em empregar tal modelo em outras situações. Embora particularidades na produção mediada pela tecnologia aproximem a escrita da oralidade, isso não significa que as pessoas estejam escrevendo errado. Muitos buscam, tão somente, adaptar o uso da linguagem ao suporte utilizado: "O contexto é que define o registro de língua. Se existe um limite de espaço, naturalmente, o sujeito irá usar mais abreviaturas, como faria no papel", afirma um professor do Departamento de Linguagem e Tecnologia do Cefet-MG. Da mesma forma, é preciso considerar a capacidade do destinatário de interpretar corretamente a mensagem emitida. No entendimento do pesquisador, a escola, às vezes, insiste em ensinar um registro utilizado apenas em contextos específicos, o que acaba por desestimular o aluno, que não vê sentido em empregar tal modelo em outras situações.',
-                    //   alternativas: [
-                    //     {
-                    //       alternativa: 'A',
-                    //       texto: 'interagir por meio da linguagem formal no contexto digital.'
-                    //     },
-                    //     {
-                    //       alternativa: 'B',
-                    //       texto: 'buscar alternativas para estabelecer melhores contatos on-line.'
-                    //     },
-                    //     {
-                    //       alternativa: 'C',
-                    //       texto: 'adotar o uso de uma mesma norma nos diferentes suportes tecnológicos.'
-                    //     },
-                    //     {
-                    //       alternativa: 'D',
-                    //       texto: 'desenvolver habilidades para compreender os textos postados na web.'
-                    //     },
-                    //     {
-                    //       alternativa: 'E',
-                    //       texto: 'perceber as especificidades das linguagens em diferentes ambientes digitais.'
-                    //     },
-                    //   ],
-                    //   selecionada: null,
-                },
 
-                text: {
-                    default: {
-                        header: 'Simulado finalizado com sucesso!',
-                        subHeader: 'Mensagem',
-                        message: 'Mensagem',
-                    }
                 },
-
-                buttons: [{text: 'ok', handler: () => this.dialog = false}],
-                dialog: false,
                 brancos: [],
 
                 questoesId: [],
@@ -573,6 +537,7 @@
             async inicio(page = 1) {
                 try {
                     this.loading = true;
+                    this.text.message = '';
                     this.questoesEmCache = [];
                     let questaoId = this.route.params.id;
                     let dados = await api.get(`/questoes-estaduais/${questaoId}/${this.user.id}?page=${page}`);
@@ -587,8 +552,7 @@
                     this.questoesEmCache.push(this.questao);
                     this.acionandoCronometro();
                 } catch (e) {
-                    console.log(e);
-                    this.loading = false;
+                    this.alertErro(e);
                 }
             },
 
@@ -688,6 +652,7 @@
                     console.log(e);
                     this.irFora(e);
                     this.text.header = 'Não foi possível realizar o procedimento! Verifique a sua conexão e tente novamente.';
+                    this.buttons = [{text: 'ok', handler: () => this.dialog = false}];
                     this.questao.salvar = !this.questao.salvar;
                     this.dialog = true;
                 }
@@ -735,6 +700,7 @@
                     console.log(e);
                     this.irFora(e);
                     this.text.header = 'Sua resposta não foi enviada! Verifique a sua conexão e tente novamente.';
+                    this.buttons = [{text: 'ok', handler: () => this.dialog = false}];
                     this.dialog = true;
                     this.questao.selecionada = aux;
                 }

@@ -47,6 +47,7 @@ const objeto = {
                 this.text.message = !status.connected ? 'Sem conexão com a internet.' : 'Erro desconhecido';
             }
             this.dialog = true;
+            this.loading = false;
         }
     }
 }

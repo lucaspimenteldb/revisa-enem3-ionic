@@ -65,6 +65,7 @@
         </div>
       </ion-list>
       <Loading :isOpen="loading"></Loading>
+      <AlertGeneric :dialog="dialog" :text="text" :buttons="buttons" />
     </ion-content>
   </ion-page>
 </template>
@@ -78,11 +79,14 @@ import Loading from "../../components/auxiliares/Loading";
 import api from '../../api/basicUrl';
 import { ref } from 'vue';
 import storage from '../../storage/StorageKey';
+import alerts from '../../mixins/Alerts';
+import AlertGeneric from "../../components/auxiliares/AlertGeneric";
 
 export default {
   name: 'Simulados',
+  mixins: [alerts],
   // components: {IonPage, IonTitle, IonContent, IonItem, IonLabel, IonList, IonButton, IonIcon, IonProgressBar, IonText, Loading},
-  components: {IonPage, IonContent, IonItem, IonLabel, IonList, IonButton, IonText, IonIcon, Loading},
+  components: {IonPage, IonContent, IonItem, IonLabel, IonList, IonButton, IonText, IonIcon, Loading, AlertGeneric},
 
   setup () {
     const loading = ref(false);
@@ -141,11 +145,10 @@ export default {
       this.user = usuario;
       let dados = await api.get('/simulado-estaduais-master');
       this.simulados = dados.data.simulados;
-      console.log('simulado', dados.data);
       this.loading = false;
     }catch (e) {
       this.loading = false;
-      console.log(e);
+      this.alertErro(e);
     }
   }
 }
