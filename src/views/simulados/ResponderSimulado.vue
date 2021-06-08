@@ -247,17 +247,17 @@
                 <!-- cardzao da questao -->
                 <ion-item lines="none" class="questao">
                     <div class="max-w-100 flex flex-column text-black">
-                        <div class="ion-margin-bottom ion-padding flex ion-align-items-center ion-justify-content-center font-bold bg-primary rounded">
-                            <ion-icon
-                                    :icon="timeOutline"
-                                    style="font-size: 30px;"
-                                    class="mr-4 text-white"
-                            />
+<!--                        <div class="ion-margin-bottom ion-padding flex ion-align-items-center ion-justify-content-center font-bold bg-primary rounded">-->
+<!--                            <ion-icon-->
+<!--                                    :icon="timeOutline"-->
+<!--                                    style="font-size: 30px;"-->
+<!--                                    class="mr-4 text-white"-->
+<!--                            />-->
 
-                            <p class="ion-no-margin font-bold text-white">
-                                restam {{simulado.horas}}:{{simulado.minutos}}:{{simulado.segundos}}
-                            </p>
-                        </div>
+<!--&lt;!&ndash;                            <p class="ion-no-margin font-bold text-white">&ndash;&gt;-->
+<!--&lt;!&ndash;                                restam {{simulado.horas}}:{{simulado.minutos}}:{{simulado.segundos}}&ndash;&gt;-->
+<!--&lt;!&ndash;                            </p>&ndash;&gt;-->
+<!--                        </div>-->
 
                         <div class="ion-no-margin flex ion-align-items-center ion-justify-content-between">
                             <p class="font-bold">Questão - {{ questao.numero }}</p>
@@ -550,7 +550,7 @@
                     this.previous = this.verificarNull(dados.data.questoes.prev_page_url, dados.data.questoes.path);
                     this.loading = false;
                     this.questoesEmCache.push(this.questao);
-                    this.acionandoCronometro();
+                    // this.acionandoCronometro();
                 } catch (e) {
                     this.alertErro(e);
                 }
