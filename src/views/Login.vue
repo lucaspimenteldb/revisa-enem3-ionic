@@ -3,14 +3,14 @@
     <ion-content>
       <Loading :isOpen="loading"></Loading>
       <div class="ion-padding flex ion-justify-content-center">
-        <ion-img src="assets/images/logo-revisa.png" class="ion-margin-end w-80"/>
-        <ion-img src="assets/images/logo-mvc.png" class="ion-margin-start w-80"/>
+        <ion-img src="assets/images/revisa_mais-01.png" class="ion-margin-end w-80 image-logo"/>
+<!--        <ion-img src="assets/images/logo-mvc.png" class="ion-margin-start w-80"/>-->
       </div>
 
       <div class="bg__paper h-full ion-padding rounded">
         <ion-text color="primary">
           <h3 class="ion-text-center font-bold">
-            Bem-vindo ao Revisa ENEM!
+            Bem-vindo ao Revisa Mais!
           </h3>
         </ion-text>
 
@@ -146,13 +146,17 @@ export default {
 </script>
 <style scoped>
 ion-content {
-  --background: var(--ion-color-primary);
+  /*--background: var(--ion-color-primary);*/
 }
 .bg__paper {
   background: url('../../public/assets/images/bg-principal.png') no-repeat center/100%;
 }
 .btn__ajuda {
   --box-shadow: none;
+}
+
+.image-logo::part(image) {
+  transform: scale(2.0);
 }
 
 </style>
