@@ -1,7 +1,7 @@
 <template>
   <ion-page>
     <ion-content>
-      <Loading :isOpen="loading"></Loading>
+      <Loading :isOpen="loading && !dialog"></Loading>
       <div class="ion-padding flex ion-justify-content-center">
         <ion-img src="assets/images/logo-revisa.png" class="ion-margin-end w-80"/>
         <ion-img src="assets/images/logo-mvc.png" class="ion-margin-start w-80"/>
@@ -74,33 +74,22 @@ import api from "../api/basicUrl";
 import object from "../storage/StorageKey";
 import browser from "../plugins/browser";
 import objeto from  '../mixins/Captcha';
+import alerts from '../mixins/Alerts';
 
 export default {
   components: { Loading, AlertGeneric, IonImg, IonPage , IonText, IonLabel, IonButton, IonItem, IonInput },
   vueRouter: useRouter(),
   name: 'Login',
-  mixins: [objeto],
+  mixins: [objeto, alerts],
 
   setup () {
     const loading = ref(false);
     const matricula = ref('');
-    const dialog =  ref(false);
-
-    const text =  ref({
-      header: 'Ops!',
-      subHeader: '',
-      message: 'Selecione uma das alternativas :)',
-    });
-
-    const buttons = [];
     const router = useRouter();
     return {
       loading,
       router,
       matricula,
-      dialog,
-      text,
-      buttons,
     }
   },
 
@@ -117,7 +106,6 @@ export default {
         this.emitter.emit('perfil', user);
         this.router.replace('/home');
       }catch (e) {
-        console.log(e.response.data);
         this.irFora(e);
         if(e.response) {
          if (e.response.status == 403) {
@@ -133,8 +121,7 @@ export default {
          }
         }
         else {
-          this.text.message = 'Sem conexão com o servidor';
-          this.buttons = [{text: 'Ok', handler: () => this.dialog = false}]
+         await this.alertErro(e);
         }
       }
 

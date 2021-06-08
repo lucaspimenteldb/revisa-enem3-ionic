@@ -10,12 +10,12 @@ const requestHandler = async request => {
 
     try {
         let xyz = await storage.get('xyz');
-        if (xyz) {
+        if (xyz.value) {
             xyz = JSON.parse(xyz.value);
            request.headers.Authorization = xyz.xyz_completo;
         }
     } catch (e) {
-        console.log(e);
+        console.log('Cedo',e);
     }
 
     return request;
@@ -27,6 +27,7 @@ const responseHandler = async response => {
         console.log('ok')
     } catch (e) {
         console.log(e);
+        throw e;
     }
 
     return response;
