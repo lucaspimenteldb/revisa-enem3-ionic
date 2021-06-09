@@ -48,6 +48,12 @@ const objeto = {
             }
             this.dialog = true;
             this.loading = false;
+        },
+
+        async alertWarning(message) {
+            this.text.message = message;
+            this.buttons = [{text: 'Ok', handler: () => this.dialog = false}];
+            this.dialog = true;
         }
     }
 }
