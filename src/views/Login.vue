@@ -75,12 +75,13 @@ import object from "../storage/StorageKey";
 import browser from "../plugins/browser";
 import objeto from  '../mixins/Captcha';
 import alerts from '../mixins/Alerts';
+import version from '../mixins/VersionCode';
 
 export default {
   components: { Loading, AlertGeneric, IonImg, IonPage , IonText, IonLabel, IonButton, IonItem, IonInput },
   vueRouter: useRouter(),
   name: 'Login',
-  mixins: [objeto, alerts],
+  mixins: [objeto, alerts, version],
 
   setup () {
     const loading = ref(false);
@@ -140,6 +141,14 @@ export default {
       }
 
       return xyz_local;
+    }
+  },
+
+  async ionViewWillEnter () {
+    try {
+      await this.getVersionCode();
+    }catch (e) {
+      console.log(e)
     }
   }
 }
