@@ -6,7 +6,7 @@ const objeto = {
             text: {
                 header: 'Ops!',
                 subHeader: '',
-                message: 'Selecione uma das alternativas :)'
+                message: ''
             },
 
             buttons: [],
