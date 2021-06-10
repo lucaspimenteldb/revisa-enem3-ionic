@@ -92,6 +92,22 @@
           </ion-button>
         </section>
       </ion-list>
+
+      <!-- questaozona -->
+      <section>
+        <ion-text color="azul">
+          <h3 class="font-bold text-lg">
+            Questão 1 - Linguagens
+          </h3>
+        </ion-text>
+
+        <h4 class="font-bold text-lg">
+          Inglês - Interpretação de texto
+        </h4>
+        <p class="mt-0 font-regular">
+          A banda The killers é conhecida mundialmente por ter suas músicas sempre nas paradas de sucesso. Sobre a música Mr. Brightside, é ressaltado:
+        </p>
+      </section>
       <Loading :isOpen="loading"></Loading>
       <AlertGeneric :dialog="dialog" :text="text" :buttons="buttons" />
     </ion-content>
