@@ -1,3 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap');
+* {
+  font-family: Quicksand, sans-serif;
+}
 .overflow-hidden {
   overflow: hidden;
 }
@@ -128,10 +132,13 @@
   color: var(--ion-color-danger);
 }
 .font-regular {
-  font-weight: 400;
+  font-weight: 500;
+}
+.font-medium {
+  font-weight: 600;
 }
 .font-bold {
-  font-weight: 600;
+  font-weight: 700;
 }
 p, h1, h2, h3, h4, h5 {
   &.text-xxs {
@@ -220,6 +227,9 @@ text-xl {
 .max-w-100 {
   max-width: 100%;
 }
+.w-100 {
+  width: 100%;
+}
 .w-full {
   width: 100%;
   min-width: 100%;
@@ -259,6 +269,9 @@ text-xl {
 }
 .w-4\/5 {
   width: 80%;
+}
+.w-1\/2 {
+  width: 50%;
 }
 
 .absolute {

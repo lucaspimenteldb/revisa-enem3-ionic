@@ -106,8 +106,20 @@ const routes = [
         component: () => import('@/views/simulados/SimuladosInicio.vue')
       },
       {
+        path: 'desempenho-simulados-estaduais',
+        component: () => import('@/views/simulados/DesempenhoSimuladosEstaduais.vue')
+      },
+      {
         path: 'ver-simulado/:id',
         component: () => import('@/views/simulados/SimuladosDiasRedacao.vue')
+      },
+      {
+        path: 'ver-meu-desempenho-geral',
+        component: () => import('@/views/simulados/VerMeuDesempenhoGeral.vue')
+      },
+      {
+        path: 'ver-meu-desempenho-areas',
+        component: () => import('@/views/simulados/VerDesempenhoArea.vue')
       },
       {
         path: 'responder-simulado/:id',

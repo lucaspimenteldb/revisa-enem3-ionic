@@ -3,82 +3,88 @@
     <ion-content>
       <div class="ion-padding fundo-cima">
         <h4 class="ion-margin-vertical text-white">
-         Simulados Estaduais
+          Desempenho Simulados Estaduais
         </h4>
       </div>
 
       <ion-list class="ion-padding rounded-top">
         <ion-label class="font-bold text-lg">
-          Simulados disponíveis
+          Simulados corrigidos
         </ion-label>
 
         <!--    card do simulado    -->
         <div
-            class="mb-64 relative"
+            class="mt-16 mb-64 relative"
             v-for="simulado in simulados"
             :key="simulado.id"
         >
-          <ion-item
-              class="ion-margin-top rounded"
-              lines="none"
-          >
+          <ion-item class="rounded shadow" lines="none">
             <div class="flex flex-column text-black">
               <ion-text color="primary">
                 <h3 class="font-bold text-lg">
-                  {{simulado.titulo}}
+                  {{simulado.ttl}}
                 </h3>
+              </ion-text>
+              <ion-text color="">
+                <p class="ion-no-margin">
+                  {{simulado.subTtl}}
+                </p>
               </ion-text>
 
               <article class="mt-8">
                 <ion-text>
                   <p class="ion-no-margin">
-                    Disponível entre:
-                    <ion-text color="verde" class="font-bold">{{simulado.inicio}}</ion-text> e
-                    <ion-text color="vermelho" class="font-bold">{{ simulado.fim }}</ion-text>
+                    <ion-icon
+                        :icon="calendarOutline"
+                        color="primary"
+                        class="relative top-2"
+                    />
+                    Realizado:
+                    <ion-text color="primary" class="font-medium">{{simulado.inicio}}</ion-text> e
+                    <ion-text color="vermelho" class="font-medium">{{ simulado.fim }}</ion-text>
                   </p>
-
-                  <p class="mb-0 mt-8" v-if="simulado.tempo">
-                    Você ainda tem: <ion-text color="primary" class="font-bold">{{ simulado.tempo}} minutos restantes</ion-text>
+                </ion-text>
+              </article>
+              <article class="ion-margin-top">
+                <ion-text>
+                  <p class="ion-no-margin">
+                    <ion-icon
+                        :icon="gridOutline"
+                        color="success"
+                        class="relative top-2"
+                    />
+                    1º dia:
+                    <ion-text color="success" class="font-bold">Linguagens, Humanas e Redação</ion-text>
+                  </p>
+                </ion-text>
+              </article>
+              <article class="mt-8">
+                <ion-text>
+                  <p class="ion-no-margin">
+                    <ion-icon
+                        :icon="gridOutline"
+                        color="tertiary"
+                        class="relative top-2"
+                    />
+                    2º dia:
+                    <ion-text color="tertiary" class="font-bold">Matemática e Natureza</ion-text>
                   </p>
                 </ion-text>
               </article>
 
               <ion-button
-                  fill="outline"
+                  fill="solid"
                   color="primary"
                   class="ion-no-margin ion-margin-vertical text-none font-bold iniciar-simulado"
                   size="small"
-                  :disabled="!simulado.botao"
-                  @click="() => router.push( '/ver-simulado/'+simulado.id)"
+                  @click="() => router.push( '/ver-meu-desempenho-geral')"
 
               >
-                Iniciar simulado
+                Ver desempenho
               </ion-button>
             </div>
           </ion-item>
-
-          <div class="absolute fundo-tudo rounded" :class="simulado.liberado">
-            <p class="ion-margin-end ion-text-center text-white">
-              {{simulado.message}}
-            </p>
-          </div>
         </div>
-
-        <ion-label >
-          <p class="font-bold text-lg">
-            Ver meu desempenho nos simulados
-          </p>
-        </ion-label>
-        <ion-button
-            fill="solid"
-            color="primary"
-            class="ion-no-margin ion-margin-vertical text-none font-bold text-md"
-            size="small"
-            @click="() => router.push( '/desempenho-simulados-estaduais')"
-
-        >
-          Ver meu desempenho
-        </ion-button>
       </ion-list>
       <Loading :isOpen="loading"></Loading>
       <AlertGeneric :dialog="dialog" :text="text" :buttons="buttons" />
@@ -89,7 +95,7 @@
 <script>
 // import {IonPage,IonTitle, IonContent, IonItem, IonLabel, IonList, IonIcon, IonButton, IonProgressBar, IonText} from '@ionic/vue';
 import {IonPage, IonContent, IonItem, IonLabel, IonList, IonButton,  IonText, IonIcon} from '@ionic/vue';
-import {notifications, arrowForwardCircleOutline} from 'ionicons/icons';
+import {notifications, arrowForwardCircleOutline, calendarOutline, gridOutline} from 'ionicons/icons';
 import { useRouter, useRoute } from 'vue-router'
 import Loading from "../../components/auxiliares/Loading";
 import api from '../../api/basicUrl';
@@ -110,6 +116,8 @@ export default {
     return {
       notifications,
       arrowForwardCircleOutline,
+      calendarOutline,
+      gridOutline,
       router: useRouter(),
       route: useRoute(),
       loading,
@@ -119,30 +127,13 @@ export default {
   data () {
     return {
       simulados: [
-        // {
-        //   inicio: '22/05/2020',
-        //   fim: '30/05/2020',
-        //   tempo: 120,
-        //   status: 'liberado',
-        //   classStatus: 'bg-verde',
-        //   id: 233,
-        // },
-        // {
-        //   inicio: '22/05/2020',
-        //   fim: '30/05/2020',
-        //   tempo: 120,
-        //   status: 'aguardando',
-        //   classStatus: 'bg-primary',
-        //   id: 235,
-        // },
-        // {
-        //   inicio: '22/05/2020',
-        //   fim: '30/05/2020',
-        //   tempo: 120,
-        //   status: 'expirado',
-        //   classStatus: 'bg-vermelho',
-        //   id: 2312,
-        // },
+        {
+          ttl: '1º Simulado Digital Estadual',
+          subTtl: 'Simulado Adaptativo disponibilizado pelo progama #Agoravai para os alunos do 3º ano!',
+          inicio: '22/05/2020',
+          fim: '30/05/2020',
+          id: 233,
+        },
       ],
       user: {}
     }
@@ -160,7 +151,7 @@ export default {
       usuario = JSON.parse(usuario.value);
       this.user = usuario;
       let dados = await api.get('/simulado-estaduais-master');
-      this.simulados = dados.data.simulados;
+      // this.simulados = dados.data.simulados;
       this.loading = false;
     }catch (e) {
       this.loading = false;
@@ -171,6 +162,9 @@ export default {
 </script>
 
 <style scoped>
+.icon-inner {
+  margin-top: 4px;
+}
 ion-content {
   --background: var(--ion-color-primary);
 }
