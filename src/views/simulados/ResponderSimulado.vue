@@ -91,6 +91,7 @@
                     Cancelar
                 </ion-button>
                 <ion-button
+                        v-if="!brancos.length"
                         @click="finalizarSimulado"
                         class="text-primary text-none font-bold bg-white rounded"
                 >
@@ -527,7 +528,7 @@
                     // this.router.push('/ver-simulado/'+this.simulado.master);
                 } catch (e) {
                     console.log(e);
-                    this.text.header = 'Não foi possível a entrega do simulado, por favor tente novamente mais tarde.';
+                    this.text.header = e.response ? e.response.data.message :'Não foi possível a entrega do simulado, por favor tente novamente mais tarde.';
                     this.loading = false;
                     this.buttons = [{text: 'ok', handler: () => this.dialog = false}];
                     this.dialog = true;
