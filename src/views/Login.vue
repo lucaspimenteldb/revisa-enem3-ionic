@@ -65,7 +65,7 @@
   </ion-page>
 </template>
 <script>
-import { IonImg, IonPage, IonText, IonLabel, IonButton, IonItem, IonInput } from '@ionic/vue';
+import { IonImg, IonPage, IonText, IonLabel, IonButton, IonItem, IonInput, IonContent } from '@ionic/vue';
 import { useRouter } from 'vue-router'
 import  Loading  from '../components/auxiliares/Loading';
 import AlertGeneric from "../components/auxiliares/AlertGeneric";
@@ -78,7 +78,7 @@ import alerts from '../mixins/Alerts';
 import version from '../mixins/VersionCode';
 
 export default {
-  components: { Loading, AlertGeneric, IonImg, IonPage , IonText, IonLabel, IonButton, IonItem, IonInput },
+  components: { Loading, AlertGeneric, IonImg, IonPage , IonText, IonLabel, IonButton, IonItem, IonInput, IonContent },
   vueRouter: useRouter(),
   name: 'Login',
   mixins: [objeto, alerts, version],

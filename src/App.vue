@@ -1,7 +1,7 @@
 <template>
   <ion-app>
     <ion-header>
-      <ion-toolbar v-if="!(route.name == 'login')" :class="[(route.name == 'home') ? 'ml-2' : '']">
+      <ion-toolbar v-if="!(route.name == 'login')" class="ml-2">
         <ion-title slot="start" class="ion-no-padding flex">
           <ion-buttons v-if="!(route.name == 'home')"  class="inline-block">
             <ion-back-button default-href="/home">voltar</ion-back-button>
