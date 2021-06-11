@@ -5,20 +5,17 @@ import Storage from '../storage/StorageKey';
 const routes = [
   {
     path: '/',
-    redirect: '/login',
-  },
-  {
-    path: '/login',
-    name:'login',
-    component: () => import('@/views/Login.vue'),
-  },
-  {
-    path: '/',
     component: Tabs,
     children: [
       {
         path: '',
         redirect: '/home'
+      },
+
+      {
+        path: '/login',
+        name:'login',
+        component: () => import('@/views/Login.vue'),
       },
       {
         path: 'home',

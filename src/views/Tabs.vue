@@ -1,7 +1,6 @@
 <template>
-  <ion-page>
   <ion-tabs>
-    <ion-tab-bar slot="bottom">
+    <ion-tab-bar v-if="$route.path != '/login'" slot="bottom">
       <ion-tab-button class="tabs" tab="home" href="/home">
         <ion-icon icon="/assets/icon/tabs/home.svg" />
         <ion-label>
@@ -31,7 +30,6 @@
       </ion-tab-button>
     </ion-tab-bar>
   </ion-tabs>
-  </ion-page>
 </template>
 
 <script>
@@ -53,9 +51,9 @@ export default {
 </script>
 <style scoped>
   .tabs, ion-tab-bar {
-    background: #000952;
-    --color: #fff;
-    --color-selected: #fff;
+    background: #62B16F;
+    --color: #000;
+    --color-selected: #000;
   }
 
   .tabs.tab-selected {
