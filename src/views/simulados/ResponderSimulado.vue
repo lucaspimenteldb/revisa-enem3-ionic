@@ -798,6 +798,7 @@
 
         async ionViewWillEnter() {
             this.loading = false;
+            this.meuGabaritoQuestoes = [];
             let usuario = await storage.get('user');
             usuario = JSON.parse(usuario.value);
             this.user = usuario;
