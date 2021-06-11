@@ -148,7 +148,7 @@
 
             async selecionandoLingua () {
               try{
-                  if (!this.id_idioma) {
+                  if (!this.id_idioma && this.simulado.isIdioma !== false) {
                       alert('selecione o idioma');
                       return;
                   }
