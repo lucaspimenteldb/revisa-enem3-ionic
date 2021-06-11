@@ -1,5 +1,4 @@
 <template>
-  <ion-page>
   <ion-tabs>
     <ion-tab-bar slot="bottom">
       <ion-tab-button class="tabs" tab="home" href="/home">
@@ -31,7 +30,6 @@
       </ion-tab-button>
     </ion-tab-bar>
   </ion-tabs>
-  </ion-page>
 </template>
 
 <script>
