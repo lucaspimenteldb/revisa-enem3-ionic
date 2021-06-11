@@ -694,7 +694,6 @@
                     return;
                 }
                 try {
-                    this.questao.selecionada = alternativa;
                     let token = await this.recaptcha();
                     let objeto = {
                         id_questao: this.questao.id,
@@ -706,6 +705,7 @@
                     this.loadingProx = true;
                     this.loading = true;
                     await api.post('/inserir-resposta', objeto);
+                    this.questao.selecionada = alternativa;
                     this.loadingProx = false;
                     this.loading = false;
                     this.atualizandoOGabarito(false);
