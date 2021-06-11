@@ -22,7 +22,7 @@
               </ion-text>
 
               <!--notas, acertos e grafico-->
-              <section class="flex w-100 ion-justify-content-between">
+              <section class="mb-16 flex w-100 ion-justify-content-between">
                 <div>
                   <article class="mt-8">
                     <ion-text color="azul">
@@ -100,6 +100,7 @@
             class="mt-16 mb-16 inline-block w-1/2 relative"
             v-for="(area, i) in areas"
             :key="area.area"
+						@click="() => $router.push(area.rota)"
         >
           <ion-item
               class="rounded shadow"
@@ -172,31 +173,31 @@ export default {
           area: 'Linguagens',
           cor: 'linguagens',
           nota: 199.8,
-          rota: 'ver-desempenho-area'
+          rota: 'ver-meu-desempenho-areas'
         },
         {
           area: 'Humanas',
           cor: 'humanas',
           nota: 199.8,
-          rota: 'ver-desempenho-area'
+          rota: 'ver-meu-desempenho-areas'
         },
         {
           area: 'Matemática',
           cor: 'matematica',
           nota: 199.8,
-          rota: 'ver-desempenho-area'
+          rota: 'ver-meu-desempenho-areas'
         },
         {
           area: 'Natureza',
           cor: 'natureza',
           nota: 199.8,
-          rota: 'ver-desempenho-area'
+          rota: 'ver-meu-desempenho-areas'
         },
         {
           area: 'Redação',
           cor: 'tertiary',
           nota: 800,
-          rota: 'ver-desempenho-redacao'
+          rota: 'ver-meu-desempenho-areas'
         },
       ],
       user: {}

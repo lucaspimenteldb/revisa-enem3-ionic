@@ -139,6 +139,7 @@
 
 .bg-white {
   background-color: white;
+  --background: white;
 }
 
 .bg-primary {
@@ -474,6 +475,10 @@ text-xl {
 
 .mb-8 {
   margin-bottom: 8px;
+}
+
+.mb-16 {
+  margin-bottom: 16px;
 }
 
 .mb-32 {

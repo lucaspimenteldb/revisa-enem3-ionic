@@ -8,8 +8,10 @@
       </div>
 
       <ion-list class="ion-padding rounded-top">
-        <ion-label class="font-bold text-lg">
-          Simulados corrigidos
+        <ion-label >
+					<p class="font-bold text-lg text-black">
+						Simulados corrigidos
+					</p>
         </ion-label>
 
         <!--    card do simulado    -->

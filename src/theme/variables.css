@@ -50,7 +50,7 @@ http://ionicframework.com/docs/theming/ */
 
   --ion-color-verde: #008033;
   --ion-color-verde-rgb: 0,128,51;
-  --ion-color-verde-contrast: #000000;
+  --ion-color-verde-contrast: #fff;
   --ion-color-verde-contrast-rgb: 0,0,0;
   --ion-color-verde-shade: #016529;
   --ion-color-verde-tint: #0c9041;

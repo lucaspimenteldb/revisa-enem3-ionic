@@ -8,8 +8,10 @@
       </div>
 
       <ion-list class="ion-padding rounded-top">
-        <ion-label class="font-bold text-lg">
-          Simulados disponíveis
+        <ion-label>
+					<p class="font-bold text-lg text-black">
+						Simulados disponíveis
+					</p>
         </ion-label>
 
         <!--    card do simulado    -->
@@ -65,7 +67,7 @@
         </div>
 
         <ion-label >
-          <p class="font-bold text-lg">
+          <p class="ion-padding-top font-bold text-lg text-black">
             Ver meu desempenho nos simulados
           </p>
         </ion-label>
