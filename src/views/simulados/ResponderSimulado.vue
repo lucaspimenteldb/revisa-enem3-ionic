@@ -265,6 +265,7 @@
 
                             <ion-button
                                     @click="salvarResposta()"
+                                    :disabled="loadingProx"
                                     size="small"
                                     class="h-40"
                                     fill="outline"
@@ -295,6 +296,7 @@
                             <ion-button
                                     v-for="alternativa in questao.alternativas"
                                     :key="alternativa.alternativa"
+                                    :disabled="loadingProx"
                                     class="mb-8 ion-text-wrap ion-text-left border-1 shadow rounded cursor-pointer alternativas text-none"
                                     :class="questao.selecionada === alternativa.alternativa ? 'text-white' : 'text-black'"
                                     :color="questao.selecionada === alternativa.alternativa ? 'primary' : 'white'"
@@ -326,6 +328,7 @@
                             </ion-button>
                             <ion-button
                                     v-if="nextPage"
+                                    :disabled="loadingProx"
                                     fill="outline"
                                     color="primary"
                                     class="text-none"
@@ -337,6 +340,7 @@
                             <ion-button
                                     color="primary"
                                     class="ion-float-right text-none font-bold"
+                                    :disabled="loadingProx"
                                     @click="verBrancos"
                             >
                                 Finalizar simulado
@@ -409,6 +413,7 @@
 
         setup() {
             const loading = ref(false);
+            const loadingProx = ref(false);
             const isOpenRef = ref(false);
             const setOpen = state => isOpenRef.value = state;
             const detalhesSimulado = ref(false);
@@ -435,6 +440,7 @@
                 router: useRouter(),
                 route: useRoute(),
                 loading,
+                loadingProx,
                 user,
             }
         },
@@ -646,10 +652,12 @@
                         salvar: this.questao.salvar,
                         token
                     };
-
+                    this.loadingProx = true;
                     await api.post('/salvar-resposta', objeto);
+                    this.loadingProx = false;
                     this.atualizandoOGabarito();
                 } catch (e) {
+                    this.loadingProx = false;
                     console.log(e);
                     this.irFora(e);
                     this.text.header = 'Não foi possível realizar o procedimento! Verifique a sua conexão e tente novamente.';
@@ -695,9 +703,12 @@
                         id_user: this.user.id,
                         token,
                     };
+                    this.loadingProx = true;
                     await api.post('/inserir-resposta', objeto);
+                    this.loadingProx = false;
                     this.atualizandoOGabarito(false);
                 } catch (e) {
+                    this.loadingProx = false;
                     console.log(e);
                     this.irFora(e);
                     this.text.header = 'Sua resposta não foi enviada! Verifique a sua conexão e tente novamente.';
