@@ -899,4 +899,10 @@
     .bg-white {
         --background: white;
     }
+
+    .enunciado-questoes {
+        z-index: 999;
+        margin-left: 2rem;
+    }
+
 </style>
