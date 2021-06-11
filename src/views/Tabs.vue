@@ -1,6 +1,6 @@
 <template>
   <ion-tabs>
-    <ion-tab-bar slot="bottom">
+    <ion-tab-bar v-if="$route.path != '/login'" slot="bottom">
       <ion-tab-button class="tabs" tab="home" href="/home">
         <ion-icon icon="/assets/icon/tabs/home.svg" />
         <ion-label>
