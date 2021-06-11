@@ -1,4 +1,5 @@
 <template>
+  <ion-page>
   <ion-tabs>
     <ion-tab-bar slot="bottom">
       <ion-tab-button class="tabs" tab="home" href="/home">
@@ -30,15 +31,16 @@
       </ion-tab-button>
     </ion-tab-bar>
   </ion-tabs>
+  </ion-page>
 </template>
 
 <script>
-import { IonTabBar, IonTabButton, IonTabs, IonLabel, IonIcon } from '@ionic/vue';
+import { IonTabBar,  IonPage, IonTabButton, IonTabs, IonLabel, IonIcon } from '@ionic/vue';
 import { ellipse, square, triangle, appsOutline } from 'ionicons/icons';
 
 export default {
   name: 'Tabs',
-  components: { IonLabel, IonTabs, IonTabBar, IonTabButton, IonIcon },
+  components: { IonLabel, IonTabs, IonPage, IonTabBar, IonTabButton, IonIcon },
   setup() {
     return {
       ellipse,
