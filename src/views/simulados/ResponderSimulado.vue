@@ -704,11 +704,14 @@
                         token,
                     };
                     this.loadingProx = true;
+                    this.loading = true;
                     await api.post('/inserir-resposta', objeto);
                     this.loadingProx = false;
+                    this.loading = false;
                     this.atualizandoOGabarito(false);
                 } catch (e) {
                     this.loadingProx = false;
+                    this.loading = false;
                     console.log(e);
                     this.irFora(e);
                     this.text.header = 'Sua resposta não foi enviada! Verifique a sua conexão e tente novamente.';
