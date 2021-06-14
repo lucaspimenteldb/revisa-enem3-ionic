@@ -162,6 +162,7 @@ export default {
   }
 }
 </script>
+
 <style scoped>
 ion-content {
   --background: var(--ion-color-primary);

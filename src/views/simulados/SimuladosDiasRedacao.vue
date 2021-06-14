@@ -125,6 +125,7 @@
                     <ion-text color="primary">{{ redacao.descricao}}</ion-text>
                   </p>
                 </ion-text>
+              </article>
 
                 <article class="mt-8">
                   <ion-text>
