@@ -11,7 +11,6 @@ const routes = [
         path: '',
         redirect: '/home'
       },
-
       {
         path: '/login',
         name:'login',

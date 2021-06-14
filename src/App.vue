@@ -4,7 +4,7 @@
       <ion-toolbar v-if="!(route.name == 'login')" class="ml-2">
         <ion-title slot="start" class="ion-no-padding flex">
           <ion-buttons v-if="!(route.name == 'home')"  class="inline-block">
-            <ion-back-button default-href="/home">voltar</ion-back-button>
+            <ion-back-button default-href="/home" text="voltar"/>
           </ion-buttons>
 
           <section class="inline-flex ion-align-items-center vertical-text-bottom">
@@ -23,11 +23,16 @@
           </section>
         </ion-title>
 
-        <ion-avatar @click="saida" class="ion-margin-end w-40 h-40" slot="secondary">
+        <ion-button 
+          @click="saida" 
+          class="ion-margin-end ion-no-padding w-40 h-40 no-shadow"
+          slot="end"
+          color="white"
+        >
           <img src="assets/icon/sair.svg" >
-        </ion-avatar>
+        </ion-button>
 
-        <ion-avatar class="ion-margin-end w-40 h-40 border-2 border-primary" slot="secondary">
+        <ion-avatar class="ion-margin-end w-40 h-40 border-2 border-primary" slot="end">
           <img :src="user.photo" >
         </ion-avatar>
 
