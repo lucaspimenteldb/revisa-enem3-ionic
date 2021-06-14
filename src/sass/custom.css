@@ -227,6 +227,10 @@ text-xl {
   height: 102%;
 }
 
+.min-h-full {
+  min-height: 96%;
+}
+
 .h-16 {
   height: 16px;
   min-height: 16px;
@@ -364,6 +368,10 @@ text-xl {
 
 .bottom-0 {
   bottom: 0;
+}
+
+.bottom-12 {
+  bottom: 12px;
 }
 
 .bottom-20 {

@@ -20,7 +20,7 @@
             class="rounded shadow build-login-ios"
             lines="none"
             mode="md"
-            color="dark"
+            color="light"
           >
             <ionLabel position="floating">
               <p class="">

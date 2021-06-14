@@ -40,7 +40,7 @@
         >
           <ion-label
               size="small"
-              class="ion-margin-end text-none"
+              class="text-none"
               v-text="'Finalizar'"
           />
         </ion-button>
@@ -64,7 +64,7 @@
 
       </section>
 
-      <ion-list class="ion-margin-top ion-padding rounded-top">
+      <ion-list class="ion-margin-top ion-padding rounded">
         <ion-item
             class="ion-margin-top lista__professores rounded"
             v-for="(q, i) in questoes"

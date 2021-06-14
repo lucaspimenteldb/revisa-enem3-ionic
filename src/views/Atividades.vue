@@ -21,7 +21,7 @@
 
       <!-- container principal -->
       <ion-list class="ion-margin-top ion-padding rounded-top">
-        <ion-label class="font-bold text-lg">
+        <ion-label class="font-bold text-lg" color="primary">
           Atividades Escolares
         </ion-label>
 

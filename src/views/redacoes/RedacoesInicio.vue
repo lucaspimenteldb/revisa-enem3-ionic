@@ -1,8 +1,8 @@
 <template>
     <ion-page>
-        <ion-content :fullscreen="true" class="ion-padding-vertical">
+        <ion-content class="ion-padding-vertical">
             <ion-list class="ion-padding">
-                <ion-label class="font-bold text-xl" color="light">
+                <ion-label class="font-bold text-xl" color="primary">
                     Redações
                 </ion-label>
 
@@ -46,7 +46,7 @@
                         style="font-size: 40px;"
                     />
                     <ion-text 
-                        class="ion-padding-top absolute right-14 bottom-20"
+                        class="ion-padding-top absolute right-14 bottom-12"
                         :class="opcao.encerrada ? 'text-red' : 'text-white'"
                     >
                         <p class="ion-no-margin ion-padding-top text-sm">

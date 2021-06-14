@@ -1,14 +1,14 @@
 <template>
   <ion-page>
-    <ion-content>
+    <ion-content >
       <div class="ion-padding fundo-cima">
         <h4 class="ion-margin-vertical text-white">
          Simulado Estadual
         </h4>
       </div>
 
-      <ion-list class="ion-padding rounded-top">
-        <ion-label class="font-bold text-lg" color="light">
+      <ion-list class="ion-padding rounded-top min-h-full">
+        <ion-label class="font-bold text-lg" color="primary">
           Simulados disponíveis
         </ion-label>
 

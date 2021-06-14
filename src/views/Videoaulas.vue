@@ -25,7 +25,7 @@
       </div>
 
       <ion-list class="ion-margin-top ion-padding h-full rounded-top">
-        <ion-label class="font-bold text-lg" color="light">
+        <ion-label class="font-bold text-lg" color="primary">
           Videoaulas
         </ion-label>
 

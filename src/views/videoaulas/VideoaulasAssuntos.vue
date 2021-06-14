@@ -4,7 +4,7 @@
         <ion-content >
             <!-- selecionar videoaula -->
             <ion-item class="ion-margin ion-margin-bottom white rounded select">
-                <ion-label color="light">
+                <ion-label color="dark">
                     Selecionar videoaula...
                 </ion-label>
 
@@ -14,8 +14,8 @@
                 </ion-select>
             </ion-item>
 
-            <ion-list class="ion-padding rounded-top">
-                <ion-label class="font-bold text-lg">
+            <ion-list class="ion-padding rounded-top min-h-full">
+                <ion-label class="font-bold text-lg" color="primary">
                     {{nome}}
                 </ion-label>
 

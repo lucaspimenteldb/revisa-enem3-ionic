@@ -7,7 +7,7 @@
 
       <!-- selecionar disciplina -->
       <ion-item class="ion-margin ion-margin-bottom white rounded select" >
-        <ion-label color="light">
+        <ion-label color="dark">
           Selecionar disciplina...
         </ion-label>
 
@@ -18,7 +18,7 @@
       </ion-item>
 
       <ion-list class="ion-padding rounded-top">
-        <ion-label class="font-bold text-lg" color="light">
+        <ion-label class="font-bold text-lg" color="primary">
           {{`Volume ${route.params.id}`}}
         </ion-label>
 
@@ -149,7 +149,7 @@ export default {
 ion-content {
   --background: var(--ion-color-primary);
 }
-ion-item {
+.lista__professores {
   --background: url('../../../public/assets/images/videoaula-secundario.png') var(--ion-color-primary) no-repeat center/100%;
 }
 ion-item.select {
