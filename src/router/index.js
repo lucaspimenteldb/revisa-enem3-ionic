@@ -9,7 +9,7 @@ const routes = [
     children: [
       {
         path: '',
-        redirect: '/home'
+        redirect: '/login'
       },
 
       {
@@ -20,7 +20,7 @@ const routes = [
       {
         path: 'home',
         name: 'home',
-        component: () => import('@/views/Home.vue')
+        component: () => import('@/views/simulados/SimuladosInicio.vue')
       },
       {
         path: 'atividades',
@@ -140,6 +140,7 @@ router.beforeEach( async (to, from, next) => {
     let user = await Storage.get('user');
     console.log('Usuário:' ,user);
     if (user.value && to.name == 'login') {
+    // if (false) {
       // await api.get('/noticias');
       next({name: 'home'})
   }
