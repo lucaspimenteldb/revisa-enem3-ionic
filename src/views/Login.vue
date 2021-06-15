@@ -114,7 +114,6 @@ export default {
           // window.open('https://ro.revisaenem.com.br/google');
            await browser.open(e.response.data.message);
            return;
-
          }
          else if(e.response.status == 400) {
             //ok
