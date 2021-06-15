@@ -10,7 +10,7 @@
       <ion-list class="ion-padding rounded-top">
         <!--    card do simulado do 1 dia    -->
         <div
-            class="mb-48 relative"
+            class="mt-16 mb-48 relative"
             v-for="simulado in simulados"
             :key="'simulado-dia-'+simulado.dia"
         >

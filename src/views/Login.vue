@@ -16,7 +16,7 @@
 
         <br>
         <form @submit.prevent="formMatricula">
-        <IonItem class="rounded shadow">
+        <IonItem class="rounded shadow" mode="md">
           <IonLabel position="floating">
             Matrícula
           </IonLabel>
@@ -24,7 +24,12 @@
           <IonInput type="number" v-model="matricula" value="{{matricula}}"/>
         </IonItem>
 
-        <ion-button type="submit" expand="block" class="ion-margin-top shadow-btn">
+        <ion-button 
+          type="submit" 
+          expand="block" 
+          class="ion-margin-top shadow-btn"
+          mode="md"
+        >
           <ion-label class="text-none font-bold">
             Entrar
           </ion-label>

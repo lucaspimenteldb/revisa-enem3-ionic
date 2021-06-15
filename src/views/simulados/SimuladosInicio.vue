@@ -7,7 +7,7 @@
         </h4>
       </div>
 
-      <ion-list class="ion-padding rounded-top">
+      <ion-list class="ion-padding rounded-top min-h-full">
         <ion-label>
 					<p class="font-bold text-lg text-black">
 						Simulados disponíveis
@@ -226,5 +226,9 @@ h2.font-bold {
 }
 .text-md {
   font-size: 1rem;
+}
+
+.min-h-full {
+  min-height: 90%;
 }
 </style>
