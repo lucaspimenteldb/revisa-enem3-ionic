@@ -1,34 +1,34 @@
 <template>
   <ion-tabs>
-    <ion-tab-bar v-if="$route.path != '/login'" slot="bottom">
-      <ion-tab-button class="tabs" tab="home" href="/home">
-        <ion-icon icon="/assets/icon/tabs/home.svg" />
-        <ion-label>
-          Home
-        </ion-label>
-      </ion-tab-button>
+<!--    <ion-tab-bar v-if="$route.path != '/login'" slot="bottom">-->
+<!--      <ion-tab-button class="tabs" tab="home" href="/home">-->
+<!--        <ion-icon icon="/assets/icon/tabs/home.svg" />-->
+<!--        <ion-label>-->
+<!--          Home-->
+<!--        </ion-label>-->
+<!--      </ion-tab-button>-->
 
-      <ion-tab-button class="tabs" tab="simulado" href="/simulado">
-        <ion-icon :icon="appsOutline" />
-        <ion-label>
-          Simul. Estadual
-        </ion-label>
-      </ion-tab-button>
+<!--      <ion-tab-button class="tabs" tab="simulado" href="/simulado">-->
+<!--        <ion-icon :icon="appsOutline" />-->
+<!--        <ion-label>-->
+<!--          Simul. Estadual-->
+<!--        </ion-label>-->
+<!--      </ion-tab-button>-->
 
-      <ion-tab-button class="tabs" tab="videoaulas" href="/videoaulas">
-        <ion-icon icon="/assets/icon/tabs/videoaula.svg" />
-        <ion-label>
-          Videoaulas
-        </ion-label>
-      </ion-tab-button>
+<!--      <ion-tab-button class="tabs" tab="videoaulas" href="/videoaulas">-->
+<!--        <ion-icon icon="/assets/icon/tabs/videoaula.svg" />-->
+<!--        <ion-label>-->
+<!--          Videoaulas-->
+<!--        </ion-label>-->
+<!--      </ion-tab-button>-->
 
-      <ion-tab-button class="tabs" tab="redacoes" href="/redacoes">
-        <ion-icon icon="/assets/icon/tabs/redacao.svg" />
-        <ion-label>
-          Redações
-        </ion-label>
-      </ion-tab-button>
-    </ion-tab-bar>
+<!--      <ion-tab-button class="tabs" tab="redacoes" href="/redacoes">-->
+<!--        <ion-icon icon="/assets/icon/tabs/redacao.svg" />-->
+<!--        <ion-label>-->
+<!--          Redações-->
+<!--        </ion-label>-->
+<!--      </ion-tab-button>-->
+<!--    </ion-tab-bar>-->
   </ion-tabs>
 </template>
 

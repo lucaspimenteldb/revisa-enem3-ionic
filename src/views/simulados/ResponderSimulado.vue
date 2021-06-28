@@ -694,7 +694,6 @@
                     return;
                 }
                 try {
-                    this.questao.selecionada = alternativa;
                     let token = await this.recaptcha();
                     let objeto = {
                         id_questao: this.questao.id,
@@ -704,11 +703,15 @@
                         token,
                     };
                     this.loadingProx = true;
+                    this.loading = true;
                     await api.post('/inserir-resposta', objeto);
+                    this.questao.selecionada = alternativa;
                     this.loadingProx = false;
+                    this.loading = false;
                     this.atualizandoOGabarito(false);
                 } catch (e) {
                     this.loadingProx = false;
+                    this.loading = false;
                     console.log(e);
                     this.irFora(e);
                     this.text.header = 'Sua resposta não foi enviada! Verifique a sua conexão e tente novamente.';
@@ -795,6 +798,7 @@
 
         async ionViewWillEnter() {
             this.loading = false;
+            this.meuGabaritoQuestoes = [];
             let usuario = await storage.get('user');
             usuario = JSON.parse(usuario.value);
             this.user = usuario;
@@ -899,4 +903,10 @@
     .bg-white {
         --background: white;
     }
+
+    .enunciado-questoes {
+        z-index: 999;
+        margin-left: 2rem;
+    }
+
 </style>

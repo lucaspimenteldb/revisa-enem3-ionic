@@ -32,37 +32,37 @@
         />
       </section>
 
-      <section class="secao-finalizar inline-block rounded-right ion-margin-end">
-        <ion-button
-                v-if="!finalizada"
-            @click="finalizarAula"
-            class="classes"
-        >
-          <ion-label
-              size="small"
-              class="ion-margin-end text-none"
-              v-text="'Finalizar'"
-          />
-        </ion-button>
+<!--      <section class="secao-finalizar inline-block rounded-right ion-margin-end">-->
+<!--        <ion-button-->
+<!--                v-if="!finalizada"-->
+<!--            @click="finalizarAula"-->
+<!--            class="classes"-->
+<!--        >-->
+<!--          <ion-label-->
+<!--              size="small"-->
+<!--              class="ion-margin-end text-none"-->
+<!--              v-text="'Finalizar'"-->
+<!--          />-->
+<!--        </ion-button>-->
 
-        <ion-button
-                v-else
-                class="classes classes-finalizadas"
-        >
-          <ion-label
-                  size="small"
-                  class="ion-margin-end text-none"
-                  color="success"
-                  v-text="'Finalizada'"
-          />
+<!--        <ion-button-->
+<!--                v-else-->
+<!--                class="classes classes-finalizadas"-->
+<!--        >-->
+<!--          <ion-label-->
+<!--                  size="small"-->
+<!--                  class="ion-margin-end text-none"-->
+<!--                  color="success"-->
+<!--                  v-text="'Finalizada'"-->
+<!--          />-->
 
-          <ion-icon
-                  :icon="checkmarkCircleOutline"
-                  color="success"
-          />
-        </ion-button>
+<!--          <ion-icon-->
+<!--                  :icon="checkmarkCircleOutline"-->
+<!--                  color="success"-->
+<!--          />-->
+<!--        </ion-button>-->
 
-      </section>
+<!--      </section>-->
 
       <ion-list class="ion-margin-top ion-padding rounded-top">
         <ion-item

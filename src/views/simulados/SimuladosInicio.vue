@@ -66,7 +66,7 @@
           </div>
         </div>
 
-        <ion-label >
+        <!-- <ion-label >
           <p class="ion-padding-top font-bold text-lg text-black">
             Ver meu desempenho nos simulados
           </p>
@@ -80,7 +80,7 @@
 
         >
           Ver meu desempenho
-        </ion-button>
+        </ion-button> -->
       </ion-list>
       <Loading :isOpen="loading"></Loading>
       <AlertGeneric :dialog="dialog" :text="text" :buttons="buttons" />
