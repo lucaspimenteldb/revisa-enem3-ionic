@@ -3,7 +3,8 @@
     <ion-content>
       <Loading :isOpen="loading"></Loading>
       <div class="ion-padding flex ion-justify-content-center">
-        <ion-img src="assets/images/revisa_mais-01.png" class="ion-margin-end w-80 image-logo"/>
+        <ion-img src="assets/images/logo-revisa.png" class="ion-margin-end w-80"/>
+        <ion-img src="assets/images/logo-mvc.png" class="ion-margin-start w-80"/>
 <!--        <ion-img src="assets/images/logo-mvc.png" class="ion-margin-start w-80"/>-->
       </div>
 
@@ -155,7 +156,7 @@ export default {
 </script>
 <style scoped>
 ion-content {
-  /*--background: var(--ion-color-primary);*/
+  --background: var(--ion-color-primary);
 }
 .bg__paper {
   background: url('../../public/assets/images/bg-principal.png') no-repeat center/100%;
@@ -164,8 +165,8 @@ ion-content {
   --box-shadow: none;
 }
 
-.image-logo::part(image) {
-  transform: scale(2.0);
-}
+/*.image-logo::part(image) {*/
+/*  transform: scale(2.0);*/
+/*}*/
 
 </style>
