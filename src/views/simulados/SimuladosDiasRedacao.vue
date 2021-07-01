@@ -21,7 +21,7 @@
           </ion-text>
 
           <p class="mt-0 text-black">
-            No card abaixo você poderá acessar o Simulado do <b>{{simulado.titulo}}</b>. Você terá {{simulado.horaEx}} para terminá-lo após o inicio do simulado.
+            No card abaixo você poderá acessar o Simulado do <b>{{simulado.titulo}}</b>.
           </p>
 
           <ion-item

@@ -53,10 +53,10 @@
                     Tem certeza que deseja finalizar e enviar o seu simulado?
                 </p>
 
-                <section class="ion-padding-horizontal" v-if="brancos.length">
+                <section class="ion-padding-horizontal" v-if="brancos.length > 0">
                     <p class="text-white">Você deixou algumas questões em branco</p>
                     <ion-button
-                            v-for="(branco, index) in brancos"
+                            v-for="(branco) in brancos"
                             :key="`questao-${branco.id}`"
                             @click="questoes(questoesId.indexOf(branco.id) + 1, false, true)"
                             class="mr-8 mb-8 btn-questao-gabarito rounded-sm"
@@ -64,7 +64,7 @@
                     >
                         <div class="flex flex-column ion-align-items-center ion-justify-content-center">
                             <p class="mt-12 mb-0 text-black">
-                                {{ (Number(index) + 1) }}
+                                {{ (branco.index) }}
                             </p>
 
                             <p class="mt-8 text-black block font-bold">
@@ -91,7 +91,7 @@
                     Cancelar
                 </ion-button>
                 <ion-button
-                        v-if="!brancos.length"
+                        v-if="brancos.length <= 0"
                         @click="finalizarSimulado"
                         class="text-primary text-none font-bold bg-white rounded"
                 >
@@ -499,11 +499,23 @@
                 } catch (e) {
                     this.loading = false;
                     if (e.response) {
-                        this.brancos = e.response.data.brancos;
-                        console.log(e.response.data.brancos);
+                        // this.brancos =  (e.response.data.brancos);
+                        this.brancos = this.objectInArray(e.response.data.brancos);
                     }
-                    console.log(e);
+                    console.log(e.response.data.brancos);
                 }
+            },
+
+            objectInArray (array) {
+                let arrayAux = [];
+
+                for (let a in array) {
+                    let index = this.questoesId.indexOf(array[a].id) + 1;
+                    array[a].index = index;
+                   arrayAux.push(array[a]);
+                }
+
+                return arrayAux;
             },
 
             fechar() {
@@ -516,7 +528,7 @@
 
             irListagem() {
                 this.fechar();
-                this.router.push('/ver-simulado/' + this.simulado.master);
+                this.router.replace('/ver-simulado/' + this.simulado.master);
             },
 
             async finalizarSimulado() {
@@ -558,9 +570,17 @@
                     this.loading = false;
                     this.questoesEmCache.push(this.questao);
                     // this.acionandoCronometro();
+                    //tirar a produção
+                    // setTimeout(this.teste, 1000);
                 } catch (e) {
                     this.alertErro(e);
                 }
+            },
+
+            //tirar do produção
+            async teste () {
+                await this.questaoSelecionada('A');
+                await this.questoes(this.nextPage, true);
             },
 
             cache(page, prox) {
@@ -635,6 +655,8 @@
                     this.previous = this.verificarNull(dados.data.prev_page_url, dados.data.path);
                     this.loading = false;
                     this.questoesEmCache.push(this.questao);
+                    //tirar produção
+                    // setTimeout(this.teste, 1000);
                 } catch (e) {
                     console.log(e);
                     this.loading = false;
