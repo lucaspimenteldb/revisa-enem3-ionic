@@ -1254,9 +1254,9 @@
   dependencies:
     "@types/node" "*"
 
-"@types/cordova@^0.0.34":
+"@types/cordova@latest":
   version "0.0.34"
-  resolved "https://registry.npmjs.org/@types/cordova/-/cordova-0.0.34.tgz"
+  resolved "https://registry.yarnpkg.com/@types/cordova/-/cordova-0.0.34.tgz#ea7addf74ecec3d7629827a0c39e2c9addc73d04"
   integrity sha1-6nrd907Ow9dimCegw54smt3HPQQ=
 
 "@types/express-serve-static-core@*", "@types/express-serve-static-core@^4.17.18":
@@ -7580,6 +7580,11 @@ mz@^2.4.0:
     any-promise "^1.0.0"
     object-assign "^4.0.1"
     thenify-all "^1.0.0"
+
+nan@^2.12.1:
+  version "2.14.2"
+  resolved "https://registry.yarnpkg.com/nan/-/nan-2.14.2.tgz#f5376400695168f4cc694ac9393d0c9585eeea19"
+  integrity sha512-M2ufzIiINKCuDfBSAUr1vWQ+vuVcA9kqx8JJUsbQi6yf1uGRyb7HfpdfUr5qLXf3B/t8dPvcjhKMmlfnP47EzQ==
 
 nanoid@^3.1.23:
   version "3.1.23"

@@ -54,7 +54,7 @@
             <ion-button
                     @click="mudarLingua(true)"
                     expand="full"
-                    class="text-primary text-none font-bold bg-white rounded"
+                    class="text-primary text-none font-bold bg-primary rounded"
             >
                 Aceitar
             </ion-button>
@@ -74,7 +74,7 @@
                 <ion-button
                         @click="selecionandoLingua"
                         expand="full"
-                        class="text-primary text-none font-bold bg-white rounded mt-16"
+                        class="text-primary text-none font-bold bg-primary rounded mt-16"
                 >
                     Selecionar
                 </ion-button>
