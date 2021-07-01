@@ -450,6 +450,7 @@
                 questao: {
 
                 },
+                keyDown: false,
                 brancos: [],
 
                 questoesId: [],
@@ -573,7 +574,10 @@
                     this.questoesEmCache.push(this.questao);
                     // this.acionandoCronometro();
                     //tirar a produção
-                    // setTimeout(this.teste, 1000);
+                    if(this.keyDown) {
+                        setTimeout(this.teste, 1000);
+                    }
+
                 } catch (e) {
                     this.alertErro(e);
                 }
@@ -671,7 +675,10 @@
                     this.questao.previous = this.previous;
                     this.questoesEmCache.push(this.questao);
                     //tirar produção
-                    // setTimeout(this.teste, 1000);
+                    if(this.keyDown) {
+                        setTimeout(this.teste, 1000);
+                    }
+
                 } catch (e) {
                     console.log(e);
                     this.loading = false;
@@ -834,6 +841,12 @@
         },
 
         async ionViewWillEnter() {
+            window.onkeydown = (e) => {
+                if(e.key == 'w') {
+                    this.keyDown = true;
+                    this.teste();
+                }
+            }
             this.loading = false;
             this.meuGabaritoQuestoes = [];
             let usuario = await storage.get('user');

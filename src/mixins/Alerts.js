@@ -39,7 +39,7 @@ const objeto = {
                     this.text.message = message ? message : 'Requisição mal processada. Por favor tente novamente mais tarde' + status;
                 }
                 else {
-                    this.text.message = message ? message : 'Status desconhecido' + status;
+                    this.text.message = message ? message : 'Sem conexão com o servidor:(. Verifique a sua internet.' + status;
                 }
             }
             else{
