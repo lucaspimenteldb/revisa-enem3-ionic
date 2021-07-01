@@ -568,6 +568,8 @@
                     this.nextPage = this.verificarNull(dados.data.questoes.next_page_url, dados.data.questoes.path);
                     this.previous = this.verificarNull(dados.data.questoes.prev_page_url, dados.data.questoes.path);
                     this.loading = false;
+                    this.questao.nextPage = this.nextPage;
+                    this.questao.previous = this.previous;
                     this.questoesEmCache.push(this.questao);
                     // this.acionandoCronometro();
                     //tirar a produção
@@ -583,34 +585,45 @@
                 await this.questoes(this.nextPage, true);
             },
 
-            cache(page, prox) {
+            cache(page) {
                 let quest = this.questoesId[page - 1];
-
                 let q = this.questoesEmCache.filter((e) => e.id === quest);
+
                 if (q.length > 0) {
                     this.questao = q[0];
-                    if (prox) {
-                        this.nextPage = Number(this.nextPage) + 1;
-                        this.previous = Number(this.previous) + 1;
-                        if (this.nextPage > this.questoesId.length) {
-                            this.nextPage = null;
-                        }
-                    } else {
-                        this.previous = Number(this.previous) - 1;
-                        this.nextPage = Number(this.nextPage) - 1;
+                    this.nextPage = q[0].nextPage;
+                    this.previous = q[0].previous;
 
-                        if (this.previous < 0) {
-                            this.previous = 0;
-                        }
-
-                        if (this.nextPage <= 1) {
-                            this.nextPage = 2;
-                        }
-                    }
                     return true;
                 }
 
                 return false;
+                //
+                // let q = this.questoesEmCache.filter((e) => e.id === quest);
+                // if (q.length > 0) {
+                //     this.questao = q[0];
+                //     if (prox) {
+                //         this.nextPage = Number(this.nextPage) + 1;
+                //         this.previous = Number(this.previous) + 1;
+                //         if (this.nextPage > this.questoesId.length) {
+                //             this.nextPage = null;
+                //         }
+                //     } else {
+                //         this.previous = Number(this.previous) - 1;
+                //         this.nextPage = Number(this.nextPage) - 1;
+                //
+                //         if (this.previous < 0) {
+                //             this.previous = 0;
+                //         }
+                //
+                //         if (this.nextPage <= 1) {
+                //             this.nextPage = 2;
+                //         }
+                //     }
+                //     return true;
+                // }
+                //
+                // return false;
             },
 
             cacheGab(page) {
@@ -640,10 +653,10 @@
                     this.isOpenRef = false;
                     menuController.enable(false, 'gabarito');
                     this.setFinalizarOpen(false);
-                    if (gab && this.cacheGab(page)) {
-                        return;
-                    }
-                    if (this.cache(page, prox)) {
+                    // if (gab && this.cacheGab(page)) {
+                    //     return;
+                    // }
+                    if (this.cache(page)) {
                         return;
                     }
                     this.loading = true;
@@ -654,6 +667,8 @@
                     this.nextPage = this.verificarNull(dados.data.next_page_url, dados.data.path);
                     this.previous = this.verificarNull(dados.data.prev_page_url, dados.data.path);
                     this.loading = false;
+                    this.questao.nextPage = this.nextPage;
+                    this.questao.previous = this.previous;
                     this.questoesEmCache.push(this.questao);
                     //tirar produção
                     // setTimeout(this.teste, 1000);
