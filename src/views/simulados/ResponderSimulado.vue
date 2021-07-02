@@ -574,9 +574,9 @@
                     this.questoesEmCache.push(this.questao);
                     // this.acionandoCronometro();
                     //tirar a produção
-                    if(this.keyDown) {
-                        setTimeout(this.teste, 1000);
-                    }
+                    // if(this.keyDown) {
+                    //     setTimeout(this.teste, 2000);
+                    // }
 
                 } catch (e) {
                     this.alertErro(e);
@@ -584,10 +584,10 @@
             },
 
             //tirar do produção
-            async teste () {
-                await this.questaoSelecionada('A');
-                await this.questoes(this.nextPage, true);
-            },
+            // async teste () {
+            //     await this.questaoSelecionada('B');
+            //     await this.questoes(this.nextPage, true);
+            // },
 
             cache(page) {
                 let quest = this.questoesId[page - 1];
@@ -675,9 +675,9 @@
                     this.questao.previous = this.previous;
                     this.questoesEmCache.push(this.questao);
                     //tirar produção
-                    if(this.keyDown) {
-                        setTimeout(this.teste, 1000);
-                    }
+                    // if(this.keyDown) {
+                    //     setTimeout(this.teste, 1000);
+                    // }
 
                 } catch (e) {
                     console.log(e);
