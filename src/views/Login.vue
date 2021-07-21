@@ -3,15 +3,15 @@
     <ion-content>
       <Loading :isOpen="loading"></Loading>
       <div class="ion-padding flex ion-justify-content-center">
-        <ion-img src="assets/images/logo-revisa.png" class="ion-margin-end w-80"/>
-        <ion-img src="assets/images/logo-mvc.png" class="ion-margin-start w-80"/>
+        <ion-img src="assets/images/logo_acerta_mais.svg" class="ion-margin-end w-80 image-logo"/>
+<!--        <ion-img src="assets/images/logo-mvc.png" class="ion-margin-start w-80"/>-->
 <!--        <ion-img src="assets/images/logo-mvc.png" class="ion-margin-start w-80"/>-->
       </div>
 
       <div class="bg__paper h-full ion-padding rounded">
         <ion-text color="primary">
           <h3 class="ion-text-center font-bold">
-            Bem-vindo ao Revisa Mais!
+            Bem-vindo ao Acerta Mais!
           </h3>
         </ion-text>
 
@@ -22,7 +22,7 @@
             Matrícula
           </IonLabel>
 
-          <IonInput type="number" v-model="matricula" value="{{matricula}}"/>
+          <IonInput type="text" v-model="matricula" value="{{matricula}}"/>
         </IonItem>
 
         <ion-button type="submit" expand="block" class="ion-margin-top shadow-btn">
@@ -156,7 +156,7 @@ export default {
 </script>
 <style scoped>
 ion-content {
-  --background: var(--ion-color-primary);
+  --background: #fff
 }
 .bg__paper {
   background: url('../../public/assets/images/bg-principal.png') no-repeat center/100%;
@@ -165,8 +165,8 @@ ion-content {
   --box-shadow: none;
 }
 
-/*.image-logo::part(image) {*/
-/*  transform: scale(2.0);*/
-/*}*/
+.image-logo::part(image) {
+  transform: scale(2.0);
+}
 
 </style>
