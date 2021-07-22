@@ -587,4 +587,14 @@ text-xl {
   pointer-events: none;
 }
 
+.alert-radio-group.sc-ion-alert-md::-webkit-scrollbar-thumb{
+  background-color: grey;
+  border-radius: 15rem;
+}
+
+.alert-radio-group.sc-ion-alert-md::-webkit-scrollbar{
+  display: block;
+  width: 0.4rem;
+}
+
 /*# sourceMappingURL=custom.css.map */

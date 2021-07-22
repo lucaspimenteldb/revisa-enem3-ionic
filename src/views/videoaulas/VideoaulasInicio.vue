@@ -1,7 +1,7 @@
 <template>
   <ion-page>
     <ion-content>
-      <ion-title>
+      <ion-title style="color:#fff;">
         Videoaulas - {{`Volume ${route.params.id}`}}
       </ion-title>
 

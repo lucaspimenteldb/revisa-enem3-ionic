@@ -4,25 +4,25 @@
       <!-- container dos volumes -->
       <ion-img src="assets/images/videoaulas-inicio-fundo.png" class="fundo absolute top-0 right-0 z--1"/>
 
-      <div class="ion-margin-vertical ion-padding-top flex ion-justify-content-center">
-        <div
-            v-for="(playlist,i) in playlists"
-            :key="playlist.nome"
-            @click="() => router.push(playlist.rota)"
-            class="p-8 inline-flex flex-column ion-justify-content-center ion-align-items-center w-80 bg-white rounded"
-            :class="{'mx-8': i === 1, 'mr-8': i === 2}"
-        >
-          <ion-img
-              :src="`/assets/icon/${playlist.icon}`"
-              class="ion-no-margin"
-              :class="{ 'w-26': i === 0 || i === 2, 'w-32': i === 1 || i === 3}"
-          />
+<!--      <div class="ion-margin-vertical ion-padding-top flex ion-justify-content-center">-->
+<!--        <div-->
+<!--            v-for="(playlist,i) in playlists"-->
+<!--            :key="playlist.nome"-->
+<!--            @click="() => router.push(playlist.rota)"-->
+<!--            class="p-8 inline-flex flex-column ion-justify-content-center ion-align-items-center w-80 bg-white rounded"-->
+<!--            :class="{'mx-8': i === 1, 'mr-8': i === 2}"-->
+<!--        >-->
+<!--          <ion-img-->
+<!--              :src="`/assets/icon/${playlist.icon}`"-->
+<!--              class="ion-no-margin"-->
+<!--              :class="{ 'w-26': i === 0 || i === 2, 'w-32': i === 1 || i === 3}"-->
+<!--          />-->
 
-          <h5 class="ion-no-margin mt-8 ion-color-primary text-sm font-bold" :class="{'relative top-2': i === 1}">
-            {{ playlist.nome }}
-          </h5>
-        </div>
-      </div>
+<!--          <h5 class="ion-no-margin mt-8 ion-color-primary text-sm font-bold" :class="{'relative top-2': i === 1}">-->
+<!--            {{ playlist.nome }}-->
+<!--          </h5>-->
+<!--        </div>-->
+<!--      </div>-->
 
       <ion-list class="ion-margin-top ion-padding h-full rounded-top">
         <ion-label class="font-bold text-lg">

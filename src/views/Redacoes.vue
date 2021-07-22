@@ -58,7 +58,7 @@ export default {
 
       opcoes: [
         {
-          ttl: 'Redações',
+          ttl: 'Redações disponíveis',
           notificacao: 1,
           rota: 'redacoes-inicio',
         },
