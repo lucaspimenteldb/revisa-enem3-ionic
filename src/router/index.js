@@ -20,7 +20,7 @@ const routes = [
       {
         path: 'home',
         name: 'home',
-        component: () => import('@/views/simulados/SimuladosInicio.vue')
+        component: () => import('@/views/Home.vue')
       },
       {
         path: 'atividades',
