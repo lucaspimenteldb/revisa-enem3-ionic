@@ -18,6 +18,7 @@ const objeto = {
     methods: {
         async alertErro(e, message = '') {
             this.buttons = [{text: 'Ok', handler: () => this.dialog = false}]
+            console.log(e);
             if (e.response) {
                 let status = e.response.status ? ' '+e.response.status  : '';
                 if (e.response.status == 0) {

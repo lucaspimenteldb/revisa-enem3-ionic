@@ -497,13 +497,13 @@
                     this.setFinalizarOpen(true);
                     await api.get('/verificar-brancos/' + this.simulado.id + '/' + this.user.id);
                     this.loading = false;
+                    this.brancos = [];
                 } catch (e) {
                     this.loading = false;
                     if (e.response) {
                         // this.brancos =  (e.response.data.brancos);
                         this.brancos = this.objectInArray(e.response.data.brancos);
                     }
-                    console.log(e.response.data.brancos);
                 }
             },
 
@@ -574,9 +574,9 @@
                     this.questoesEmCache.push(this.questao);
                     // this.acionandoCronometro();
                     //tirar a produção
-                    // if(this.keyDown) {
+                    //  if(this.keyDown) {
                     //     setTimeout(this.teste, 2000);
-                    // }
+                    //  }
 
                 } catch (e) {
                     this.alertErro(e);
@@ -584,10 +584,10 @@
             },
 
             //tirar do produção
-            // async teste () {
+            //  async teste () {
             //     await this.questaoSelecionada('B');
-            //     await this.questoes(this.nextPage, true);
-            // },
+            //      await this.questoes(this.nextPage, true);
+            //  },
 
             cache(page) {
                 let quest = this.questoesId[page - 1];
@@ -675,9 +675,9 @@
                     this.questao.previous = this.previous;
                     this.questoesEmCache.push(this.questao);
                     //tirar produção
-                    // if(this.keyDown) {
-                    //     setTimeout(this.teste, 1000);
-                    // }
+                    //  if(this.keyDown) {
+                    //      setTimeout(this.teste, 2000);
+                    //  }
 
                 } catch (e) {
                     console.log(e);
