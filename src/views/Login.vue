@@ -25,6 +25,15 @@
           <IonInput type="text" v-model="matricula" value="{{matricula}}"/>
         </IonItem>
 
+
+          <IonItem class="rounded shadow mt-16">
+            <IonLabel position="floating">
+              Senha:
+            </IonLabel>
+
+            <IonInput type="password" v-model="senha" value="{{senha}}"/>
+          </IonItem>
+
         <ion-button type="submit" expand="block" class="ion-margin-top shadow-btn">
           <ion-label class="text-none font-bold">
             Entrar
@@ -87,20 +96,28 @@ export default {
   setup () {
     const loading = ref(false);
     const matricula = ref('');
+    const senha = ref('');
     const router = useRouter();
     return {
       loading,
       router,
       matricula,
+      senha,
     }
   },
 
   methods : {
     async formMatricula() {
       try{
+        if (!this.matricula || !this.senha) {
+          this.text.message = 'Preencha os campos obrigatórios';
+          this.buttons = [{text: 'Ok', handler: () => this.dialog = false}]
+          this.dialog = true;
+          return;
+        }
         let token = await this.recaptcha();
         this.loading= true;
-        let user = await api.post('/login', {matricula: this.matricula, token});
+        let user = await api.post('/login', {matricula: this.matricula,senha: this.senha, token});
         let xyz = this.formandoXyz(user.data.xyz, user.data.xyz_type);
         user = user.data.user;
         await object.set('user', JSON.stringify(user));
