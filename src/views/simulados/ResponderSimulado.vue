@@ -496,6 +496,7 @@
                     this.setFinalizarOpen(true);
                     await api.get('/verificar-brancos/' + this.simulado.id + '/' + this.user.id);
                     this.loading = false;
+                    this.brancos = [];
                 } catch (e) {
                     this.loading = false;
                     if (e.response) {
