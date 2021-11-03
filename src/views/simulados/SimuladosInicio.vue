@@ -161,7 +161,7 @@ export default {
       let usuario = await storage.get('user');
       usuario = JSON.parse(usuario.value);
       this.user = usuario;
-      let dados = await api.get('/simulado-estaduais-master');
+      let dados = await api.get(`/simulado-estaduais-master/${this.user.id}`);
       this.simulados = dados.data.simulados;
       this.loading = false;
     }catch (e) {
